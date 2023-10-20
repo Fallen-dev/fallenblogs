@@ -1,0 +1,32 @@
+---
+import Body from "$com/Body.astro";
+import Categories from "$com/Categories.svelte";
+---
+
+<Body title="Home">
+	<hgroup>
+		<h1>Fallen's Blog</h1>
+		<h6></h6>
+	</hgroup>
+
+	<p>
+		Hi, I'm Rishav, known as Fallen on GitHub and here I share my experiences
+		and discoveries in the ever-evolving world of technology.
+	</p>
+
+	<p>
+		Whether it's delving into cutting-edge web technologies, exploring a fresh
+		framework, or uncovering lesser-known Linux tricks, you'll find a collection
+		of my reflections and insights in the form of blog blogs.
+	</p>
+
+	<p class="contrast">
+		Email me at <a href="mailto:iamrishav@outlook.in">iamrishav@outlook.in</a>
+		 or <a href="/Resume.pdf">download my Resume.</a>
+	</p>
+
+	<a href="/about" role="button" class="contrast">More about me</a>
+
+	<h5>Latest blogs</h5>
+	<Categories client:load />
+</Body>

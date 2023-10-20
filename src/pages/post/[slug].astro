@@ -1,0 +1,76 @@
+---
+import Body from "$com/Body.astro";
+import Posts from "$lib/components/Posts.svelte";
+import TableOfContents from "$lib/components/TableOfContents.astro";
+import { formatDate } from "$lib/utils";
+import { getEntry } from "astro:content";
+
+const { slug } = Astro.params;
+
+if (!slug) return;
+
+const post = await getEntry("blogs", slug);
+if (!post) return;
+
+async function followUpPost() {
+  if (!post || typeof post.data.followUp === "undefined") return false;
+
+  const followUpPost = await getEntry("blogs", post.data.followUp.slug);
+
+  return followUpPost.data.title;
+}
+
+const { Content, headings, remarkPluginFrontmatter } = await post.render();
+---
+
+<Body title={post.data.title} article publishedOn={post.data.publishedOn}>
+  <a href="/" class="contrast"><p>&larr; Back to post</p></a>
+
+  <hgroup id="post-title">
+    <h1>{post.data.title}</h1>
+    <p>
+      {formatDate(post.data.publishedOn)} &bull; {
+        remarkPluginFrontmatter.minutesRead
+      }
+    </p>
+  </hgroup>
+
+  <section>
+    {
+      post.data.image && (
+        <figure id="hero">
+          <img src={post.data.image} alt="Just an image" />
+        </figure>
+      )
+    }
+  </section>
+
+  <div id="prose">
+    <TableOfContents headings={headings} />
+
+    <figure id="md">
+      <Content />
+    </figure>
+  </div>
+
+  <section id="bottom-navigation">
+    <a href="/" class="contrast">&larr; Back to post</a>
+
+    {
+      post.data.followUp && (
+        <a
+          href={`/post/${post.data.followUp.slug}`}
+          role="button"
+          class="contrast outline"
+        >
+          <strong>Follow up:</strong>&ThinSpace;
+          {followUpPost()}
+        </a>
+      )
+    }
+  </section>
+
+  <Posts postId={post.id} postTags={post.data.tags} client:idle />
+</Body>
+
+<style></style>

@@ -1,0 +1,121 @@
+@import url('/css/clash-display.css');
+@import url('/css/satoshi.css');
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'ClashDisplay-Medium';
+  letter-spacing: 0.875px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--typography-spacing-vertical);
+}
+
+body {
+  font-family: 'Satoshi-Medium';
+  letter-spacing: 0.5px;
+}
+
+button,
+a[role="button"] {
+  padding: 0.25rem 0.875rem;
+  font-size: 0.875rem;
+}
+
+button.chip,
+a[role="button"].chip {
+  border-radius: 100px;
+}
+
+article:not([data-unset]) {
+  margin-block: 0;
+  padding: var(--spacing);
+  display: grid;
+}
+
+#prose>#md :is(h1, h2, h3) {
+  --typography-spacing-vertical: calc(var(--spacing) * 2);
+}
+
+#prose {
+  display: grid;
+  column-gap: 2rem;
+}
+
+#prose>#toc {
+  margin-bottom: 3rem;
+}
+
+#prose>#toc>a {
+  display: block;
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+}
+
+#bottom-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  justify-content: space-between;
+}
+
+#bottom-navigation>:first-of-type {
+  flex-shrink: 0;
+}
+
+#post-title {
+  text-align: left;
+}
+
+figure#hero {
+  width: fit-content;
+  height: 100%;
+  max-height: 600px;
+  margin-inline: auto;
+}
+
+
+/* Media quries */
+@media screen and (min-width: 768px) {
+  .content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  button.chip,
+  a[role="button"].chip {
+    font-size: 0.675rem;
+  }
+
+  #bottom-navigation {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  #post-title {
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #prose {
+    grid-template-columns: calc(20vw) 1fr;
+  }
+
+  #prose>#toc {
+    position: sticky;
+    top: 3rem;
+    height: fit-content;
+  }
+
+  #prose>#toc>a {
+    font-size: 0.75rem;
+  }
+}
