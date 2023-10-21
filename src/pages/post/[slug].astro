@@ -1,8 +1,9 @@
 ---
 import Body from "$com/Body.astro";
 import Posts from "$lib/components/Posts.svelte";
-import TableOfContents from "$lib/components/TableOfContents.astro";
+import TableOfContents from "$lib/components/TableOfContents.svelte";
 import { formatDate } from "$lib/utils";
+import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
 
 const { slug } = Astro.params;
@@ -21,9 +22,42 @@ async function followUpPost() {
 }
 
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
+type Data = { slug: string; depth: number; text: string };
+
+const toc = [] as any;
+
+headings?.forEach((item: Data) => {
+  switch (item.depth) {
+    case 1:
+      toc.push(item);
+      break;
+    case 2:
+      toc.push(item);
+      break;
+    case 3:
+      toc.push([item]);
+      break;
+    case 4:
+      toc.push([[item]]);
+      break;
+    case 5:
+      toc.push([[[item]]]);
+      break;
+    case 6:
+      toc.push([[[[item]]]]);
+      break;
+    default:
+      break;
+  }
+});
 ---
 
-<Body title={post.data.title} article publishedOn={post.data.publishedOn}>
+<Body
+  title={post.data.title}
+  article
+  publishedOn={post.data.publishedOn}
+  image={post.data.image}
+>
   <a href="/" class="contrast"><p>&larr; Back to post</p></a>
 
   <hgroup id="post-title">
@@ -36,17 +70,23 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render();
   </hgroup>
 
   <section>
-    {
-      post.data.image && (
-        <figure id="hero">
-          <img src={post.data.image} alt="Just an image" />
-        </figure>
-      )
-    }
+    <figure id="hero">
+      <Image
+        src={post.data.image || "/images/placeholder.webp"}
+        alt="Just an image"
+        width={800}
+        height={600}
+        format="webp"
+        loading="eager"
+      />
+    </figure>
   </section>
 
   <div id="prose">
-    <TableOfContents headings={headings} />
+    <article id="toc">
+      <h6>Table of contents</h6>
+      <TableOfContents headings={toc} />
+    </article>
 
     <figure id="md">
       <Content />
@@ -64,7 +104,7 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render();
           class="contrast outline"
         >
           <strong>Follow up:</strong>&ThinSpace;
-          {followUpPost()}
+          {followUpPost()} &rarr;
         </a>
       )
     }
@@ -72,5 +112,3 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render();
 
   <Posts postId={post.id} postTags={post.data.tags} client:idle />
 </Body>
-
-<style></style>

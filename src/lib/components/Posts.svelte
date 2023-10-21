@@ -22,10 +22,20 @@
   {#if data.length > 0}
     <section>
       <h5>Related posts</h5>
-      <div class="content">
-        {#each data as { data: { title, publishedOn }, slug, render }}
+      <div id="content">
+        {#each data as { data: { title, publishedOn, image }, slug, render }}
           {#await render() then data}
             <article>
+              <div>
+                <img
+                  src={image ? image : "/images/placeholder.webp"}
+                  alt="Poster of the post"
+                  width="400"
+                  height="200"
+                  loading="lazy"
+                />
+              </div>
+
               <hgroup>
                 <h5>{title}</h5>
                 <h6>
@@ -34,7 +44,9 @@
                 </h6>
               </hgroup>
 
-              <a href="/post/{slug}" role="button">Read &rarr;</a>
+              <div class="link">
+                <a href="/post/{slug}" role="button">Read &rarr;</a>
+              </div>
             </article>
           {/await}
         {/each}
@@ -44,21 +56,24 @@
 {/await}
 
 <style>
-  .content {
-    display: grid;
-    gap: var(--spacing);
-    margin-bottom: var(--vertical-spacing, 3rem);
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    aspect-ratio: 16/9;
   }
 
-  .content > article {
-    margin-block: 0;
-    padding: var(--spacing);
-    display: grid;
+  hgroup,
+  .link {
+    padding-inline: var(--spacing);
   }
 
-  .content > article > a {
-    width: fit-content;
-    justify-self: start;
-    align-self: end;
+  hgroup {
+    padding-top: var(--spacing);
+  }
+  .link {
+    margin-top: auto;
+    align-self: stretch;
+    padding-bottom: var(--spacing);
   }
 </style>

@@ -3,6 +3,7 @@
   import { formatDate } from "$lib/utils";
 
   import { getCollection } from "astro:content";
+  import { fade, fly, slide } from "svelte/transition";
 
   async function getblogs() {
     const all = await getCollection("blogs");
@@ -29,28 +30,44 @@
 </figure>
 
 {#await getblogs()}
-  <article aria-busy="true">Loading blogs...</article>
+  <article aria-busy="true" data-unset>Loading blogs...</article>
 {:then data}
-  <div class="content">
-    {#each data as { slug, data: { title, tags, publishedOn }, render }}
-      {#if selected == "all" || tags.find((tag) => tag.toLowerCase() == selected.toLowerCase())}
-        {#await render() then data}
+  {#key selected}
+    <div
+      id="content"
+      in:fade={{ duration: 200, delay: 200 }}
+      out:fade={{ duration: 200 }}
+    >
+      {#each data as { slug, data: { title, tags, publishedOn, image } }}
+        {#if selected == "all" || tags.find((tag) => tag.toLowerCase() == selected.toLowerCase())}
           <article>
+            <div>
+              <img
+                src={image ? image : "/images/placeholder.webp"}
+                alt="Poster of the post"
+                height="200"
+                width="400"
+                loading="lazy"
+              />
+            </div>
+
             <hgroup>
               <h5>{title}</h5>
               <h6>
-                <small
-                  >{formatDate(publishedOn)} &bull; {data
-                    .remarkPluginFrontmatter.minutesRead}</small
-                >
+                <small>{formatDate(publishedOn)}</small>
               </h6>
             </hgroup>
-            <a href={"/post/" + slug} role="button"> Read &rarr; </a>
+
+            <div class="link">
+              <a href={"/post/" + slug} role="button"
+                >Read &rarr;</a
+              >
+            </div>
           </article>
-        {/await}
-      {/if}
-    {/each}
-  </div>
+        {/if}
+      {/each}
+    </div>
+  {/key}
 {/await}
 
 <style>
@@ -63,21 +80,24 @@
     width: auto;
     flex-shrink: 0;
   }
-  .content {
-    display: grid;
-    gap: var(--spacing);
-    margin-bottom: var(--vertical-spacing, 3rem);
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    aspect-ratio: 16/9;
   }
 
-  .content > article {
-    margin-block: 0;
-    padding: var(--spacing);
-    display: grid;
+  hgroup,
+  .link {
+    padding-inline: var(--spacing);
   }
 
-  .content > article > a {
-    width: fit-content;
-    justify-self: start;
-    align-self: end;
+  hgroup {
+    padding-top: var(--spacing);
+  }
+  .link {
+    margin-top: auto;
+    align-self: stretch;
+    padding-bottom: var(--spacing);
   }
 </style>

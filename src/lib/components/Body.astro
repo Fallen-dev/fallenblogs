@@ -5,12 +5,20 @@ import "/src/global.css";
 import Nav from "$com/Nav.astro";
 import Footer from "$com/Footer.astro";
 
-const { title = "Welcome to my website!", article, publishedOn } = Astro.props;
-const canonicalURL = Astro.url.pathname;
+const {
+  title: _title,
+  article,
+  publishedOn,
+  image = "/images/placeholder.webp",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const navTitle = "Fallenblogs";
 const description =
   "I am Fallen and this is where I share my amazing tech learning experience.";
+
+const title = _title ? `${_title} • ${navTitle}` : navTitle;
 ---
 
 <html lang="en">
@@ -29,6 +37,7 @@ const description =
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
     {
       article && (
         <>
@@ -43,8 +52,9 @@ const description =
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
 
-    <title>Fallen's blogs &bull; {title}</title>
+    <title>{title}</title>
   </head>
   <body>
     <Nav title={navTitle} />

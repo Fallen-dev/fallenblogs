@@ -3,7 +3,7 @@ import Body from "$com/Body.astro";
 import Categories from "$com/Categories.svelte";
 ---
 
-<Body title="Home">
+<Body>
 	<hgroup>
 		<h1>Fallen's Blog</h1>
 		<h6></h6>
@@ -15,9 +15,8 @@ import Categories from "$com/Categories.svelte";
 	</p>
 
 	<p>
-		Whether it's delving into cutting-edge web technologies, exploring a fresh
-		framework, or uncovering lesser-known Linux tricks, you'll find a collection
-		of my reflections and insights in the form of blog blogs.
+		I'm an under graduate CS student completing B.Tech and with 3 years of
+		experience in web development.
 	</p>
 
 	<p class="contrast">
@@ -30,3 +29,18 @@ import Categories from "$com/Categories.svelte";
 	<h5>Latest blogs</h5>
 	<Categories client:load />
 </Body>
+
+<style>
+	h1 {
+		animation: wght 800ms ease-in-out;
+	}
+
+	@keyframes wght {
+		from {
+			font-weight: 100;
+		}
+		to {
+			font-weight: 900;
+		}
+	}
+</style>

@@ -14,6 +14,15 @@ dependencies:
   '@astrojs/vercel':
     specifier: ^5.0.2
     version: 5.0.2(astro@3.3.2)
+  '@fontsource-variable/manrope':
+    specifier: ^5.0.16
+    version: 5.0.16
+  '@fontsource-variable/public-sans':
+    specifier: ^5.0.15
+    version: 5.0.15
+  '@fontsource-variable/roboto-flex':
+    specifier: ^5.0.8
+    version: 5.0.8
   '@picocss/pico':
     specifier: ^1.5.10
     version: 1.5.10
@@ -761,6 +770,18 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@fontsource-variable/manrope@5.0.16:
+    resolution: {integrity: sha512-6zsLHlf/nSDByrtdzhMc25LAuyJDw+f1RZXXoSODe7k7/h9osUqUSjfQmZTSFoVVRyLxwS0Hphoi8wrcymB/vg==}
+    dev: false
+
+  /@fontsource-variable/public-sans@5.0.15:
+    resolution: {integrity: sha512-1kIrQasK+lCXyUcOPTqAWQKy8ORuwU6sNvCE7TlHtJxqxLx2GLI1t3yrTZD2JJISvuE7zcCy1P1Z4zpjwKmG4A==}
+    dev: false
+
+  /@fontsource-variable/roboto-flex@5.0.8:
+    resolution: {integrity: sha512-zSnE0htmk1tlKqVNfMGWJfxgLxLYQH9eYNvXFzWJ3GuDMXVBEiKuaYytkrItaP/svX3t5y8qsIXC+cpflsfvWQ==}
+    dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}

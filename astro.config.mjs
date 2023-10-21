@@ -10,5 +10,6 @@ export default defineConfig({
   integrations: [svelte()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
-  }
+  },
+  site: process.env.NODE_ENV === 'production' ? 'https://fallenblogs.vercel.app' : 'http://localhost:4321'
 });
