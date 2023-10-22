@@ -5,8 +5,8 @@ import Categories from "$com/Categories.svelte";
 
 <Body>
 	<hgroup>
-		<h1>Fallen's Blog</h1>
-		<h6></h6>
+		<h1 class="title">Fallen's Blog</h1>
+		<h6 class="sub-title">4th year CS student</h6>
 	</hgroup>
 
 	<p>
@@ -21,26 +21,21 @@ import Categories from "$com/Categories.svelte";
 
 	<p class="contrast">
 		Email me at <a href="mailto:iamrishav@outlook.in">iamrishav@outlook.in</a>
-		 or <a href="/Resume.pdf">download my Resume.</a>
+		 or <a href="/about">read more about me</a>.
 	</p>
-
-	<a href="/about" role="button" class="contrast">More about me</a>
 
 	<h5>Latest blogs</h5>
 	<Categories client:load />
 </Body>
 
-<style>
-	h1 {
-		animation: wght 800ms ease-in-out;
-	}
+<script>
+	import { fadeIn } from "$lib/utils";
+	fadeIn(".title");
+	fadeIn(".sub-title", 0.05);
+</script>
 
-	@keyframes wght {
-		from {
-			font-weight: 100;
-		}
-		to {
-			font-weight: 900;
-		}
+<style>
+	hgroup > :is(h1, h6) {
+		opacity: 0;
 	}
 </style>

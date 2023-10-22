@@ -1,11 +1,49 @@
 @import url('./fonts.css');
 
+/* Teal Light scheme (Default) */
+
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --primary: #00897b;
+  --primary-hover: #00796b;
+  --primary-focus: rgba(0, 137, 123, 0.125);
+  --primary-inverse: #FFF;
+}
+
+/* Teal Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --primary: #00897b;
+    --primary-hover: #009688;
+    --primary-focus: rgba(0, 137, 123, 0.25);
+    --primary-inverse: #FFF;
+  }
+}
+
+/* Teal Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+  --primary: #00897b;
+  --primary-hover: #009688;
+  --primary-focus: rgba(0, 137, 123, 0.25);
+  --primary-inverse: #FFF;
+}
+
+/* Teal (Common styles) */
+:root {
+  --form-element-active-border-color: var(--primary);
+  --form-element-focus-color: var(--primary-focus);
+  --switch-color: var(--primary-inverse);
+  --switch-checked-background-color: var(--primary);
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--typography-spacing-vertical);
   font-family: Satoshi, sans-serif;
 }
-
 
 button,
 a[role="button"] {
@@ -52,7 +90,7 @@ article:not([data-unset]) {
 
 #prose>#toc {
   height: fit-content;
-  margin-bottom: 3rem;
+  margin-top: var(--spacing);
 }
 
 #bottom-navigation {
@@ -67,21 +105,31 @@ article:not([data-unset]) {
 }
 
 #post-title {
-  text-align: left;
+  text-align: center;
 }
 
 figure#hero {
   width: 100%;
   height: 100%;
   max-height: 200px;
-}
-
-figure#hero>img {
-  display: block;
+  overflow: hidden;
   margin-inline: auto;
 }
 
+figure#hero>img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: var(--border-radius);
+}
+
 /* Media quries */
+@media screen and (min-width: 578px) {
+  figure#hero {
+    max-height: 400px;
+  }
+}
+
 @media screen and (min-width: 768px) {
   #content {
     grid-template-columns: repeat(2, 1fr);
@@ -112,7 +160,7 @@ figure#hero>img {
   }
 
   #prose {
-    grid-template-columns: calc(25vw) 1fr;
+    grid-template-columns: calc(12rem + 100px) 1fr;
   }
 
   #prose>#toc {

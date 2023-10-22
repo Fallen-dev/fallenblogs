@@ -59,9 +59,7 @@
             </hgroup>
 
             <div class="link">
-              <a href={"/post/" + slug} role="button"
-                >Read &rarr;</a
-              >
+              <a href={"/post/" + slug} role="button">Read &rarr;</a>
             </div>
           </article>
         {/if}

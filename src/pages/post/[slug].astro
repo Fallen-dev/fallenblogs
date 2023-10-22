@@ -60,21 +60,23 @@ headings?.forEach((item: Data) => {
 >
   <a href="/" class="contrast"><p>&larr; Back to post</p></a>
 
-  <hgroup id="post-title">
-    <h1>{post.data.title}</h1>
-    <p>
-      {formatDate(post.data.publishedOn)} &bull; {
-        remarkPluginFrontmatter.minutesRead
-      }
-    </p>
-  </hgroup>
+  <section>
+    <hgroup id="post-title">
+      <h1 class="title" style="opacity: 0;">{post.data.title}</h1>
+      <p>
+        Published on {formatDate(post.data.publishedOn)} &bull; {
+          remarkPluginFrontmatter.minutesRead
+        }
+      </p>
+    </hgroup>
+  </section>
 
   <section>
     <figure id="hero">
       <Image
         src={post.data.image || "/images/placeholder.webp"}
         alt="Just an image"
-        width={800}
+        width={1000}
         height={600}
         format="webp"
         loading="eager"
@@ -112,3 +114,28 @@ headings?.forEach((item: Data) => {
 
   <Posts postId={post.id} postTags={post.data.tags} client:idle />
 </Body>
+
+<script>
+  import { fadeIn } from "$lib/utils";
+
+  fadeIn(".title");
+</script>
+
+<script>
+  const headings = document.querySelectorAll(
+    "#md > h1, #md > h2, #md > h3, #md > h4, #md > h5, #md > h6",
+  );
+
+  function headingsObserver(entries: IntersectionObserverEntry[]) {
+    entries.forEach((entry) => {
+      const link = document.querySelector(`a[href="#${entry.target.id}"]`);
+
+      if (entry.isIntersecting) link?.classList.remove("contrast");
+      else link?.classList.add("contrast");
+    });
+  }
+
+  const observer = new IntersectionObserver(headingsObserver);
+
+  headings.forEach((heading) => observer.observe(heading));
+</script>

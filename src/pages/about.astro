@@ -4,8 +4,8 @@ import Body from "$lib/components/Body.astro";
 
 <Body title="About me">
   <hgroup>
-    <h1>I'm Rishav Mandal</h1>
-    <p>And the creator of this website.</p>
+    <h1 class="title">I'm Rishav Mandal</h1>
+    <p class="sub-title">And the creator of this website.</p>
   </hgroup>
 
   <p>Again, Fallen is my GitHub username.</p>
@@ -127,7 +127,16 @@ import Body from "$lib/components/Body.astro";
   </p>
 </Body>
 
+<script>
+  import { fadeIn } from "$lib/utils";
+  fadeIn(".title");
+  fadeIn(".sub-title", 0.05);
+</script>
+
 <style>
+  hgroup > :is(h1, h6) {
+    opacity: 0;
+  }
   span {
     color: var(--contrast);
   }
