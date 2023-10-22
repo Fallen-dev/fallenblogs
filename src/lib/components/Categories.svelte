@@ -43,7 +43,7 @@
           <article>
             <div>
               <img
-                src={image ? image : "/images/placeholder.webp"}
+                src={image}
                 alt="Poster of the post"
                 height="200"
                 width="400"

@@ -16,8 +16,6 @@ export function formatDate(date: string | Date) {
   return givenDate.fromNow()
 }
 
-
-
 export function fadeIn(selector: string, delay?: number) {
   return animate(
     selector,

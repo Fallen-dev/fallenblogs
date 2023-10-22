@@ -1,12 +1,15 @@
 ---
 import Body from "$com/Body.astro";
-import Categories from "$com/Categories.svelte";
+import Posts from "$com/Posts.astro";
+import { getCollection } from "astro:content";
+
+const blogs = await getCollection("blogs");
 ---
 
 <Body>
 	<hgroup>
-		<h1 class="title">Fallen's Blog</h1>
-		<h6 class="sub-title">4th year CS student</h6>
+		<h1 class="title">Fallen&apos;s tech blogs</h1>
+		<h6>A final year CS student</h6>
 	</hgroup>
 
 	<p>
@@ -25,17 +28,11 @@ import Categories from "$com/Categories.svelte";
 	</p>
 
 	<h5>Latest blogs</h5>
-	<Categories client:load />
+
+	<Posts posts={blogs} />
 </Body>
 
 <script>
 	import { fadeIn } from "$lib/utils";
 	fadeIn(".title");
-	fadeIn(".sub-title", 0.05);
 </script>
-
-<style>
-	hgroup > :is(h1, h6) {
-		opacity: 0;
-	}
-</style>

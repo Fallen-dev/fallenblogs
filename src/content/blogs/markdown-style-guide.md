@@ -1,7 +1,7 @@
 ---
 title: Markdown Style Guide
 publishedOn: "2022-07-01"
-image: "/images/md-style-guide.jpg"
+image: "../../assets/md-style-guide.jpg"
 tags:
 - Astro
 ---

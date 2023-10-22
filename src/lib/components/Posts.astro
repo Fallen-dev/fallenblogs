@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+import Date from "$com/Date.astro";
+
+const { posts } = Astro.props;
+
+interface Props {
+  posts: CollectionEntry<"blogs">[];
+}
+---
+
+<section id="content">
+  {
+    posts &&
+      posts.map(({ slug, data: { image, publishedOn, title } }) => (
+        <article>
+          <div>
+            <Image
+              src={image}
+              alt="Poster of the post"
+              height="200"
+              loading="lazy"
+            />
+          </div>
+
+          <hgroup>
+            <h5>{title}</h5>
+            <h6>
+              <small>
+                <Date date={publishedOn} />
+              </small>
+            </h6>
+          </hgroup>
+
+          <div class="link">
+            <a href={"/post/" + slug} role="button">
+              Read &rarr;
+            </a>
+          </div>
+        </article>
+      ))
+  }
+</section>

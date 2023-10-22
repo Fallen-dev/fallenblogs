@@ -1,25 +1,31 @@
 ---
 import Body from "$com/Body.astro";
-import Posts from "$lib/components/Posts.svelte";
+import Posts from "$lib/components/Posts.astro";
 import TableOfContents from "$lib/components/TableOfContents.svelte";
-import { formatDate } from "$lib/utils";
+import Date from "$lib/components/Date.astro";
 import { Image } from "astro:assets";
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 
 const { slug } = Astro.params;
 
 if (!slug) return;
 
 const post = await getEntry("blogs", slug);
-if (!post) return;
+if (!post) return Astro.redirect("/", 404);
 
-async function followUpPost() {
-  if (!post || typeof post.data.followUp === "undefined") return false;
+const followUpPost =
+  post.data.followUp && (await getEntry("blogs", post.data.followUp.slug));
 
-  const followUpPost = await getEntry("blogs", post.data.followUp.slug);
-
-  return followUpPost.data.title;
-}
+const relatedPosts = await getCollection(
+  "blogs",
+  ({ data: { tags }, slug }) =>
+    post.slug !== slug &&
+    tags
+      .flat()
+      .find((t) =>
+        post.data.tags.find((tag) => tag.toLowerCase() === t.toLowerCase()),
+      ),
+);
 
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 type Data = { slug: string; depth: number; text: string };
@@ -62,22 +68,21 @@ headings?.forEach((item: Data) => {
 
   <section>
     <hgroup id="post-title">
-      <h1 class="title" style="opacity: 0;">{post.data.title}</h1>
-      <p>
-        Published on {formatDate(post.data.publishedOn)} &bull; {
-          remarkPluginFrontmatter.minutesRead
-        }
-      </p>
+      <h1 class="title">{post.data.title}</h1>
+      <h6>
+        <Date date={post.data.publishedOn} text="Published on" />
+         &bull; {remarkPluginFrontmatter.minutesRead}
+      </h6>
     </hgroup>
   </section>
 
   <section>
     <figure id="hero">
       <Image
-        src={post.data.image || "/images/placeholder.webp"}
+        src={post.data.image}
         alt="Just an image"
-        width={1000}
-        height={600}
+        widths={[720, 1024]}
+        sizes="720px, (min-width: 1024px) 1024px"
         format="webp"
         loading="eager"
       />
@@ -99,20 +104,20 @@ headings?.forEach((item: Data) => {
     <a href="/" class="contrast">&larr; Back to post</a>
 
     {
-      post.data.followUp && (
+      followUpPost && (
         <a
-          href={`/post/${post.data.followUp.slug}`}
+          href={`/post/${followUpPost.slug}`}
           role="button"
           class="contrast outline"
         >
           <strong>Follow up:</strong>&ThinSpace;
-          {followUpPost()} &rarr;
+          {followUpPost.data.title} &rarr;
         </a>
       )
     }
   </section>
 
-  <Posts postId={post.id} postTags={post.data.tags} client:idle />
+  <Posts posts={relatedPosts} />
 </Body>
 
 <script>
@@ -128,14 +133,17 @@ headings?.forEach((item: Data) => {
 
   function headingsObserver(entries: IntersectionObserverEntry[]) {
     entries.forEach((entry) => {
-      const link = document.querySelector(`a[href="#${entry.target.id}"]`);
+      const link = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
 
       if (entry.isIntersecting) link?.classList.remove("contrast");
       else link?.classList.add("contrast");
     });
   }
 
-  const observer = new IntersectionObserver(headingsObserver);
+  const observer = new IntersectionObserver(headingsObserver, {
+    threshold: 1,
+    rootMargin: "40% 0px -60% 0px",
+  });
 
   headings.forEach((heading) => observer.observe(heading));
 </script>

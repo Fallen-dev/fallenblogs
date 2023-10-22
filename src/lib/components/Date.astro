@@ -1,0 +1,8 @@
+---
+import { formatDate } from "$lib/utils";
+
+const { date, text } = Astro.props;
+---
+
+{text && <span set:text={text + " "} />}
+<time datetime={String(date)}>{formatDate(date)}</time>

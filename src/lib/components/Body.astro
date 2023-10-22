@@ -5,6 +5,15 @@ import "/src/global.css";
 import Nav from "$com/Nav.astro";
 import Footer from "$com/Footer.astro";
 
+if (!Astro.cookies.has("theme")) {
+  Astro.cookies.set("theme", "dark", {
+    maxAge: 315360000,
+    path: "/",
+  });
+}
+
+const theme = Astro.cookies.get("theme")?.value || "dark";
+
 const {
   title: _title,
   article,
@@ -21,7 +30,7 @@ const description =
 const title = _title ? `${_title} • ${navTitle}` : navTitle;
 ---
 
-<html lang="en" data-theme="light">
+<html lang="en" data-theme={theme}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -57,7 +66,7 @@ const title = _title ? `${_title} • ${navTitle}` : navTitle;
     <title>{title}</title>
   </head>
   <body>
-    <Nav title={navTitle} />
+    <Nav title={navTitle} theme={theme} />
 
     <main class="container">
       <slot />

@@ -1,5 +1,7 @@
 ---
-const { title } = Astro.props;
+const { title, theme } = Astro.props;
+
+const currentTheme = (theme === "dark" ? "Light" : "Dark") + " theme";
 ---
 
 <nav class="container-fluid">
@@ -8,6 +10,30 @@ const { title } = Astro.props;
   </ul>
   <ul>
     <li><a href="https://github.com/fallen-dev">GitHub</a></li>
-    <li><a href="/Resume.pdf" role="button">Resume</a></li>
+    <li>
+      <button class="contrast" id="theme">{currentTheme}</button>
+    </li>
   </ul>
 </nav>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const btn = document.querySelector("button#theme")!;
+
+    const handleToggleClick = () => {
+      const html = document.querySelector("html")!;
+      const isDark = html.getAttribute("data-theme") === "dark";
+
+      if (isDark) {
+        html.setAttribute("data-theme", "light");
+        document.cookie = "theme=light; max-age=315360000; path=/; SameSite";
+        btn.textContent = "Dark theme";
+      } else {
+        html.setAttribute("data-theme", "dark");
+        document.cookie = "theme=dark; max-age=315360000; path=/; SameSite";
+        btn.textContent = "Light theme";
+      }
+    };
+    btn.addEventListener("click", handleToggleClick);
+  });
+</script>

@@ -45,6 +45,11 @@ html {
   font-family: Satoshi, sans-serif;
 }
 
+.title,
+.sub-title {
+  opacity: 0;
+}
+
 button,
 a[role="button"] {
   padding: 0.25rem 0.875rem;
@@ -78,6 +83,26 @@ article:not([data-unset]) {
   display: grid;
   gap: var(--spacing);
 }
+
+#content div>img {
+  width: 100%;
+}
+
+#content hgroup,
+.link {
+  padding-inline: var(--spacing);
+}
+
+#content hgroup {
+  padding-top: var(--spacing);
+}
+
+#content .link {
+  margin-top: auto;
+  align-self: stretch;
+  padding-bottom: var(--spacing);
+}
+
 
 #prose>#md :is(h1, h2, h3, h4) {
   margin-bottom: calc(var(--spacing) * 2);
@@ -124,6 +149,12 @@ figure#hero>img {
 }
 
 /* Media quries */
+@media screen and (min-width: 400px) {
+  figure#hero {
+    max-height: 400px;
+  }
+}
+
 @media screen and (min-width: 578px) {
   figure#hero {
     max-height: 400px;

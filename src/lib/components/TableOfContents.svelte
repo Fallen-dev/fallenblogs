@@ -26,9 +26,10 @@
 
   a {
     text-decoration: none;
+    font-weight: 500;
   }
 
-  :global(ul > li > ul > li) {
+  :global(#toc > ul > li > ul > li) {
     padding-left: var(--spacing);
   }
 </style>
