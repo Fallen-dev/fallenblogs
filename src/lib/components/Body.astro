@@ -1,9 +1,9 @@
 ---
 import "@picocss/pico";
-import "/src/global.css";
+import "$lib/styles/global.css";
 
-import Nav from "$com/Nav.astro";
-import Footer from "$com/Footer.astro";
+import Nav from "@/Nav.astro";
+import Footer from "@/Footer.astro";
 
 if (!Astro.cookies.has("theme")) {
   Astro.cookies.set("theme", "dark", {
@@ -14,44 +14,98 @@ if (!Astro.cookies.has("theme")) {
 
 const theme = Astro.cookies.get("theme")?.value || "dark";
 
+interface Props {
+  title?: string;
+  description?: string;
+  publishedOn?: string | Date;
+  image?: string;
+}
+
 const {
   title: _title,
-  article,
+  description: _description,
   publishedOn,
-  image = "/images/placeholder.webp",
+  image = "/images/placeholder.jpg",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const navTitle = "Fallenblogs";
-const description =
-  "I am Fallen and this is where I share my amazing tech learning experience.";
+const description = _description
+  ? _description
+  : "I am Fallen and this is where I share my amazing tech learning experience.";
 
 const title = _title ? `${_title} • ${navTitle}` : navTitle;
+
+const links = [
+  { name: "Home", href: "/" },
+  { name: "Blog", href: "/blog" },
+  { name: "About", href: "/about" },
+];
 ---
 
 <html lang="en" data-theme={theme}>
   <head>
+    <!-- Global Metadata -->
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Font preloads -->
+    <link
+      rel="preload"
+      href="/fonts/Satoshi-Regular.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Satoshi-Bold.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Satoshi-Medium.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Satoshi-Black.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+
+    <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
 
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="Fallen | Rishav" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content={article ? "article" : "website"} />
+    <meta property="og:type" content={publishedOn ? "article" : "website"} />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="en" />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta property="og:image:alt" content={title} />
     {
-      article && (
+      publishedOn && (
         <>
           <meta property="article:author" content="Fallen | Rishav" />
-          <meta property="article:published_time" content={publishedOn} />
+          <meta
+            property="article:published_time"
+            content={publishedOn.toString()}
+          />
         </>
       )
     }
@@ -61,17 +115,16 @@ const title = _title ? `${_title} • ${navTitle}` : navTitle;
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={image} />
-
-    <title>{title}</title>
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    <meta property="twitter:image:alt" content={title} />
   </head>
   <body>
-    <Nav title={navTitle} theme={theme} />
+    <Nav title={navTitle} {theme} {links} />
 
     <main class="container">
       <slot />
     </main>
 
-    <Footer />
+    <Footer author={navTitle} {links} />
   </body>
 </html>

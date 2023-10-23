@@ -1,6 +1,8 @@
 ---
 title: Mastering Essential Linux Commands
+description: "Linux, the open-source operating system, offers a powerful command-line interface that allows users to perform a wide range of tasks efficiently."
 publishedOn: "2023-09-08"
+image: "$assets/blog-placeholder-4.jpg"
 tags:
 - Linux
 - OS

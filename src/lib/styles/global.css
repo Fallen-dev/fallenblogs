@@ -42,6 +42,9 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--typography-spacing-vertical);
+}
+
+body {
   font-family: Satoshi, sans-serif;
 }
 
@@ -84,8 +87,14 @@ article:not([data-unset]) {
   gap: var(--spacing);
 }
 
-#content div>img {
+#content .img-container {
+  height: auto;
+  aspect-ratio: 16/9;
+}
+
+#content .img-container>img {
   width: 100%;
+  height: 100%;
 }
 
 #content hgroup,
@@ -135,32 +144,19 @@ article:not([data-unset]) {
 
 figure#hero {
   width: 100%;
-  height: 100%;
-  max-height: 200px;
+  height: auto;
+  aspect-ratio: 16/9;
   overflow: hidden;
+  border-radius: var(--border-radius);
   margin-inline: auto;
 }
 
 figure#hero>img {
   width: 100%;
   height: 100%;
-  display: block;
-  border-radius: var(--border-radius);
 }
 
 /* Media quries */
-@media screen and (min-width: 400px) {
-  figure#hero {
-    max-height: 400px;
-  }
-}
-
-@media screen and (min-width: 578px) {
-  figure#hero {
-    max-height: 400px;
-  }
-}
-
 @media screen and (min-width: 768px) {
   #content {
     grid-template-columns: repeat(2, 1fr);
@@ -180,9 +176,6 @@ figure#hero>img {
     text-align: center;
   }
 
-  figure#hero {
-    max-height: 600px;
-  }
 }
 
 @media screen and (min-width: 992px) {

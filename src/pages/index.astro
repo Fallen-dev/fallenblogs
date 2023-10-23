@@ -1,9 +1,10 @@
 ---
-import Body from "$com/Body.astro";
-import Posts from "$com/Posts.astro";
+import { POST_COUNT } from "$data";
+import Body from "@/Body.astro";
+import Posts from "@/Posts.astro";
 import { getCollection } from "astro:content";
 
-const blogs = await getCollection("blogs");
+const blogs = await getCollection("blog");
 ---
 
 <Body>
@@ -29,7 +30,8 @@ const blogs = await getCollection("blogs");
 
 	<h5>Latest blogs</h5>
 
-	<Posts posts={blogs} />
+	<Posts posts={blogs} count={POST_COUNT} />
+	<a href="/blog" role="button" class="contrast">See all blogs</a>
 </Body>
 
 <script>

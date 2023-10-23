@@ -1,3 +1,15 @@
+---
+import Link from "@/Link.astro";
+const { links, author } = Astro.props;
+
+interface Props {
+  author: string;
+  links: Array<{ href: string; name: string }>;
+}
+
+const year = new Date().getFullYear();
+---
+
 <article data-unset>
   <div class="container" style="text-align: center;">
     <h6>
@@ -9,13 +21,23 @@
     </h6>
 
     <div class="grid">
-      <a href="/about">About me</a>
-      <a href="https://github.com/fallen-dev">My GitHub</a>
-      <a href="/Resume.pdf">Download my resume</a>
+      {
+        links.map(({ href, name }) => (
+          <Link {href} class="contrast">
+            {name}
+          </Link>
+        ))
+      }
+      <a
+        href="http://github.com/Fallen-dev"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="contrast">My GitHub</a
+      >
     </div>
 
-    <p style="margin-block: var(--typography-spacing-vertical) 0;">
-      <small>&copy; 2023 Fallenblogs. All rights reserved.</small>
+    <p>
+      <small>&copy;&nbsp;{year}&nbsp;{author}. All rights reserved.</small>
     </p>
   </div>
 </article>
@@ -23,5 +45,13 @@
 <style>
   article {
     margin: 0;
+  }
+
+  article p {
+    margin-block: var(--typography-spacing-vertical) 0;
+  }
+
+  a.contrast:not(.active) {
+    text-decoration: none;
   }
 </style>

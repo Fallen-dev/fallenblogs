@@ -1,8 +1,8 @@
 ---
-import Body from "$com/Body.astro";
-import Posts from "$lib/components/Posts.astro";
-import TableOfContents from "$lib/components/TableOfContents.svelte";
-import Date from "$lib/components/Date.astro";
+import Body from "@/Body.astro";
+import Posts from "@/Posts.astro";
+import TableOfContents from "@/TableOfContents.svelte";
+import Date from "@/Date.astro";
 import { Image } from "astro:assets";
 import { getCollection, getEntry } from "astro:content";
 
@@ -10,14 +10,14 @@ const { slug } = Astro.params;
 
 if (!slug) return;
 
-const post = await getEntry("blogs", slug);
+const post = await getEntry("blog", slug);
 if (!post) return Astro.redirect("/", 404);
 
 const followUpPost =
-  post.data.followUp && (await getEntry("blogs", post.data.followUp.slug));
+  post.data.followUp && (await getEntry("blog", post.data.followUp.slug));
 
 const relatedPosts = await getCollection(
-  "blogs",
+  "blog",
   ({ data: { tags }, slug }) =>
     post.slug !== slug &&
     tags
@@ -44,25 +44,24 @@ headings?.forEach((item: Data) => {
       toc.push([item]);
       break;
     case 4:
-      toc.push([[item]]);
+      toc.push([item]);
       break;
     case 5:
-      toc.push([[[item]]]);
+      toc.push([[item]]);
       break;
     case 6:
-      toc.push([[[[item]]]]);
-      break;
-    default:
+      toc.push([[[item]]]);
       break;
   }
 });
 ---
 
 <Body
-  title={post.data.title}
   article
+  title={post.data.title}
+  description={post.data.description}
   publishedOn={post.data.publishedOn}
-  image={post.data.image}
+  image={post.data.image.src}
 >
   <a href="/" class="contrast"><p>&larr; Back to post</p></a>
 
@@ -77,13 +76,12 @@ headings?.forEach((item: Data) => {
   </section>
 
   <section>
-    <figure id="hero">
+    <figure id="hero" transition:name="image">
       <Image
         src={post.data.image}
         alt="Just an image"
         widths={[720, 1024]}
         sizes="720px, (min-width: 1024px) 1024px"
-        format="webp"
         loading="eager"
       />
     </figure>
@@ -127,23 +125,29 @@ headings?.forEach((item: Data) => {
 </script>
 
 <script>
-  const headings = document.querySelectorAll(
-    "#md > h1, #md > h2, #md > h3, #md > h4, #md > h5, #md > h6",
-  );
+  function initObserver() {
+    const headings = document.querySelectorAll(
+      "#md > h1, #md > h2, #md > h3, #md > h4, #md > h5, #md > h6",
+    );
 
-  function headingsObserver(entries: IntersectionObserverEntry[]) {
-    entries.forEach((entry) => {
-      const link = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+    function headingsObserver(entries: IntersectionObserverEntry[]) {
+      entries.forEach((entry) => {
+        const link = document.querySelector(
+          `#toc a[href="#${entry.target.id}"]`,
+        );
 
-      if (entry.isIntersecting) link?.classList.remove("contrast");
-      else link?.classList.add("contrast");
+        if (entry.isIntersecting) link?.classList.remove("contrast");
+        else link?.classList.add("contrast");
+      });
+    }
+
+    const observer = new IntersectionObserver(headingsObserver, {
+      threshold: 1,
+      rootMargin: "40% 0px -60% 0px",
     });
+
+    headings.forEach((heading) => observer.observe(heading));
   }
 
-  const observer = new IntersectionObserver(headingsObserver, {
-    threshold: 1,
-    rootMargin: "40% 0px -60% 0px",
-  });
-
-  headings.forEach((heading) => observer.observe(heading));
+  if (window.innerWidth > 990) initObserver();
 </script>
