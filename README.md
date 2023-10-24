@@ -6,7 +6,7 @@ This is where I post my blogs.
 
 > The posts are not written yet!
 
-![Banner]('/banner.png')
+![Banner](/public/banner.png)
 
 Features:
 
