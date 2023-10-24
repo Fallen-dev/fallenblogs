@@ -6,30 +6,36 @@ import Date from "@/Date.astro";
 import { Image } from "astro:assets";
 import { getCollection, getEntry } from "astro:content";
 
-const { slug } = Astro.params;
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
 
-if (!slug) return;
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: {
+      post,
+      followUp: post.data.followUp,
+    },
+  }));
+}
 
-const post = await getEntry("blog", slug);
-if (!post) return Astro.redirect("/", 404);
+const { post, followUp } = Astro.props;
 
-const followUpPost =
-  post.data.followUp && (await getEntry("blog", post.data.followUp.slug));
+const followUpPost = followUp && (await getEntry(followUp));
 
 const relatedPosts = await getCollection(
   "blog",
   ({ data: { tags }, slug }) =>
     post.slug !== slug &&
-    tags
-      .flat()
-      .find((t) =>
-        post.data.tags.find((tag) => tag.toLowerCase() === t.toLowerCase()),
+    tags.find((t) =>
+      post.data.tags.find(
+        (tag: string) => tag.toLowerCase() === t.toLowerCase(),
       ),
+    ),
 );
 
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
-type Data = { slug: string; depth: number; text: string };
 
+type Data = { slug: string; depth: number; text: string };
 const toc = [] as any;
 
 headings?.forEach((item: Data) => {
@@ -57,7 +63,6 @@ headings?.forEach((item: Data) => {
 ---
 
 <Body
-  article
   title={post.data.title}
   description={post.data.description}
   publishedOn={post.data.publishedOn}

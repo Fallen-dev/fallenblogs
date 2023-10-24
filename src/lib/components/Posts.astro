@@ -11,14 +11,19 @@ interface Props {
   count?: number;
 }
 
-const arr = posts.slice(0, count).sort((a, b) => {
-  const fst = a.data.publishedOn;
-  const snd = b.data.publishedOn;
+const arr = posts
+  .slice(0, count)
+  .filter((post) =>
+    process.env.NODE_ENV === "production" ? post.data.publishedOn : post,
+  )
+  .sort((a, b) => {
+    const fst = a.data.publishedOn;
+    const snd = b.data.publishedOn;
 
-  if (!fst || !snd) return 0;
+    if (!fst || !snd) return 0;
 
-  return snd.valueOf() - fst.valueOf();
-});
+    return snd.valueOf() - fst.valueOf();
+  });
 ---
 
 <section id="content">
@@ -43,7 +48,11 @@ const arr = posts.slice(0, count).sort((a, b) => {
               <h5>{title}</h5>
               <h6>
                 <small>
-                  <Date date={publishedOn} />
+                  {publishedOn ? (
+                    <Date date={publishedOn} />
+                  ) : (
+                    <small class="draft">DRAFT</small>
+                  )}
                   &bullet;
                   {minutesRead}
                 </small>
@@ -60,3 +69,12 @@ const arr = posts.slice(0, count).sort((a, b) => {
       })
   }
 </section>
+
+<style>
+  .draft {
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.125rem;
+    background-color: var(--secondary);
+    color: var(--secondary-inverse);
+  }
+</style>

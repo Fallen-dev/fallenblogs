@@ -1,7 +1,7 @@
 ---
 title: 'Discovering and Using Fire'
 description: Fire, one of the most fundamental discoveries in human history, has been both a boon and a bane to our species.
-publishedOn: "2023-09-08"
+publishedOn: "2023-09-12"
 image: "$assets/blog-placeholder-2.jpg"
 tags:
 - Nature

@@ -56,8 +56,6 @@ interface Props {
       const html = document.querySelector("html")!;
       const theme = html.getAttribute("data-theme");
 
-      console.log(theme);
-
       if (theme === "dark") {
         html.setAttribute("data-theme", "light");
         document.cookie = "theme=light; max-age=315360000; path=/; SameSite";

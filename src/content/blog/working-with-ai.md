@@ -1,7 +1,7 @@
 ---
 title: 'Transforming Workflows for the Future'
 description: In this blog post, we'll delve into the world of AI and explore how it can reshape our work processes, making them more efficient and effective.
-publishedOn: "2023-09-08"
+publishedOn: "2023-09-18"
 tags:
 - AI
 - OS

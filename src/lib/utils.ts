@@ -5,7 +5,8 @@ import { animate } from "motion";
 export const slugify = (slug: string) => slug.toLowerCase().replaceAll(' ', '-')
 export const unslugify = (slug: string) => slug.replaceAll('-', ' ')
 
-export function formatDate(date: string | Date) {
+export function formatDate(date: Date | string) {
+
   dayjs.extend(relativeTime)
   const givenDate = dayjs(date)
   const today = dayjs()

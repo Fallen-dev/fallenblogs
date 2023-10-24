@@ -7,7 +7,7 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-	output: "server",
+	output: "hybrid",
 	adapter: vercel(),
 	integrations: [svelte(), mdx(), sitemap()],
 	markdown: {
@@ -15,9 +15,9 @@ export default defineConfig({
 	},
 	image: {
 		domains: ['astro.build'],
-		//remotePatterns: [{
-		//	protocol: 'https'
-		//}]
+		remotePatterns: [{
+			protocol: 'https'
+		}]
 	},
 	site: process.env.NODE_ENV === 'production' ? 'https://fallenblogs.vercel.app' : 'http://localhost:4321'
 });

@@ -1,6 +1,11 @@
 ---
 import { formatDate } from "$lib/utils";
 
+interface Props {
+  date: Date | string;
+  text?: string;
+}
+
 const { date, text } = Astro.props;
 ---
 
