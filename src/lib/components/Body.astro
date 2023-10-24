@@ -5,15 +5,6 @@ import "$lib/styles/global.css";
 import Nav from "@/Nav.astro";
 import Footer from "@/Footer.astro";
 
-if (!Astro.cookies.has("theme")) {
-  Astro.cookies.set("theme", "dark", {
-    maxAge: 315360000,
-    path: "/",
-  });
-}
-
-const theme = Astro.cookies.get("theme")?.value || "dark";
-
 interface Props {
   title?: string;
   description?: string;
@@ -44,7 +35,7 @@ const links = [
 ];
 ---
 
-<html lang="en" data-theme={theme}>
+<html lang="en" data-theme="dark">
   <head>
     <!-- Global Metadata -->
     <meta charset="utf-8" />
@@ -119,7 +110,7 @@ const links = [
     <meta property="twitter:image:alt" content={title} />
   </head>
   <body>
-    <Nav title={navTitle} {theme} {links} />
+    <Nav title={navTitle} {links} />
 
     <main class="container">
       <slot />
