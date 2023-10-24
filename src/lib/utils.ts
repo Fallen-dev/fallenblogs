@@ -30,3 +30,24 @@ export function fadeIn(selector: string, delay?: number) {
     { duration: 1, easing: "ease-in-out", delay: delay || 0 },
   );
 }
+
+class Cookies {
+  get(name: string) {
+    const cookie = document.cookie.split(";").map((cookie) => {
+      const _ = cookie.split("=");
+      const key = _[0]!;
+      const value = _[1]!;
+
+      if (key === name) return value;
+
+      return undefined;
+    });
+
+    return cookie[0];
+  }
+  set(name: string, value: string) {
+    return (document.cookie = `${name}=${value}; max-age=315360000; path=/; SameSite`);
+  }
+}
+
+export const cookies = new Cookies()

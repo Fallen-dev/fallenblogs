@@ -36,12 +36,7 @@ const arr = posts
         return (
           <article>
             <div class="img-container">
-              <Image
-                src={image}
-                alt="Poster of the post"
-                height="200"
-                loading="lazy"
-              />
+              <Image src={image} alt="Poster of the post" loading="eager" />
             </div>
 
             <hgroup>

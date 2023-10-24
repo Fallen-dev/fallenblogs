@@ -49,21 +49,32 @@ interface Props {
 </nav>
 
 <script>
-  addEventListener("load", () => {
-    const btn = document.querySelector("#theme")!;
+  import { cookies } from "$lib/utils";
+
+  const btn = document.querySelector("#theme")!;
+  const html = document.querySelector("html")!;
+
+  function setTheme(theme: string) {
+    html.setAttribute("data-theme", theme);
+    cookies.set("theme", theme);
+  }
+
+  const theme = {
+    get: () => html.getAttribute("data-theme"),
+    is: (name: string) => theme.get() === name,
+  };
+
+  function initListener() {
+    const themeFromCookie = cookies.get("theme");
+
+    if (!themeFromCookie) cookies.set("theme", theme.get() || "dark");
 
     const handleToggleClick = () => {
-      const html = document.querySelector("html")!;
-      const theme = html.getAttribute("data-theme");
-
-      if (theme === "dark") {
-        html.setAttribute("data-theme", "light");
-        document.cookie = "theme=light; max-age=315360000; path=/; SameSite";
-      } else if (theme === "light") {
-        html.setAttribute("data-theme", "dark");
-        document.cookie = "theme=dark; max-age=315360000; path=/; SameSite";
-      }
+      if (theme.is("dark")) return setTheme("light");
+      if (theme.is("light")) return setTheme("dark");
     };
     btn.addEventListener("click", handleToggleClick);
-  });
+  }
+
+  onload = initListener;
 </script>

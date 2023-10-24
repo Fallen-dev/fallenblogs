@@ -89,7 +89,6 @@ article:not([data-unset]) {
 
 #content .img-container {
   height: auto;
-  aspect-ratio: 16/9;
 }
 
 #content .img-container>img {
@@ -145,7 +144,6 @@ article:not([data-unset]) {
 figure#hero {
   width: 100%;
   height: auto;
-  aspect-ratio: 16/9;
   overflow: hidden;
   border-radius: var(--border-radius);
   margin-inline: auto;
