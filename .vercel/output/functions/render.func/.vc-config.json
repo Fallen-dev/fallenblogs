@@ -1,5 +1,0 @@
-{
-	"runtime": "nodejs18.x",
-	"handler": "home/rain/Public/projects/fallenblogs/dist/entry.mjs",
-	"launcherType": "Nodejs"
-}
