@@ -8,7 +8,7 @@
       {#if Array.isArray(item)}
         <svelte:self headings={item} />
       {:else}
-        <a href="#{item.slug}" class="contrast">{item.text}</a>
+        <a href="#{item.slug}" data-nounderline>{item.text}</a>
       {/if}
     </li>
   {/each}
@@ -25,11 +25,10 @@
   }
 
   a {
-    text-decoration: none;
     font-weight: 500;
   }
 
-  :global(#toc > ul > li > ul > li) {
+  :global(.toc > ul > li > ul > li) {
     padding-left: var(--spacing);
   }
 </style>

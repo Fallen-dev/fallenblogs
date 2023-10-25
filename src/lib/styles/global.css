@@ -1,42 +1,109 @@
 @import url('./fonts.css');
 
-/* Teal Light scheme (Default) */
+:root:not([data-theme=dark]),
+[data-theme=light] {
+  --color: #201a1a;
+  --primary: #9c4143;
+  --contrast: #745a2f;
+  --secondary: #775655;
 
-/* Can be forced with data-theme="light" */
-[data-theme="light"],
-:root:not([data-theme="dark"]) {
-  --primary: #00897b;
-  --primary-hover: #00796b;
-  --primary-focus: rgba(0, 137, 123, 0.125);
-  --primary-inverse: #FFF;
+  --h1-color: var(--color);
+  --h2-color: var(--color);
+  --h3-color: var(--color);
+  --h4-color: var(--color);
+  --h5-color: var(--color);
+  --h6-color: var(--color);
+
+  --primary-hover: rgba(156, 65, 67, 0.9);
+  --primary-focus: rgba(156, 65, 67, 0.9);
+  --primary-inverse: #ffffff;
+
+  --contrast-hover: rgba(116, 90, 47, 0.9);
+  --contrast-focus: rgba(116, 90, 47, 0.9);
+  --contrast-inverse: #ffffff;
+
+  --secondary-hover: rgba(119, 86, 85, 0.9);
+  --secondary-focus: rgba(119, 86, 85, 0.9);
+  --secondary-inverse: #ffffff;
+
+  --muted-color: #775655;
+  --border-color: var(--background-color);
+
+  --background-color: #fffbff;
+  --card-background-color: hsl(300, 100%, 94%);
+
+  --code-background-color: #f4dddc;
+  --code-color: #524343;
+  --accordion-border-color: #f4dddc;
+
+  --card-box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.2);
+
+  [role="button"].contrast {
+    --background-color: var(--contrast);
+    --color: var(--contrast-inverse);
+    --border-color: var(--background-color);
+  }
+
 }
 
-/* Teal Dark scheme (Auto) */
-/* Automatically enabled if user has Dark mode enabled */
-@media only screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --primary: #00897b;
-    --primary-hover: #009688;
-    --primary-focus: rgba(0, 137, 123, 0.25);
-    --primary-inverse: #FFF;
+[data-theme="dark"] {
+  --color: #ede0df;
+  --primary: #ffb3b1;
+  --contrast: #e4c18d;
+  --secondary: #e6bdbb;
+
+  --h1-color: var(--color);
+  --h2-color: var(--color);
+  --h3-color: var(--color);
+  --h4-color: var(--color);
+  --h5-color: var(--color);
+  --h6-color: var(--color);
+
+  --primary-hover: rgba(230, 190, 188, 0.9);
+  --primary-focus: rgba(230, 190, 188, 0.9);
+  --primary-inverse: #5f1319;
+
+  --contrast-hover: rgba(228, 193, 141, 0.9);
+  --contrast-focus: rgba(228, 193, 141, 0.9);
+  --contrast-inverse: #442929;
+
+  --secondary-hover: rgba(230, 189, 187, 0.9);
+  --secondary-focus: rgba(230, 189, 187, 0.9);
+  --secondary-inverse: #442929;
+
+  --muted-color: #e6bdbb;
+  --border-color: var(--background-color);
+
+  --background-color: #201a1a;
+  --card-background-color: hsl(0, 10%, 15%);
+  --accordion-border-color: #524343;
+
+  --code-background-color: #524343;
+  --code-color: #d7c1c0;
+
+  --card-box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.25);
+
+  [role="button"].contrast {
+    --background-color: #ede0df;
+    --color: #201a1a;
+
+    --background-color: #e4c18d;
+    --color: #412d05;
+    --border-color: var(--background-color);
   }
 }
 
-/* Teal Dark scheme (Forced) */
-/* Enabled if forced with data-theme="dark" */
-[data-theme="dark"] {
-  --primary: #00897b;
-  --primary-hover: #009688;
-  --primary-focus: rgba(0, 137, 123, 0.25);
-  --primary-inverse: #FFF;
-}
-
-/* Teal (Common styles) */
 :root {
   --form-element-active-border-color: var(--primary);
   --form-element-focus-color: var(--primary-focus);
   --switch-color: var(--primary-inverse);
   --switch-checked-background-color: var(--primary);
+}
+
+/* Make more smooth animations */
+* {
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 html {
@@ -56,6 +123,35 @@ body {
 [data-animate],
 [data-animate-post] {
   opacity: 0;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+[role="button"].contrast.outline {
+  --background-color: transparent;
+  --color: var(--contrast);
+  --border-color: var(--contrast);
+}
+
+a:not([role]).contrast:is(:active, :focus) {
+  color: var(--contrast-inverse);
+}
+
+a:not([role]):is(:active, :focus) {
+  color: var(--primary-inverse);
+}
+
+a {
+  --color: var(--color);
+  text-decoration: underline;
+}
+
+a.primary {
+  --color: var(--primary);
+}
+
+a[data-nounderline] {
+  text-decoration: none;
 }
 
 button,
@@ -73,6 +169,11 @@ a[role="button"].chip {
 article:not([data-unset]) {
   margin-block: var(--block-spacing-vertical);
   padding: var(--spacing);
+}
+
+
+hgroup>:last-child {
+  color: var(--muted-color);
 }
 
 #content article {
@@ -110,6 +211,11 @@ article:not([data-unset]) {
   padding-top: var(--spacing);
 }
 
+#content hgroup>:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
 #content .link {
   margin-top: auto;
   align-self: stretch;
@@ -126,9 +232,14 @@ article:not([data-unset]) {
   column-gap: 2rem;
 }
 
-#prose>#toc {
+#prose>article.toc {
+  display: none;
   height: fit-content;
   margin-top: var(--spacing);
+}
+
+#prose>details.toc {
+  display: block;
 }
 
 #bottom-navigation {
@@ -159,8 +270,23 @@ figure#hero>img {
   height: 100%;
 }
 
+
+#footer-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
 /* Media quries */
-@media screen and (min-width: 768px) {
+@media (min-width: 576px) {
+  body>main {
+    --block-spacing-vertical: calc(var(--spacing) * 2);
+  }
+}
+
+@media (min-width: 768px) {
   #content {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -179,9 +305,13 @@ figure#hero>img {
     text-align: center;
   }
 
+  #footer-links {
+    flex-direction: row;
+    gap: var(--spacing);
+  }
 }
 
-@media screen and (min-width: 992px) {
+@media (min-width: 992px) {
   #content {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -190,14 +320,19 @@ figure#hero>img {
     grid-template-columns: calc(12rem + 100px) 1fr;
   }
 
-  #prose>#toc {
+  #prose>details.toc {
+    display: none;
+  }
+
+  #prose>article.toc {
+    display: block;
     position: sticky;
     top: 3rem;
     max-height: calc(100vh - 6rem);
     overflow-y: scroll;
   }
 
-  #prose>#toc a {
+  #prose>article.toc a {
     font-size: 0.8rem;
   }
 }

@@ -11,7 +11,7 @@ interface Props {
 <nav class="container-fluid">
   <ul>
     <li>
-      <a href="/" class="contrast">
+      <a href="/" data-nounderline>
         <strong set:html={title} />
       </a>
     </li>
@@ -20,9 +20,7 @@ interface Props {
     {
       links.map(({ href, name }) => (
         <li>
-          <Link {href} class="contrast">
-            {name}
-          </Link>
+          <Link {href}>{name}</Link>
         </li>
       ))
     }
@@ -30,7 +28,7 @@ interface Props {
 
   <ul>
     <li>
-      <a id="theme" class="contrast">
+      <a id="theme">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

@@ -10,16 +10,14 @@ const blogs = await getCollection("blog");
 <Body>
 	<hgroup data-animate-container>
 		<h1 data-animate>Fallen&apos;s tech blogs</h1>
-		<h6 data-animate>A final year CS student</h6>
+		<p data-animate>A final year CS student</p>
 	</hgroup>
-
 	<div data-animate-container>
 		<p data-animate>
 			Hi, I'm Rishav, known as Fallen on GitHub and here I share my experiences
 			and discoveries in the ever-evolving world of technology.
 		</p>
 	</div>
-
 	<div data-animate-container>
 		<p data-animate>
 			I'm an under graduate CS student completing B.Tech and with 3 years of
@@ -28,7 +26,7 @@ const blogs = await getCollection("blog");
 	</div>
 
 	<div class="banner" data-animate-post>
-		<h5>Latest blogs</h5>
+		<strong>Latest blogs</strong>
 
 		<a href="/blog" class="contrast">See all</a>
 	</div>
@@ -45,5 +43,10 @@ const blogs = await getCollection("blog");
 	.banner {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: var(--block-spacing-vertical);
+	}
+
+	hgroup p {
+		margin-bottom: 0;
 	}
 </style>

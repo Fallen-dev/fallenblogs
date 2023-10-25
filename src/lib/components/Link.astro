@@ -10,13 +10,14 @@ const active =
 	pathname === href || (pathname.startsWith("/blog/") && href === "/blog");
 ---
 
-<a href={href} class:list={[className, { active }]} {...props}>
+<a href={href} class:list={[className, { active }]} {...props} data-nounderline>
 	<slot />
 </a>
 
 <style>
 	a.active {
 		font-weight: 700;
+		color: var(--primary);
 		text-decoration: underline;
 	}
 </style>

@@ -16,28 +16,23 @@ const year = new Date().getFullYear();
       Made with <a
         href="http://astro.build"
         target="_blank"
+        class="primary"
         rel="noopener noreferrer">Astro</a
       >
     </h6>
 
-    <div class="grid">
-      {
-        links.map(({ href, name }) => (
-          <Link {href} class="contrast">
-            {name}
-          </Link>
-        ))
-      }
+    <div id="footer-links">
+      {links.map(({ href, name }) => <Link {href}>{name}</Link>)}
       <a
         href="http://github.com/Fallen-dev"
         target="_blank"
         rel="noopener noreferrer"
-        class="contrast">My GitHub</a
+        data-nounderline>My GitHub</a
       >
     </div>
 
     <p>
-      <small>&copy;&nbsp;{year}&nbsp;{author}. All rights reserved.</small>
+      &copy;&nbsp;{year}&nbsp;{author}. All rights reserved.
     </p>
   </div>
 </article>
@@ -45,13 +40,10 @@ const year = new Date().getFullYear();
 <style>
   article {
     margin: 0;
+    border-radius: 0;
   }
 
   article p {
     margin-block: var(--typography-spacing-vertical) 0;
-  }
-
-  a.contrast:not(.active) {
-    text-decoration: none;
   }
 </style>
