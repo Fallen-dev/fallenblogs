@@ -10,6 +10,9 @@
       "@/*": [
         "src/lib/components/*"
       ],
+      "$icons/*": [
+        "src/lib/icons/*"
+      ],
       "$content/*": [
         "src/content/*"
       ],

@@ -1,6 +1,12 @@
 import dayjs from "dayjs"
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { animate } from "motion";
+import { animate, stagger } from "motion";
+import type {
+  ElementOrSelector,
+  MotionKeyframesDefinition,
+  AnimationOptionsWithOverrides,
+} from "motion";
+
 
 export const slugify = (slug: string) => slug.toLowerCase().replaceAll(' ', '-')
 export const unslugify = (slug: string) => slug.replaceAll('-', ' ')
@@ -51,3 +57,23 @@ class Cookies {
 }
 
 export const cookies = new Cookies()
+
+export function setTheme(theme: string) {
+  document.querySelector("html")!.setAttribute("data-theme", theme);
+  cookies.set("theme", theme);
+}
+
+export function reveal(
+  element: ElementOrSelector,
+  keyframes: MotionKeyframesDefinition,
+  options?: AnimationOptionsWithOverrides | null,
+  stag?: number,
+) {
+  options = {
+    delay: options?.delay || stag ? stagger(stag) : 0.4,
+    duration: options?.duration || 0.4,
+    easing: options?.easing || "ease-out",
+  };
+
+  return animate(element, keyframes, options);
+}

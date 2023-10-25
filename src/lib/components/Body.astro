@@ -58,20 +58,6 @@ const links = [
       type="font/woff"
       crossorigin
     />
-    <link
-      rel="preload"
-      href="/fonts/Satoshi-Medium.woff"
-      as="font"
-      type="font/woff"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/Satoshi-Black.woff"
-      as="font"
-      type="font/woff"
-      crossorigin
-    />
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
@@ -119,3 +105,18 @@ const links = [
     <Footer author={navTitle} {links} />
   </body>
 </html>
+
+<script>
+  import { cookies, setTheme } from "$lib/utils";
+
+  const theme = cookies.get("theme");
+
+  if (theme === "light") setTheme("light");
+  else setTheme("dark");
+</script>
+
+<script>
+  import { reveal } from "$lib/utils";
+
+  reveal("[data-animate]", { y: [90, 0], opacity: 1 }, { delay: 1 }, 0.25);
+</script>

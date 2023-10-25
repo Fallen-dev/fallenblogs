@@ -48,8 +48,13 @@ body {
   font-family: Satoshi, sans-serif;
 }
 
-.title,
-.sub-title {
+[data-animate-container] {
+  width: auto;
+  overflow: hidden;
+}
+
+[data-animate],
+[data-animate-post] {
   opacity: 0;
 }
 

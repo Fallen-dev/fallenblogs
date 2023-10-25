@@ -34,7 +34,7 @@ const arr = posts
         const { minutesRead } = rendered.remarkPluginFrontmatter;
 
         return (
-          <article>
+          <article data-animate-post>
             <div class="img-container">
               <Image src={image} alt="Poster of the post" loading="eager" />
             </div>
@@ -73,3 +73,9 @@ const arr = posts
     color: var(--secondary-inverse);
   }
 </style>
+
+<script>
+  import { reveal } from "$lib/utils";
+
+  reveal("[data-animate-post]", { y: [50, 0], opacity: [0, 1] });
+</script>

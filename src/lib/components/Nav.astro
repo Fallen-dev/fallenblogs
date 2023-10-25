@@ -48,32 +48,19 @@ interface Props {
 </nav>
 
 <script>
-  import { cookies } from "$lib/utils";
+  import { setTheme } from "$lib/utils";
 
   const btn = document.querySelector("#theme")!;
   const html = document.querySelector("html")!;
-
-  function setTheme(theme: string) {
-    html.setAttribute("data-theme", theme);
-    cookies.set("theme", theme);
-  }
 
   const theme = {
     get: () => html.getAttribute("data-theme"),
     is: (name: string) => theme.get() === name,
   };
 
-  function initListener() {
-    const themeFromCookie = cookies.get("theme");
-
-    if (!themeFromCookie) cookies.set("theme", theme.get() || "dark");
-
-    const handleToggleClick = () => {
-      if (theme.is("dark")) return setTheme("light");
-      if (theme.is("light")) return setTheme("dark");
-    };
-    btn.addEventListener("click", handleToggleClick);
-  }
-
-  onload = initListener;
+  const handleToggleClick = () => {
+    if (theme.is("dark")) return setTheme("light");
+    if (theme.is("light")) return setTheme("dark");
+  };
+  btn.addEventListener("click", handleToggleClick);
 </script>

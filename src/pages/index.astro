@@ -8,33 +8,42 @@ const blogs = await getCollection("blog");
 ---
 
 <Body>
-	<hgroup>
-		<h1 class="title">Fallen&apos;s tech blogs</h1>
-		<h6>A final year CS student</h6>
+	<hgroup data-animate-container>
+		<h1 data-animate>Fallen&apos;s tech blogs</h1>
+		<h6 data-animate>A final year CS student</h6>
 	</hgroup>
 
-	<p>
-		Hi, I'm Rishav, known as Fallen on GitHub and here I share my experiences
-		and discoveries in the ever-evolving world of technology.
-	</p>
+	<div data-animate-container>
+		<p data-animate>
+			Hi, I'm Rishav, known as Fallen on GitHub and here I share my experiences
+			and discoveries in the ever-evolving world of technology.
+		</p>
+	</div>
 
-	<p>
-		I'm an under graduate CS student completing B.Tech and with 3 years of
-		experience in web development.
-	</p>
+	<div data-animate-container>
+		<p data-animate>
+			I'm an under graduate CS student completing B.Tech and with 3 years of
+			experience in web development.
+		</p>
+	</div>
 
-	<p class="contrast">
-		Email me at <a href="mailto:iamrishav@outlook.in">iamrishav@outlook.in</a>
-		 or <a href="/about">read more about me</a>.
-	</p>
+	<div class="banner" data-animate-post>
+		<h5>Latest blogs</h5>
 
-	<h5>Latest blogs</h5>
+		<a href="/blog" class="contrast">See all</a>
+	</div>
 
 	<Posts posts={blogs} count={POST_COUNT} />
-	<a href="/blog" role="button" class="contrast">See all blogs</a>
+	<div data-animate-container>
+		<a href="/blog" role="button" class="contrast" data-animate-post
+			>See all blogs</a
+		>
+	</div>
 </Body>
 
-<script>
-	import { fadeIn } from "$lib/utils";
-	fadeIn(".title");
-</script>
+<style>
+	.banner {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>
