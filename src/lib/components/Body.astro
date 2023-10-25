@@ -4,6 +4,7 @@ import "$lib/styles/global.css";
 
 import Nav from "@/Nav.astro";
 import Footer from "@/Footer.astro";
+import PlaceholderImage from "$assets/placeholder.jpg";
 
 interface Props {
   title?: string;
@@ -16,7 +17,7 @@ const {
   title: _title,
   description: _description,
   publishedOn,
-  image = "/images/placeholder.jpg",
+  image = PlaceholderImage.src,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
