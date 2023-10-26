@@ -1,16 +1,16 @@
-<script lang="ts">
-  interface ShareData {
-    title: string;
-    text: string;
-    url: string;
-  }
-
-  export let data: ShareData;
+<script>
+  export let title;
+  export let text;
+  export let url;
 
   async function sharepost() {
+    const data = { title, text, url };
+
+    // if (!navigator.canShare(data)) do something
+
     try {
       await navigator.share(data);
-    } catch (error: any) {
+    } catch (error) {
       throw new Error(error);
     }
   }
@@ -40,7 +40,7 @@
       <button
         aria-label="Bookmark"
         data-tooltip="work in progress"
-        data-="left"
+        data-placement="left"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

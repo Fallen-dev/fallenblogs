@@ -96,11 +96,9 @@ headings?.forEach((item: Data) => {
     </figure>
 
     <Share
-      data={{
-        title: post.data.title,
-        text: post.data.description,
-        url: Astro.url,
-      }}
+      title="Check out this article on Fallenblogs"
+      text={post.data.title + "\n"}
+      url={Astro.url}
       client:visible
     />
   </section>
