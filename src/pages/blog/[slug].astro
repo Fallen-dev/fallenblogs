@@ -1,7 +1,7 @@
 ---
 import Body from "@/Body.astro";
 import Posts from "@/Posts.astro";
-import Share from "@/Share.svelte";
+import MicroActions from "@/MircoActions.svelte";
 import TableOfContents from "@/TableOfContents.svelte";
 import Date from "@/Date.astro";
 import { Image } from "astro:assets";
@@ -95,11 +95,13 @@ headings?.forEach((item: Data) => {
       />
     </figure>
 
-    <Share
-      title="Check out this article on Fallenblogs"
-      text={post.data.title + "\n"}
-      url={Astro.url}
-      client:visible
+    <MicroActions
+      shareData={{
+        title: "Check out this article on Fallenblogs",
+        text: post.data.title,
+        url: Astro.url.href,
+      }}
+      client:load
     />
   </section>
 
