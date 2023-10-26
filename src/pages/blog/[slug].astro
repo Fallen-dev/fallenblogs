@@ -50,10 +50,10 @@ headings?.forEach((item: Data) => {
       toc.push([item]);
       break;
     case 4:
-      toc.push([item]);
+      toc.push([[item]]);
       break;
     case 5:
-      toc.push([[item]]);
+      toc.push([[[item]]]);
       break;
     case 6:
       toc.push([[[item]]]);
@@ -68,7 +68,9 @@ headings?.forEach((item: Data) => {
   publishedOn={post.data.publishedOn}
   image={post.data.image.src}
 >
-  <a href="/"><p>&larr; Back to post</p></a>
+  <a onclick="
+  history.back()
+  "><p>&larr; Back</p></a>
 
   <section>
     <hgroup id="post-title" data-animate-container>
@@ -85,6 +87,7 @@ headings?.forEach((item: Data) => {
       <Image
         src={post.data.image}
         alt="Just an image"
+        quality="high"
         widths={[720, 1024]}
         sizes="720px, (min-width: 1024px) 1024px"
         loading="eager"
@@ -109,7 +112,7 @@ headings?.forEach((item: Data) => {
   </div>
 
   <section id="bottom-navigation">
-    <a href="/">&larr; Back to post</a>
+    <a onclick="history.back()">&larr; Back</a>
 
     {
       followUpPost && (

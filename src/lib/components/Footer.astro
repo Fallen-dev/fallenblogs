@@ -12,14 +12,13 @@ const year = new Date().getFullYear();
 
 <article data-unset>
   <div class="container" style="text-align: center;">
-    <h6>
+    <strong>
       Made with <a
         href="http://astro.build"
         target="_blank"
-        class="primary"
         rel="noopener noreferrer">Astro</a
       >
-    </h6>
+    </strong>
 
     <div id="footer-links">
       {links.map(({ href, name }) => <Link {href}>{name}</Link>)}
@@ -41,6 +40,12 @@ const year = new Date().getFullYear();
   article {
     margin: 0;
     border-radius: 0;
+    background-color: var(--footer-color);
+  }
+
+  strong {
+    display: block;
+    margin-bottom: var(--typography-spacing-vertical);
   }
 
   article p {

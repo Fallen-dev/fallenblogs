@@ -36,11 +36,17 @@ const arr = posts
         return (
           <article data-animate-post>
             <div class="img-container">
-              <Image src={image} alt="Poster of the post" loading="eager" />
+              <Image
+                src={image}
+                alt="Poster of the post"
+                height="400"
+                quality="mid"
+                loading="eager"
+              />
             </div>
 
             <hgroup>
-              <h5>{title}</h5>
+              <strong>{title}</strong>
               <p>
                 <small>
                   {publishedOn ? (

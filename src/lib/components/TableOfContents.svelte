@@ -28,7 +28,7 @@
     font-weight: 500;
   }
 
-  :global(.toc > ul > li > ul > li) {
+  :global(.toc > ul > li ul) {
     padding-left: var(--spacing);
   }
 </style>

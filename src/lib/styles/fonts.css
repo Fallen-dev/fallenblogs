@@ -29,37 +29,3 @@
   font-display: swap;
   font-style: normal;
 }
-
-/* Italics */
-
-@font-face {
-  font-family: Satoshi;
-  src: url('/fonts/Satoshi-RegularItalic.woff') format('woff');
-  font-weight: 400;
-  font-display: swap;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: Satoshi;
-  src: url('/fonts/Satoshi-MediumItalic.woff') format('woff');
-  font-weight: 500;
-  font-display: swap;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: Satoshi;
-  src: url('/fonts/Satoshi-BoldItalic.woff') format('woff');
-  font-weight: 700;
-  font-display: swap;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: Satoshi;
-  src: url('/fonts/Satoshi-BlackItalic.woff') format('woff');
-  font-weight: 900;
-  font-display: swap;
-  font-style: italic;
-}
