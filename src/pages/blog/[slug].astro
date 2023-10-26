@@ -1,6 +1,7 @@
 ---
 import Body from "@/Body.astro";
 import Posts from "@/Posts.astro";
+import Share from "@/Share.svelte";
 import TableOfContents from "@/TableOfContents.svelte";
 import Date from "@/Date.astro";
 import { Image } from "astro:assets";
@@ -93,6 +94,15 @@ headings?.forEach((item: Data) => {
         loading="eager"
       />
     </figure>
+
+    <Share
+      data={{
+        title: post.data.title,
+        text: post.data.description,
+        url: Astro.url,
+      }}
+      client:visible
+    />
   </section>
 
   <div id="prose">

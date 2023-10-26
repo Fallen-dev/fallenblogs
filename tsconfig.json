@@ -19,8 +19,8 @@
       "$assets/*": [
         "src/lib/assets/*"
       ],
-      "$data": [
-        "src/data.ts"
+      "$config": [
+        "src/config.ts"
       ]
     }
   }

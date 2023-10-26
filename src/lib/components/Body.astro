@@ -25,7 +25,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const navTitle = "Fallenblogs";
 const description = _description
   ? _description
-  : "I am Fallen and this is where I share my amazing tech learning experience.";
+  : "Articles on Web Development, JavaScript, Linux and Databases to solve problems and to help to learn new technologies.";
 
 const title = _title ? `${_title} • ${navTitle}` : navTitle;
 
@@ -43,6 +43,10 @@ const links = [
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="block-all-mixed-content"
+    />
 
     <!-- Font preloads -->
     <link
@@ -95,6 +99,9 @@ const links = [
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
     <meta property="twitter:image:alt" content={title} />
+
+    <!-- Change theme color of url bar -->
+    <meta name="theme-color" content="#201a19" />
   </head>
   <body>
     <Nav title={navTitle} {links} />

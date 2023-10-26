@@ -7,12 +7,7 @@ import type {
   AnimationOptionsWithOverrides,
 } from "motion";
 
-
-export const slugify = (slug: string) => slug.toLowerCase().replaceAll(' ', '-')
-export const unslugify = (slug: string) => slug.replaceAll('-', ' ')
-
 export function formatDate(date: Date | string) {
-
   dayjs.extend(relativeTime)
   const givenDate = dayjs(date)
   const today = dayjs()
@@ -21,20 +16,6 @@ export function formatDate(date: Date | string) {
     return givenDate.format('MMM DD, YYYY')
 
   return givenDate.fromNow()
-}
-
-export function fadeIn(selector: string, delay?: number) {
-  return animate(
-    selector,
-    {
-      opacity: [0, 1],
-      clipPath: [
-        "polygon(0 0, 0 0, 0 100%, 0% 100%)",
-        "polygon(100% 0, 0 0, 0 100%, 100% 100%)",
-      ],
-    },
-    { duration: 1, easing: "ease-in-out", delay: delay || 0 },
-  );
 }
 
 class Cookies {
@@ -55,11 +36,15 @@ class Cookies {
     return (document.cookie = `${name}=${value}; max-age=315360000; path=/; SameSite`);
   }
 }
-
 export const cookies = new Cookies()
 
 export function setTheme(theme: string) {
   document.querySelector("html")!.setAttribute("data-theme", theme);
+  const metaTheme = document.querySelector('meta[name=theme-color]') as HTMLMetaElement
+  theme === 'light'
+    ? metaTheme.content = '#fffbff'
+    : metaTheme.content = '#201a19'
+
   cookies.set("theme", theme);
 }
 

@@ -1,4 +1,4 @@
-import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from '$data';
+import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from '$config';
 import { z, defineCollection, reference } from 'astro:content';
 
 const message = (str: string, length: number) => `For the best SEO, keep ${str} length around ${length} characters`

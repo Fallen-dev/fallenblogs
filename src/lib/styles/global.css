@@ -90,12 +90,6 @@
   --card-box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.25);
 
   --footer-color: #442925;
-
-  [role="button"].contrast {
-    --background-color: var(--contrast);
-    --color: var(--contrast-inverse);
-    --border-color: var(--background-color);
-  }
 }
 
 :root {
@@ -132,10 +126,39 @@ body {
   transform: translateZ(0);
 }
 
-[role="button"].contrast.outline {
+[role="button"].contrast.outline,
+button {
   --background-color: transparent;
   --color: var(--contrast);
   --border-color: var(--contrast);
+}
+
+[role="button"].contrast,
+button {
+  --background-color: var(--contrast);
+  --color: var(--contrast-inverse);
+  --border-color: var(--background-color);
+}
+
+[role="button"].ghost,
+button {
+  width: auto;
+  --border-color: transparent;
+  --background-color: transparent;
+  --color: var(--color);
+}
+
+[role="button"].ghost:is(:active, :focus, :hover),
+button:is(:active, :focus, :hover) {
+  width: auto;
+  --background-color: transparent;
+  --color: var(--color);
+}
+
+[role="button"].icon,
+button.icon {
+  padding: 0.125rem 0.25rem;
+  padding-top: 2px;
 }
 
 a:not([role]).contrast:is(:active, :focus) {
@@ -275,7 +298,6 @@ figure#hero>img {
   height: 100%;
 }
 
-
 #footer-links {
   display: flex;
   flex-direction: column;
@@ -287,6 +309,14 @@ figure#hero>img {
 
 #footer-links>a {
   margin-inline: auto;
+}
+
+#shareables {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing);
 }
 
 /* Media quries */
