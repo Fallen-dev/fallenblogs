@@ -5,7 +5,7 @@ image: $assets/avik-mandal.jpg
 tags:
 - test
 - unpublished
-publishedOn: 2023-10-27 11:12 PM
+publishedOn: 2023-10-27
 ---
 
 ## This is an autobiography about Aveek Mondol

@@ -39,9 +39,11 @@
       aria-label="Share"
       on:click={async () => {
         try {
+          if (!navigator.canShare(shareData))
+            return (useFallbackShare = !useFallbackShare);
           await navigator.share(shareData);
         } catch {
-          return (useFallbackShare = !useFallbackShare);
+          // return (useFallbackShare = !useFallbackShare);
         }
       }}
     >

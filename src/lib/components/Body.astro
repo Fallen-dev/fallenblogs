@@ -102,6 +102,11 @@ const links = [
 
     <!-- Change theme color of url bar -->
     <meta name="theme-color" content="#201a19" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#201a19"
+    />
   </head>
   <body>
     <Nav title={navTitle} {links} />
@@ -121,9 +126,9 @@ const links = [
     </script>
 
     <script>
-    import { reveal } from "$lib/utils";
+      import { reveal } from "$lib/utils";
 
-    reveal("[data-animate]", { y: [90, 0], opacity: 1 }, { delay: 1 }, 0.25);
-  </script>
+      reveal("[data-animate]", { y: [90, 0], opacity: 1 }, { delay: 1 }, 0.25);
+    </script>
   </body>
 </html>

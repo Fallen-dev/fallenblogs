@@ -13,9 +13,9 @@ export function formatDate(date: Date | string) {
   const today = dayjs()
 
   if (givenDate.isBefore(today.subtract(1, 'M')))
-    return givenDate.format('MMM DD, YYYY')
+    return { date: givenDate.format('MMM DD, YYYY'), isRelativeTime: false }
 
-  return givenDate.fromNow()
+  return { date: givenDate.fromNow(), isRelativeTime: true }
 }
 
 class Cookies {

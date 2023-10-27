@@ -3,11 +3,13 @@ import { formatDate } from "$lib/utils";
 
 interface Props {
   date: Date | string;
-  text?: string;
+  showText?: boolean;
 }
 
-const { date, text } = Astro.props;
+const { date, showText } = Astro.props;
+
+const format = formatDate(date);
 ---
 
-{text && <span set:text={text + " "} />}
-<time datetime={String(date)}>{formatDate(date)}</time>
+{showText && <span>Published {format.isRelativeTime ? "" : "on "}</span>}
+<time datetime={String(date)}>{format.date}</time>
