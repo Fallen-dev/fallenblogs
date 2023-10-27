@@ -93,6 +93,8 @@
 }
 
 :root {
+  --form-element-background-color: var(--background-color);
+  --form-element-active-background-color: var(--background-color);
   --form-element-active-border-color: var(--primary);
   --form-element-focus-color: var(--primary-focus);
   --switch-color: var(--primary-inverse);
@@ -277,8 +279,10 @@ hgroup>:last-child {
   justify-content: space-between;
 }
 
-#bottom-navigation>:first-of-type {
+#bottom-navigation>:first-child {
   flex-shrink: 0;
+  width: fit-content;
+  padding-inline: 0;
 }
 
 #post-title {

@@ -1,7 +1,7 @@
 ---
 import Body from "@/Body.astro";
 import Posts from "@/Posts.astro";
-import MicroActions from "@/MircoActions.svelte";
+import Share from "@/Share.svelte";
 import TableOfContents from "@/TableOfContents.svelte";
 import Date from "@/Date.astro";
 import { Image } from "astro:assets";
@@ -69,20 +69,24 @@ headings?.forEach((item: Data) => {
   publishedOn={post.data.publishedOn}
   image={post.data.image.src}
 >
-  <a onclick="
-  history.back()
-  "><p>&larr; Back</p></a>
+  <Share
+    shareData={{
+      title: "Check out this article on Fallenblogs",
+      text: post.data.title,
+      url: Astro.url.href,
+    }}
+    client:load
+  />
 
-  <section>
-    <hgroup id="post-title" data-animate-container>
-      <h1 class="title" data-animate>{post.data.title}</h1>
-      <p style="margin-bottom: 0;" data-animate>
-        <Date date={post.data.publishedOn} text="Published on" />
-         &bull; {remarkPluginFrontmatter.minutesRead}
-      </p>
-    </hgroup>
-  </section>
-
+  <hgroup id="post-title" data-animate-container>
+    <h1 class="title" data-animate>
+      {post.data.title}
+    </h1>
+    <p style="margin-bottom: 0;" data-animate>
+      <Date date={post.data.publishedOn} text="Published" />
+       &bull; {remarkPluginFrontmatter.minutesRead}
+    </p>
+  </hgroup>
   <section>
     <figure id="hero" transition:name="image">
       <Image
@@ -94,15 +98,6 @@ headings?.forEach((item: Data) => {
         loading="eager"
       />
     </figure>
-
-    <MicroActions
-      shareData={{
-        title: "Check out this article on Fallenblogs",
-        text: post.data.title,
-        url: Astro.url.href,
-      }}
-      client:load
-    />
   </section>
 
   <div id="prose">
@@ -122,7 +117,9 @@ headings?.forEach((item: Data) => {
   </div>
 
   <section id="bottom-navigation">
-    <a onclick="history.back()">&larr; Back</a>
+    <button onclick="
+    history.back()
+    ">&larr; Back</button>
 
     {
       followUpPost && (
@@ -164,3 +161,10 @@ headings?.forEach((item: Data) => {
 
   if (window.innerWidth > 990) initObserver();
 </script>
+
+<style>
+  #mirco-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>

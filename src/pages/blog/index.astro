@@ -7,6 +7,8 @@ import { getCollection } from "astro:content";
 const posts = await getCollection("blog");
 ---
 
-<Body>
+<Body title="All of my blogs">
+  <input type="search" name="search" placeholder="Search blogs" data-animate />
+
   <Posts {posts} />
 </Body>

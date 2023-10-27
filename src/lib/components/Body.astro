@@ -111,20 +111,19 @@ const links = [
     </main>
 
     <Footer author={navTitle} {links} />
+    <script>
+      import { cookies, setTheme } from "$lib/utils";
+
+      const theme = cookies.get("theme");
+
+      if (theme === "light") setTheme("light");
+      else setTheme("dark");
+    </script>
+
+    <script>
+    import { reveal } from "$lib/utils";
+
+    reveal("[data-animate]", { y: [90, 0], opacity: 1 }, { delay: 1 }, 0.25);
+  </script>
   </body>
 </html>
-
-<script>
-  import { cookies, setTheme } from "$lib/utils";
-
-  const theme = cookies.get("theme");
-
-  if (theme === "light") setTheme("light");
-  else setTheme("dark");
-</script>
-
-<script>
-  import { reveal } from "$lib/utils";
-
-  reveal("[data-animate]", { y: [90, 0], opacity: 1 }, { delay: 1 }, 0.25);
-</script>

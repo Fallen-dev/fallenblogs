@@ -12,7 +12,6 @@ interface Props {
 }
 
 const arr = posts
-  .slice(0, count)
   .filter((post) =>
     process.env.NODE_ENV === "production" ? post.data.publishedOn : post,
   )
@@ -23,7 +22,8 @@ const arr = posts
     if (!fst || !snd) return 0;
 
     return snd.valueOf() - fst.valueOf();
-  });
+  })
+  .slice(0, count);
 ---
 
 <section id="content">
