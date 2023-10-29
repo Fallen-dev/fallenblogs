@@ -5,7 +5,6 @@ image: $assets/avik-mandal.jpg
 tags:
 - test
 - unpublished
-publishedOn: 2023-10-27
 ---
 
 ## This is an autobiography about Aveek Mondol
@@ -17,6 +16,6 @@ publishedOn: 2023-10-27
 
 This photo was taken the moment before his balls got destroyed during the rugby time.
 
-```txt
-This article will be deleted very soon
+```shell
+echo This article will be deleted very soon
 ```

@@ -40,10 +40,15 @@ export const cookies = new Cookies()
 
 export function setTheme(theme: string) {
   document.querySelector("html")!.setAttribute("data-theme", theme);
-  const metaTheme = document.querySelector('meta[name=theme-color]') as HTMLMetaElement
-  theme === 'light'
-    ? metaTheme.content = '#fffbff'
-    : metaTheme.content = '#201a19'
+  const metaThemeTags = document.querySelectorAll('meta[name=theme-color]')
+
+  metaThemeTags.forEach(tag => {
+    const metaThemeTag = tag as HTMLMetaElement
+
+    theme === 'light'
+      ? metaThemeTag.content = '#fffbff'
+      : metaThemeTag.content = '#201a19'
+  })
 
   cookies.set("theme", theme);
 }
