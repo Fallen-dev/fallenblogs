@@ -1,14 +1,13 @@
 ---
 import Body from "@/Body.astro";
 import Posts from "@/Posts.astro";
-
 import { getCollection } from "astro:content";
 
+const searchValue = Astro.url.searchParams.get("search") || "";
+
 const posts = await getCollection("blog", function (post) {
-  if (Astro.url.searchParams.get("search"))
-    return post.data.title
-      .toLowerCase()
-      .includes(Astro.url.searchParams.get("search")!.toLowerCase());
+  if (searchValue)
+    return post.data.title.toLowerCase().includes(searchValue.toLowerCase());
 
   return post;
 });
@@ -20,9 +19,10 @@ const posts = await getCollection("blog", function (post) {
       type="search"
       name="search"
       placeholder="Search blogs"
-      required
       min="2"
       max="30"
+      value={searchValue}
+      required
       data-animate
     />
   </form>
@@ -39,6 +39,6 @@ const posts = await getCollection("blog", function (post) {
     const formData = new FormData(form);
     const searchInput = formData.get("search") as string;
 
-    location.assign("/blog?search=" + searchInput);
+    location.assign("/blog?" + new URLSearchParams({ search: searchInput }));
   });
 </script>

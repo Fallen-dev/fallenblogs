@@ -7,20 +7,13 @@ import Date from "@/Date.astro";
 import { Image } from "astro:assets";
 import { getCollection, getEntry } from "astro:content";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+const { slug } = Astro.params;
+if (typeof slug === "undefined") return Astro.redirect("/blog");
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: {
-      post,
-      followUp: post.data.followUp,
-    },
-  }));
-}
+const post = await getEntry("blog", slug);
+if (typeof post === "undefined") return Astro.redirect("/404");
 
-const { post, followUp } = Astro.props;
-
+const followUp = post.data.followUp;
 const followUpPost = followUp && (await getEntry(followUp));
 
 const relatedPosts = await getCollection(
@@ -83,7 +76,13 @@ headings?.forEach((item: Data) => {
       {post.data.title}
     </h1>
     <p style="margin-bottom: 0;" data-animate>
-      <Date date={post.data.publishedOn} showText />
+      {
+        post.data.publishedOn ? (
+          <Date date={post.data.publishedOn} showText />
+        ) : (
+          <span>Not published</span>
+        )
+      }
        &bull; {remarkPluginFrontmatter.minutesRead}
     </p>
   </hgroup>

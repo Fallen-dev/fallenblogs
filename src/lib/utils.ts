@@ -7,7 +7,9 @@ import type {
   AnimationOptionsWithOverrides,
 } from "motion";
 
-export function formatDate(date: Date | string) {
+export function formatDate(date: Date | string | undefined) {
+  if (typeof date === 'undefined') return
+
   dayjs.extend(relativeTime)
   const givenDate = dayjs(date)
   const today = dayjs()

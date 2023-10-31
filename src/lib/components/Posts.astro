@@ -28,7 +28,7 @@ const arr = posts
 
 <section id="content">
   {
-    arr &&
+    arr.length > 0 ? (
       arr.map(async ({ slug, data: { image, publishedOn, title }, render }) => {
         const rendered = await render();
         const { minutesRead } = rendered.remarkPluginFrontmatter;
@@ -68,6 +68,9 @@ const arr = posts
           </article>
         );
       })
+    ) : (
+      <p>No blogs found</p>
+    )
   }
 </section>
 

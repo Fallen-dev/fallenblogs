@@ -5,37 +5,33 @@ import "$lib/styles/global.css";
 import Nav from "@/Nav.astro";
 import Footer from "@/Footer.astro";
 import PlaceholderImage from "$assets/placeholder.jpg";
-
-const theme = Astro.cookies.get("theme")?.value || "dark";
+import { SITE_DESCRIPTION, SITE_TITLE } from "$config";
 
 interface Props {
   title?: string;
   description?: string;
-  publishedOn?: string | Date;
+  publishedOn?: string | Date | undefined;
   image?: string;
 }
 
 const {
   title: _title,
-  description: _description,
+  description = SITE_DESCRIPTION,
   publishedOn,
   image = PlaceholderImage.src,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const navTitle = "Fallenblogs";
-const description = _description
-  ? _description
-  : "Articles on Web Development, JavaScript, Linux and Databases to solve problems and to help to learn new technologies.";
-
-const title = _title ? `${_title} • ${navTitle}` : navTitle;
+const title = _title ? `${_title} • ${SITE_TITLE}` : SITE_TITLE;
 
 const links = [
   { name: "Home", href: "/" },
   { name: "Blog", href: "/blog" },
   { name: "About", href: "/about" },
 ];
+
+const theme = Astro.cookies.get("theme")?.value || "dark";
 ---
 
 <html lang="en" data-theme={theme}>
@@ -133,22 +129,13 @@ const links = [
     <meta name="theme-color" content="#201a19" />
   </head>
   <body>
-    <Nav title={navTitle} {links} />
+    <Nav title={SITE_TITLE} {links} />
 
     <main class="container">
       <slot />
     </main>
 
-    <Footer author={navTitle} {links} />
-
-    <!-- <script>
-      import { cookies, setTheme } from "$lib/utils";
-
-      const theme = cookies.get("theme");
-
-      if (theme === "light") setTheme("light");
-      else setTheme("dark");
-    </script> -->
+    <Footer author={SITE_TITLE} {links} />
 
     <script>
       import { reveal } from "$lib/utils";
