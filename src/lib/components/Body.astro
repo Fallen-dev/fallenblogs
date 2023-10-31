@@ -6,6 +6,8 @@ import Nav from "@/Nav.astro";
 import Footer from "@/Footer.astro";
 import PlaceholderImage from "$assets/placeholder.jpg";
 
+const theme = Astro.cookies.get("theme")?.value || "dark";
+
 interface Props {
   title?: string;
   description?: string;
@@ -36,7 +38,7 @@ const links = [
 ];
 ---
 
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme={theme}>
   <head>
     <!-- Global Metadata -->
     <meta charset="utf-8" />
@@ -138,14 +140,15 @@ const links = [
     </main>
 
     <Footer author={navTitle} {links} />
-    <script>
+
+    <!-- <script>
       import { cookies, setTheme } from "$lib/utils";
 
       const theme = cookies.get("theme");
 
       if (theme === "light") setTheme("light");
       else setTheme("dark");
-    </script>
+    </script> -->
 
     <script>
       import { reveal } from "$lib/utils";

@@ -7,8 +7,8 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-	output: "hybrid",
 	adapter: vercel(),
+	output: "server",
 	integrations: [svelte(), mdx(), sitemap()],
 	markdown: {
 		remarkPlugins: [remarkReadingTime]
