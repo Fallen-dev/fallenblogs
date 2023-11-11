@@ -6,6 +6,7 @@ import TableOfContents from "@/TableOfContents.svelte";
 import Date from "@/Date.astro";
 import { Image } from "astro:assets";
 import { getCollection, getEntry } from "astro:content";
+import Breadcrubms from "$lib/components/Breadcrubms.astro";
 
 const { slug } = Astro.params;
 if (typeof slug === "undefined") return Astro.redirect("/blog");
@@ -62,14 +63,16 @@ headings?.forEach((item: Data) => {
   publishedOn={post.data.publishedOn}
   image={post.data.image.src}
 >
-  <Share
+  <!-- <Share
     shareData={{
       title: "Check out this article on Fallenblogs",
       text: post.data.title,
       url: Astro.url.href,
     }}
     client:load
-  />
+  /> -->
+
+  <Breadcrubms />
 
   <hgroup id="post-title" data-animate-container>
     <h1 class="title" data-animate>
@@ -86,33 +89,30 @@ headings?.forEach((item: Data) => {
        &bull; {remarkPluginFrontmatter.minutesRead}
     </p>
   </hgroup>
+
   <section>
-    <figure id="hero" transition:name="image">
-      <Image
-        src={post.data.image}
-        alt="Just an image"
-        quality="high"
-        widths={[720, 1024]}
-        sizes="720px, (min-width: 1024px) 1024px"
-        loading="eager"
-      />
-    </figure>
+    <Image
+      src={post.data.image}
+      alt="Just an image"
+      quality="high"
+      widths={[720, 1024]}
+      sizes="720px, (min-width: 1024px) 1024px"
+      loading="eager"
+    />
   </section>
 
   <div id="prose">
-    <article class="toc">
+    <!-- <article class="toc">
       <h6>Table of contents</h6>
       <TableOfContents headings={toc} />
-    </article>
+    </article> -->
 
-    <details class="toc" data-onmobile>
+    <!-- <details class="toc" data-onmobile>
       <summary><strong>Table of contents</strong></summary>
       <TableOfContents headings={toc} />
-    </details>
+    </details> -->
 
-    <figure id="md">
-      <Content />
-    </figure>
+    <Content />
   </div>
 
   <section id="bottom-navigation">

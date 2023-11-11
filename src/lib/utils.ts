@@ -1,3 +1,4 @@
+import { getCollection } from "astro:content";
 import dayjs from "dayjs"
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { animate, stagger } from "motion";
@@ -6,6 +7,8 @@ import type {
   MotionKeyframesDefinition,
   AnimationOptionsWithOverrides,
 } from "motion";
+
+export const blogs = await getCollection("blog");
 
 export function formatDate(date: Date | string | undefined) {
   if (typeof date === 'undefined') return

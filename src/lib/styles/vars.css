@@ -1,0 +1,27 @@
+:root {
+  --padding-outer: 0.5rem;
+  --padding-breakout: 0.5rem;
+
+  --margin-bottom: 1.5rem;
+
+  --max-width: 56rem;
+
+  --fs-h1: 2rem;
+  --fs-h2: 1.75rem;
+  --fs-h3: 1.5rem;
+  --fs-h4_h5: 1.25rem;
+  --fs-body: 1.025rem;
+}
+
+@media (min-width: 567px) {
+  :root {
+    --padding-outer: 6rem;
+    --padding-breakout: 2rem;
+
+    --fs-h1: 3rem;
+    --fs-h2: 2.5rem;
+    --fs-h3: 2rem;
+    --fs-h4_h5: 1.5rem;
+    --fs-body: 1.25rem;
+  }
+}

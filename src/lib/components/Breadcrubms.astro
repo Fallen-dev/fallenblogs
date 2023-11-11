@@ -1,0 +1,23 @@
+---
+const routes = Astro.url.pathname.split("/").filter((x) => x);
+const blog = routes.at(-1);
+routes.pop();
+---
+
+<p>
+  <a href="/">Fallenblogs</a>
+  {
+    routes.map((route) => (
+      <span>
+        &gt; <a href={"/" + route}>{route}</a>
+      </span>
+    ))
+  }
+  <span> &gt; {blog}</span>
+</p>
+
+<style>
+  a {
+    color: var(--md-sys-color-tertiary);
+  }
+</style>

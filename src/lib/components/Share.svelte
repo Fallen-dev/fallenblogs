@@ -79,12 +79,6 @@
       <hgroup>
         <p>Share this blog</p>
         <small>{shareData.text}</small>
-        <!-- <p>
-          {shareData.url.replace(
-            process.env.NODE_ENV === "production" ? "https://" : "http://",
-            ""
-          )}
-        </p> -->
       </hgroup>
 
       <button
@@ -280,7 +274,7 @@
     margin-left: auto;
     margin-top: 0;
     width: fit-content;
-    background-color: var(--footer-color);
+    background-color: var(--md-sys-color-surface-variant);
   }
 
   article hgroup > :first-child {

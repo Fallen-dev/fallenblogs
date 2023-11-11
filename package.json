@@ -15,7 +15,6 @@
     "@astrojs/sitemap": "^3.0.2",
     "@astrojs/svelte": "^4.0.3",
     "@astrojs/vercel": "^5.0.2",
-    "@picocss/pico": "^1.5.10",
     "astro": "^3.3.3",
     "dayjs": "^1.11.10",
     "mdast-util-to-string": "^4.0.0",

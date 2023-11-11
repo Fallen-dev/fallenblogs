@@ -11,7 +11,10 @@ export default defineConfig({
 	output: "server",
 	integrations: [svelte(), mdx(), sitemap()],
 	markdown: {
-		remarkPlugins: [remarkReadingTime]
+		remarkPlugins: [remarkReadingTime],
+		shikiConfig: {
+			theme: 'slack-dark'
+		}
 	},
 	image: {
 		domains: ['astro.build'],

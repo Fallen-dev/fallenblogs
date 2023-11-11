@@ -116,6 +116,14 @@ body {
   font-family: Satoshi, sans-serif;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 [data-animate-container] {
   width: auto;
   overflow: hidden;

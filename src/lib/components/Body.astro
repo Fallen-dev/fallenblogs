@@ -1,6 +1,6 @@
 ---
-import "@picocss/pico";
-import "$lib/styles/global.css";
+import "$lib/css/theme.css";
+import "$lib/styles/my.css";
 
 import Nav from "@/Nav.astro";
 import Footer from "@/Footer.astro";
@@ -128,19 +128,19 @@ const theme = Astro.cookies.get("theme")?.value || "dark";
     <!-- Change theme color of url bar -->
     <meta name="theme-color" content="#201a19" />
   </head>
-  <body>
+  <body class="background">
     <Nav title={SITE_TITLE} {links} />
 
     <main class="container">
       <slot />
     </main>
 
-    <Footer author={SITE_TITLE} {links} />
+    <!-- <Footer author={SITE_TITLE} {links} /> -->
 
-    <script>
+    <!-- <script>
       import { reveal } from "$lib/utils";
 
       reveal("[data-animate]", { y: [90, 0], opacity: 1 }, { delay: 1 }, 0.25);
-    </script>
+    </script> -->
   </body>
 </html>

@@ -26,7 +26,17 @@ const arr = posts
   .slice(0, count);
 ---
 
-<section id="content">
+<!-- 
+         <Image
+                src={image}
+                alt="Poster of the post"
+                height="400"
+                quality="mid"
+                loading="lazy"
+              />
+
+ -->
+<div id="content">
   {
     arr.length > 0 ? (
       arr.map(async ({ slug, data: { image, publishedOn, title }, render }) => {
@@ -34,20 +44,17 @@ const arr = posts
         const { minutesRead } = rendered.remarkPluginFrontmatter;
 
         return (
-          <article data-animate-post>
-            <div class="img-container">
-              <Image
-                src={image}
+          <a href={"/blog/" + slug}>
+            <article data-animate-post>
+              <img
+                src={image.src}
                 alt="Poster of the post"
-                height="400"
-                quality="mid"
-                loading="eager"
+                width="600"
+                height="600"
+                loading="lazy"
               />
-            </div>
 
-            <hgroup>
-              <strong>{title}</strong>
-              <p>
+              <div>
                 <small>
                   {publishedOn ? (
                     <Date date={publishedOn} />
@@ -57,34 +64,81 @@ const arr = posts
                   &bullet;
                   {minutesRead}
                 </small>
-              </p>
-            </hgroup>
 
-            <div class="link">
-              <a href={"/blog/" + slug} role="button">
-                Read &rarr;
-              </a>
-            </div>
-          </article>
+                <h6>{title}</h6>
+              </div>
+            </article>
+          </a>
         );
       })
     ) : (
       <p>No blogs found</p>
     )
   }
-</section>
+</div>
 
 <style>
+  a:not([role]) {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #content {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+
+  @media (min-width: 576px) {
+    #content {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  article {
+    height: 100%;
+
+    border-radius: var(--border-radius);
+    overflow: hidden;
+
+    box-shadow: 2px 2px 8px 0px var(--md-sys-color-shadow);
+    will-change: background-color, color, box-shadow;
+
+    transition:
+      color 60ms ease-in,
+      background-color 160ms ease-out,
+      box-shadow 400ms ease-in-out;
+  }
+
+  article:hover {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    box-shadow: 8px 8px 12px 0px var(--md-sys-color-shadow);
+  }
+
+  article div {
+    padding-inline: 1rem;
+  }
+
+  article p {
+    font-size: initial;
+  }
+
+  article small {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
   .draft {
     padding: 0.125rem 0.25rem;
     border-radius: 0.125rem;
-    background-color: var(--secondary);
-    color: var(--secondary-inverse);
+    background-color: var(--md-sys-color-surface-variant);
+    color: var(--md-sys-color-on-surface-variant);
   }
 </style>
 
-<script>
+<!-- <script>
   import { reveal } from "$lib/utils";
 
   reveal("[data-animate-post]", { y: [50, 0], opacity: [0, 1] });
-</script>
+</script> -->
