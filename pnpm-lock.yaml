@@ -20,9 +20,6 @@ dependencies:
   '@astrojs/vercel':
     specifier: ^5.0.2
     version: 5.0.2(astro@3.3.3)
-  '@picocss/pico':
-    specifier: ^1.5.10
-    version: 1.5.10
   astro:
     specifier: ^3.3.3
     version: 3.3.3(typescript@5.2.2)
@@ -959,10 +956,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
-    dev: false
-
-  /@picocss/pico@1.5.10:
-    resolution: {integrity: sha512-+LafMsrwPxXQMk6sI///TmSInCwwZmq+K7SikyL3N/4GhhwzyPC+TQLUEqmrLyjluR+uIpFFcqjty30Rtr6GxQ==}
     dev: false
 
   /@rollup/pluginutils@4.2.1:

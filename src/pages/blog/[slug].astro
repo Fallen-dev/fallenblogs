@@ -1,12 +1,10 @@
 ---
 import Body from "@/Body.astro";
 import Posts from "@/Posts.astro";
-import Share from "@/Share.svelte";
-import TableOfContents from "@/TableOfContents.svelte";
 import Date from "@/Date.astro";
-import { Image } from "astro:assets";
 import { getCollection, getEntry } from "astro:content";
 import Breadcrubms from "$lib/components/Breadcrubms.astro";
+import SuperImage from "$lib/components/SuperImage.astro";
 
 const { slug } = Astro.params;
 if (typeof slug === "undefined") return Astro.redirect("/blog");
@@ -91,13 +89,11 @@ headings?.forEach((item: Data) => {
   </hgroup>
 
   <section>
-    <Image
-      src={post.data.image}
+    <SuperImage
       alt="Just an image"
-      quality="high"
-      widths={[720, 1024]}
-      sizes="720px, (min-width: 1024px) 1024px"
-      loading="eager"
+      src={post.data.image}
+      width={post.data.image.width}
+      figcaption="Image by Astro"
     />
   </section>
 

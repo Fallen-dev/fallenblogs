@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { Image } from "astro:assets";
 
 import Date from "@/Date.astro";
+import SuperImage from "./SuperImage.astro";
 
 const { posts, count } = Astro.props;
 
@@ -26,16 +26,6 @@ const arr = posts
   .slice(0, count);
 ---
 
-<!-- 
-         <Image
-                src={image}
-                alt="Poster of the post"
-                height="400"
-                quality="mid"
-                loading="lazy"
-              />
-
- -->
 <div id="content">
   {
     arr.length > 0 ? (
@@ -46,13 +36,7 @@ const arr = posts
         return (
           <a href={"/blog/" + slug}>
             <article data-animate-post>
-              <img
-                src={image.src}
-                alt="Poster of the post"
-                width="600"
-                height="600"
-                loading="lazy"
-              />
+              <SuperImage src={image} width={600} loading="lazy" />
 
               <div>
                 <small>
