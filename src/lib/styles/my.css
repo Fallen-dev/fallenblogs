@@ -28,7 +28,7 @@ body{
   font-family: Satoshi;
   font-weight: normal;
   font-style: normal;
-  font-size: 1.25rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
 }
 
@@ -45,7 +45,7 @@ a:visited {
 }
 
 small {
-  font-size: .95rem;
+  font-size: var(--fs-small);
 }
 
 pre {
@@ -92,12 +92,12 @@ li {
 img {
   max-width: 100%;
   height: auto;
-  vertical-align: middle;
   background-color: var(--md-sys-color-surface-variant);
   background-repeat: no-repeat;
   background-size: cover;
   font-style: italic;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
+  vertical-align: middle;
 }
 
 section {
@@ -131,23 +131,26 @@ button.square, a[role=button].square {
 }
 
 .container {
-  padding-block: 2rem;
+  --padding-outer: 1rem;
+  --padding-content: 60ch;
+  --padding-breakout: 80ch;
+  --breakout-size: calc((var(--padding-breakout) - var(--padding-content)) / 2);
+
+  margin-block: var(--padding-outer);
 
   display: grid;
   grid-template-columns: 
   [full-width-start] 
-    var(--padding-outer) 
+    minmax(var(--padding-outer), 1fr) 
     [breakout-start] 
-      var(--padding-breakout) 
+      minmax(0, var(--breakout-size)) 
       [content-start] 
-        calc(100% - 2rem) 
+        min(100% - var(--padding-outer), var(--padding-content)) 
       [content-end] 
-      var(--padding-breakout) 
+      minmax(0, var(--breakout-size)) 
     [breakout-end] 
-    var(--padding-outer) 
+    minmax(var(--padding-outer), 1fr) 
   [full-width-end];
-
-  justify-content: center;
 }
 
 
@@ -161,22 +164,4 @@ button.square, a[role=button].square {
 
 .container > .full-width {
   grid-column: full-width;
-}
-
-@media (min-width: 576px) {
-  .container {
-    display: grid;
-    grid-template-columns: 
-    [full-width-start] 
-      var(--padding-outer) 
-      [breakout-start] 
-        var(--padding-breakout) 
-        [content-start] 
-          55ch 
-        [content-end] 
-        var(--padding-breakout) 
-      [breakout-end] 
-      var(--padding-outer) 
-    [full-width-end];
-  }
 }

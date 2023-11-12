@@ -4,7 +4,8 @@ description: We often celebrate gifted kids in school, natural athletes in sport
 tags:
 - success
 - non-tech
-publishedOn: "2023-11-11 21:15"
+publishedOn: "2023-11-12 15:21"
+image: $assets/skills.jpg
 ---
 
 We often celebrate gifted kids in school, natural athletes in sports, and child prodigies in music. But you don’t have to be a wunderkind to achieve success.

@@ -42,3 +42,29 @@ const posts = await getCollection("blog", function (post) {
     location.assign("/blog?" + new URLSearchParams({ search: searchInput }));
   });
 </script>
+
+<style>
+  input {
+    display: block;
+    min-width: 100%;
+    padding: 1rem;
+    background-color: inherit;
+    color: inherit;
+    font-weight: 500;
+    font-size: var(--fs-small);
+    border: 2px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--margin-bottom);
+  }
+
+  input:focus {
+    border-color: var(--md-sys-color-outline);
+    outline: none;
+  }
+
+  @media (min-width: 576px) {
+    input {
+      min-width: 40%;
+    }
+  }
+</style>

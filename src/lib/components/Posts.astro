@@ -36,14 +36,14 @@ const arr = posts
         return (
           <a href={"/blog/" + slug}>
             <article data-animate-post>
-              <SuperImage src={image} width={600} loading="lazy" />
+              <SuperImage src={image} width="600" height="400" loading="lazy" />
 
               <div>
-                <small>
+                <small class="secondary-text">
                   {publishedOn ? (
                     <Date date={publishedOn} />
                   ) : (
-                    <small class="draft">DRAFT</small>
+                    <span class="draft">Draft</span>
                   )}
                   &bullet;
                   {minutesRead}
@@ -75,6 +75,12 @@ const arr = posts
 
   @media (min-width: 576px) {
     #content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    #content {
       grid-template-columns: repeat(3, 1fr);
     }
   }
@@ -89,7 +95,7 @@ const arr = posts
     will-change: background-color, color, box-shadow;
 
     transition:
-      color 60ms ease-in,
+      color 60ms ease-out,
       background-color 160ms ease-out,
       box-shadow 400ms ease-in-out;
   }
@@ -100,6 +106,10 @@ const arr = posts
     box-shadow: 8px 8px 12px 0px var(--md-sys-color-shadow);
   }
 
+  article:hover small {
+    color: var(--md-sys-color-on-primary);
+  }
+
   article div {
     padding-inline: 1rem;
   }
@@ -108,21 +118,23 @@ const arr = posts
     font-size: initial;
   }
 
-  article small {
+  small {
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 
   .draft {
     padding: 0.125rem 0.25rem;
-    border-radius: 0.125rem;
-    background-color: var(--md-sys-color-surface-variant);
-    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 600;
+    font-size: 0.75rem;
+    background-color: var(--md-sys-color-secondary);
+    color: var(--md-sys-color-on-secondary);
+    border-radius: var(--border-radius);
   }
 </style>
 
 <!-- <script>
-  import { reveal } from "$lib/utils";
+  import { reveal } from "$lib/utils";                              
 
   reveal("[data-animate-post]", { y: [50, 0], opacity: [0, 1] });
 </script> -->

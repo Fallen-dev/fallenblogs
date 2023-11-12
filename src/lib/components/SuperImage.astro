@@ -5,7 +5,7 @@ type Props = {
   height?: string | number;
   loading?: "lazy" | "eager";
   alt?: string;
-  figcaption?: string;
+  class?: string;
 };
 
 import { getImage, Picture } from "astro:assets";
@@ -16,7 +16,7 @@ const {
   height,
   loading = "eager",
   alt = "Just an image",
-  figcaption,
+  class: className,
 } = Astro.props;
 
 const phdl_img = await getImage({
@@ -33,30 +33,31 @@ const phdl_img = await getImage({
   height={Number(height)}
   style={`background-image: url(${phdl_img.src});`}
   formats={["avif", "webp"]}
+  pictureAttributes={{ class: className }}
 />
 
-{figcaption && <figcaption set:html={figcaption} />}
+{
+  Astro.slots.has("default") && (
+    <figcaption class="content">
+      <slot name="default" />
+    </figcaption>
+  )
+}
 
 <style>
   picture {
-    width: 600px;
-    height: 400px;
     background-color: var(--md-sys-color-surface-variant);
+    overflow: hidden;
   }
 
-  picture img {
-    width: 100%;
-    height: 100%;
-  }
-
-  picture,
   img {
-    background-repeat: no-repeat;
-    background-size: cover;
+    display: block;
+    margin-inline: auto;
   }
 
   figcaption {
-    font-size: 0.95rem;
+    margin-bottom: var(--margin-bottom);
+    font-size: var(--fs-small);
     color: var(--md-sys-color-secondary);
   }
 </style>

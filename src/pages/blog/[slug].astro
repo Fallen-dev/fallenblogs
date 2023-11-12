@@ -76,7 +76,7 @@ headings?.forEach((item: Data) => {
     <h1 class="title" data-animate>
       {post.data.title}
     </h1>
-    <p style="margin-bottom: 0;" data-animate>
+    <small data-animate>
       {
         post.data.publishedOn ? (
           <Date date={post.data.publishedOn} showText />
@@ -85,17 +85,21 @@ headings?.forEach((item: Data) => {
         )
       }
        &bull; {remarkPluginFrontmatter.minutesRead}
-    </p>
+    </small>
   </hgroup>
 
-  <section>
-    <SuperImage
-      alt="Just an image"
-      src={post.data.image}
-      width={post.data.image.width}
-      figcaption="Image by Astro"
-    />
-  </section>
+  <SuperImage
+    alt="Just an image"
+    src={post.data.image}
+    width={1024}
+    class="full-width"
+  >
+    Image placeholder by <a
+      href="https://astro.build"
+      target="_blank"
+      rel="noopener noreferrer">Astro</a
+    >
+  </SuperImage>
 
   <div id="prose">
     <!-- <article class="toc">
