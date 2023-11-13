@@ -17,17 +17,32 @@ import config from "$lib/config";
     <title>{config.site.name}</title>
   </head>
   <body>
-    <div class="bg-gradient"></div>
     <main class="content">
+      <nav class="breakout">
+        <a href="/"><strong>{config.site.name}</strong></a>
+
+        <a href="/blog">Blog</a>
+      </nav>
+
       <slot />
     </main>
   </body>
 </html>
 
 <style>
+  nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--margin-bottom);
+  }
+
+  nav a {
+    text-decoration: none;
+  }
+
   html {
     scroll-behavior: smooth;
-    scroll-margin-top: var(--margin-bottom);
+    scroll-padding-top: calc(var(--margin-bottom) - 0.5rem);
   }
 
   body {
@@ -53,7 +68,7 @@ import config from "$lib/config";
     line-height: 1.5;
   }
 
-  .bg-gradient {
+  body::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -62,9 +77,6 @@ import config from "$lib/config";
     z-index: -1;
     will-change: height, background;
     user-select: none;
-  }
-
-  .bg-gradient {
     background-image: linear-gradient(
       to bottom,
       hsl(var(--bg-color, var(--background))),

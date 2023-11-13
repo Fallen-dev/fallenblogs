@@ -14,8 +14,8 @@
   padding-block-end: 4rem;
 
   --padding-inline: 1rem;
-  --padding-breakout: 4rem;
-  --content-width: 60ch;
+  --padding-breakout: 3rem;
+  --content-width: 55ch;
 
   display: grid;
   grid-template-columns: 
@@ -48,10 +48,6 @@
   grid-template-columns: inherit;
 }
 
-.prose {
-  max-width: initial;
-}
-
 .disable {
   color: lightgray;
 }
@@ -76,8 +72,12 @@
   text-decoration: none;
 }
 
+.big-img-h {
+  max-height: 720px;
+}
+
 .divider {
-  margin-block: var(--margin-bottom);
+  margin-bottom: var(--margin-bottom);
   display: block;
   width: 100%;
   height: 2px;
@@ -88,8 +88,11 @@
 img {
   max-width: 100%;
   height: auto;
+  max-height: 600px;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  object-fit: cover;
   vertical-align: middle;
   margin-inline: auto;
   margin-bottom: var(--margin-bottom);
@@ -102,5 +105,18 @@ picture {
 
 ul, ol {
   padding-left: inherit;
-  list-style-position: inside;
+  list-style: none;
+}
+
+section {
+  margin-bottom: var(--margin-bottom);
+}
+
+.md > :is(ul, ol) {
+  list-style: initial;
+  padding-left: 5%;
+}
+
+.md > :is(img) {
+  max-height: none;
 }

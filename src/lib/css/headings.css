@@ -39,7 +39,7 @@ hgroup > :last-child {
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: var(--margin-bottom);
 }
 
 small {

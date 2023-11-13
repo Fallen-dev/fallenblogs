@@ -18,16 +18,22 @@ const { data } = post;
 ---
 
 <Body>
-  <h1>{data.title}</h1>
+  <hgroup>
+    <h1>{data.title}</h1>
+    <small class="disable"
+      >{minutesRead} &bull; <Date date={data.date} />
+    </small>
+  </hgroup>
 
   {
     data.image && (
       <>
         <Img
           src={data.image.src}
-          width="720"
+          width="1024"
+          height="600"
           alt="My post"
-          class="full-width"
+          class="hero full-width"
         />
         {data.image.credit && data.image.link && (
           <figcaption>
@@ -37,11 +43,6 @@ const { data } = post;
       </>
     )
   }
-
-  <small class="meta disable"
-    ><span>{minutesRead}</span>
-    <Date date={data.date} /></small
-  >
 
   <div class="divider breakout"></div>
 
@@ -65,7 +66,7 @@ const { data } = post;
     }
   </section>
 
-  <section class="prose full-width">
+  <section class="md full-width">
     <Content />
   </section>
 </Body>
@@ -76,20 +77,15 @@ const { data } = post;
   import { convert } from "colvertize";
 
   const colorThief = new ColorThief();
-  const img = document.querySelector("img.full-width") as HTMLImageElement;
+  const img = document.querySelector("img.hero") as HTMLImageElement;
 
   function setBgColorOnRoot(img: HTMLImageElement) {
     const root = document.querySelector(":root") as HTMLElement;
 
-    if (!img || img.src == undefined) {
-      root.style.setProperty("--on-bg-color", "red");
-      root.style.setProperty("--on-bg-color-alt", "red");
+    if (!img || !img.src) return;
 
-      return;
-    }
-
-    const dominantRGB = colorThief.getColor(img);
-    const tertiaryRGB = colorThief.getPalette(img)[8];
+    const dominantRGB = colorThief.getPalette(img)[2];
+    const tertiaryRGB = colorThief.getColor(img);
 
     const rgbToHex = (rgb: string[]) =>
       "#" +
@@ -113,9 +109,7 @@ const { data } = post;
 
     const th = (tertiaryHSL.h * 100).toFixed(2);
 
-    const bg_gradient = document.querySelector(
-      ".bg-gradient",
-    ) as HTMLDivElement;
+    const bg_gradient = document.querySelector("body") as HTMLBodyElement;
 
     root.style.setProperty("--bg-color", `${dh}, ${s}%, ${l}%`);
     root.style.setProperty("--on-bg-color", `${dh}, 90%, 85%`);
@@ -127,6 +121,7 @@ const { data } = post;
       duration: 500,
       easing: "ease-out",
       fill: "forwards",
+      pseudoElement: "::after",
     });
   }
 
@@ -159,11 +154,6 @@ const { data } = post;
     margin-bottom: var(--margin-bottom);
     font-size: var(--fs-small);
     color: lightgray;
-  }
-
-  .meta {
-    display: flex;
-    justify-content: space-between;
   }
 
   .prose :global(pre) {
