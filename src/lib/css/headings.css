@@ -18,12 +18,12 @@ h3 {
 
 h4, h5 {
   font-size: var(--fs-h4_h5);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 h6 {
   font-size: var(--fs-body);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 hgroup {
@@ -35,11 +35,44 @@ hgroup > :first-child {
 }
 
 hgroup > :last-child {
-  color: var(--md-sys-color-secondary);
   margin-bottom: 0px;
 }
 
-@media (max-width: 567px) {
+p {
+  margin-bottom: 1rem;
+}
+
+small {
+  font-size: var(--fs-small);
+}
+
+pre, code {
+  font-family: Lotion, meslo, 'Courier New', Courier, monospace;
+  font-size: var(--fs-code);
+}
+
+pre {
+  background-color: rebeccapurple;
+  padding: var(--inner-padding);
+  margin-bottom: var(--margin-bottom);
+  border-radius: var(--border-radius);
+  line-height: 1.5;
+}
+
+code {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  font-size: calc(var(--fs-code) - 0.125rem);
+  line-height: inherit;
+}
+
+pre code {
+  padding: 0px;
+  background-color: inherit;
+  font-size: inherit;
+}
+
+@media (max-width: 576px) {
   h1 {
     font-size: 2.5rem;
     line-height: 1.25;
@@ -63,4 +96,8 @@ hgroup > :last-child {
     font-size: 1.025rem;
     margin-bottom: 1.25rem;
   }
+}
+
+h1, h2, h3, h4, h5, h6, p, small, a, span {
+  color: inherit;
 }

@@ -1,10 +1,8 @@
 ---
 title: 'Transforming Workflows for the Future'
 description: In this blog post, we'll delve into the world of AI and explore how it can reshape our work processes, making them more efficient and effective.
-publishedOn: "2023-09-18"
-tags:
-- AI
-- OS
+date: "2023-09-18"
+category: AI
 ---
 
 In the age of digital transformation, where technology continues to evolve at an unprecedented pace, businesses and individuals alike are seeking ways to optimize their workflows and increase productivity. One of the most promising tools in this endeavor is artificial intelligence (AI). In this blog post, we'll delve into the world of AI and explore how it can reshape our work processes, making them more efficient and effective.

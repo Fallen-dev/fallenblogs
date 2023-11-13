@@ -1,11 +1,8 @@
 ---
-title: Mastering Essential Linux Commands
+title: "Mastering Essential Linux Commands"
 description: "Linux, the open-source operating system, offers a powerful command-line interface that allows users to perform a wide range of tasks efficiently."
-publishedOn: "2023-09-08"
-image: $assets/blog-placeholder-4.jpg
-tags:
-- Linux
-- OS
+date: "2023-09-08"
+category: Linux
 ---
 
 Linux, the open-source operating system, offers a powerful command-line interface that allows users to perform a wide range of tasks efficiently. In this article, we'll explore five essential Linux commands: `find`, `grep`, `awk`, `ip`, and `sudo`, along with practical examples for each.

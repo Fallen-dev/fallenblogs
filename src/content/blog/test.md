@@ -1,10 +1,10 @@
 ---
 title: About Avik Mondal
 description: No dedscription needed
-image: $assets/avik-mandal.jpg
-tags:
-- test
-- unpublished
+image:
+  credit: Image taken from Astro
+  link: https://astro.build
+  src: $assets/avik-mandal.jpg
 ---
 
 ## This is an autobiography about Aveek Mondol

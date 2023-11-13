@@ -1,167 +1,172 @@
 ---
-import Body from "@/Body.astro";
-import Posts from "@/Posts.astro";
-import Date from "@/Date.astro";
-import { getCollection, getEntry } from "astro:content";
-import Breadcrubms from "$lib/components/Breadcrubms.astro";
-import SuperImage from "$lib/components/SuperImage.astro";
+import { blogs } from "$lib/utils";
+import { Body, Date, Img } from "$lib/components";
 
-const { slug } = Astro.params;
-if (typeof slug === "undefined") return Astro.redirect("/blog");
+export const getStaticPaths = async () => {
+  return blogs.map((post) => {
+    return {
+      params: { slug: post.slug },
+      props: { post },
+    };
+  });
+};
 
-const post = await getEntry("blog", slug);
-if (typeof post === "undefined") return Astro.redirect("/404");
-
-const followUp = post.data.followUp;
-const followUpPost = followUp && (await getEntry(followUp));
-
-const relatedPosts = await getCollection(
-  "blog",
-  ({ data: { tags }, slug }) =>
-    post.slug !== slug &&
-    tags.find((t) =>
-      post.data.tags.find(
-        (tag: string) => tag.toLowerCase() === t.toLowerCase(),
-      ),
-    ),
-);
-
+const { post } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
-
-type Data = { slug: string; depth: number; text: string };
-const toc = [] as any;
-
-headings?.forEach((item: Data) => {
-  switch (item.depth) {
-    case 1:
-      toc.push(item);
-      break;
-    case 2:
-      toc.push(item);
-      break;
-    case 3:
-      toc.push([item]);
-      break;
-    case 4:
-      toc.push([[item]]);
-      break;
-    case 5:
-      toc.push([[[item]]]);
-      break;
-    case 6:
-      toc.push([[[item]]]);
-      break;
-  }
-});
+const { minutesRead } = remarkPluginFrontmatter;
+const { data } = post;
 ---
 
-<Body
-  title={post.data.title}
-  description={post.data.description}
-  publishedOn={post.data.publishedOn}
-  image={post.data.image.src}
->
-  <!-- <Share
-    shareData={{
-      title: "Check out this article on Fallenblogs",
-      text: post.data.title,
-      url: Astro.url.href,
-    }}
-    client:load
-  /> -->
+<Body>
+  <h1>{data.title}</h1>
 
-  <Breadcrubms />
+  {
+    data.image && (
+      <>
+        <Img
+          src={data.image.src}
+          width="720"
+          alt="My post"
+          class="full-width"
+        />
+        {data.image.credit && data.image.link && (
+          <figcaption>
+            {data.image.credit}. <a href={data.image.link}>Link here.</a>
+          </figcaption>
+        )}
+      </>
+    )
+  }
 
-  <hgroup id="post-title" data-animate-container>
-    <h1 class="title" data-animate>
-      {post.data.title}
-    </h1>
-    <small data-animate>
-      {
-        post.data.publishedOn ? (
-          <Date date={post.data.publishedOn} showText />
-        ) : (
-          <span>Not published</span>
-        )
-      }
-       &bull; {remarkPluginFrontmatter.minutesRead}
-    </small>
-  </hgroup>
-
-  <SuperImage
-    alt="Just an image"
-    src={post.data.image}
-    width={1024}
-    class="full-width"
+  <small class="meta disable"
+    ><span>{minutesRead}</span>
+    <Date date={data.date} /></small
   >
-    Image placeholder by <a
-      href="https://astro.build"
-      target="_blank"
-      rel="noopener noreferrer">Astro</a
-    >
-  </SuperImage>
 
-  <div id="prose">
-    <!-- <article class="toc">
-      <h6>Table of contents</h6>
-      <TableOfContents headings={toc} />
-    </article> -->
+  <div class="divider breakout"></div>
 
-    <!-- <details class="toc" data-onmobile>
-      <summary><strong>Table of contents</strong></summary>
-      <TableOfContents headings={toc} />
-    </details> -->
-
-    <Content />
-  </div>
-
-  <section id="bottom-navigation">
-    <a href="/blog">&larr; Blogs</a>
+  <section>
+    <h5>Table of contents</h5>
 
     {
-      followUpPost && (
-        <a href={`/post/${followUpPost.slug}`} role="button" class="outline">
-          <strong>Follow up:</strong>&ThinSpace;
-          {followUpPost.data.title} &rarr;
-        </a>
-      )
+      headings.map((heading) => {
+        return (
+          <ul>
+            <li>
+              <h6 class="no-mb">
+                <a href={`#${heading.slug}`} class="no-underline">
+                  {heading.text}
+                </a>
+              </h6>
+            </li>
+          </ul>
+        );
+      })
     }
   </section>
 
-  <Posts posts={relatedPosts} />
+  <section class="prose full-width">
+    <Content />
+  </section>
 </Body>
 
 <script>
-  function initObserver() {
-    const headings = document.querySelectorAll(
-      "#md > h1, #md > h2, #md > h3, #md > h4, #md > h5, #md > h6",
-    );
+  //@ts-ignore
+  import ColorThief from "colorthief";
+  import { convert } from "colvertize";
 
-    function headingsObserver(entries: IntersectionObserverEntry[]) {
-      entries.forEach((entry) => {
-        const link = document.querySelector(
-          `.toc a[href="#${entry.target.id}"]`,
-        );
+  const colorThief = new ColorThief();
+  const img = document.querySelector("img.full-width") as HTMLImageElement;
 
-        if (entry.isIntersecting) link?.classList.add("contrast");
-        else link?.classList.remove("contrast");
-      });
+  function setBgColorOnRoot(img: HTMLImageElement) {
+    const root = document.querySelector(":root") as HTMLElement;
+
+    if (!img || img.src == undefined) {
+      root.style.setProperty("--on-bg-color", "red");
+      root.style.setProperty("--on-bg-color-alt", "red");
+
+      return;
     }
 
-    const observer = new IntersectionObserver(headingsObserver, {
-      threshold: 1,
-      rootMargin: "40% 0px -60% 0px",
-    });
+    const dominantRGB = colorThief.getColor(img);
+    const tertiaryRGB = colorThief.getPalette(img)[8];
 
-    headings.forEach((heading) => observer.observe(heading));
+    const rgbToHex = (rgb: string[]) =>
+      "#" +
+      rgb
+        .map((x) => {
+          //@ts-ignore
+          const hex = x.toString(16);
+          return hex.length === 1 ? "0" + hex : hex;
+        })
+        .join("");
+
+    const dominantHex = rgbToHex(dominantRGB);
+    const dominantHSL = convert(dominantHex, "hsl");
+
+    const tertiaryHex = rgbToHex(tertiaryRGB);
+    const tertiaryHSL = convert(tertiaryHex, "hsl");
+
+    const dh = (dominantHSL.h * 100).toFixed(2);
+    const s = 12;
+    const l = 18;
+
+    const th = (tertiaryHSL.h * 100).toFixed(2);
+
+    const bg_gradient = document.querySelector(
+      ".bg-gradient",
+    ) as HTMLDivElement;
+
+    root.style.setProperty("--bg-color", `${dh}, ${s}%, ${l}%`);
+    root.style.setProperty("--on-bg-color", `${dh}, 90%, 85%`);
+    root.style.setProperty("--bg-color-alt", `${th}, ${s}%, ${l}%`);
+    root.style.setProperty("--on-bg-color-alt", `${th}, 90%, 85%`);
+
+    bg_gradient.animate([{ height: "0" }, { height: "120vh" }], {
+      delay: 500,
+      duration: 500,
+      easing: "ease-out",
+      fill: "forwards",
+    });
   }
 
-  if (window.innerWidth > 990) initObserver();
+  if (img.complete) {
+    setBgColorOnRoot(img);
+  } else {
+    img.addEventListener("load", function () {
+      setBgColorOnRoot(img);
+    });
+  }
 </script>
 
 <style>
-  #mirco-actions {
+  h1,
+  h1 :not(.prose) {
+    background-image: linear-gradient(
+      to right,
+      hsl(var(--on-bg-color, var(--on-background))),
+      hsl(var(--on-bg-color-alt, var(--on-background)))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  section {
+    margin-bottom: var(--margin-bottom);
+  }
+  figcaption {
+    margin-top: calc((var(--margin-bottom) - 0.75rem) * -1);
+    margin-bottom: var(--margin-bottom);
+    font-size: var(--fs-small);
+    color: lightgray;
+  }
+
+  .meta {
     display: flex;
     justify-content: space-between;
+  }
+
+  .prose :global(pre) {
+    grid-column: breakout;
   }
 </style>

@@ -1,11 +1,12 @@
 ---
 title: I study highly successful people. Here are 11 little habits
 description: We often celebrate gifted kids in school, natural athletes in sports, and child prodigies in music. But you don’t have to be a wunderkind to achieve success.
-tags:
-- success
-- non-tech
-publishedOn: "2023-11-12 15:21"
-image: $assets/skills.jpg
+category: Wellbeing
+date: "2023-11-12 15:21"
+image:
+  credit: Image from Unsplash
+  link: https://unsplash.com
+  src: $assets/skills.jpg
 ---
 
 We often celebrate gifted kids in school, natural athletes in sports, and child prodigies in music. But you don’t have to be a wunderkind to achieve success.

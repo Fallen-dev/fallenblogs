@@ -1,12 +1,11 @@
 ---
 title: The Wonders of Bioluminescence in the Ocean
 description: The ocean, Earth's vast and mysterious realm, is home to countless wonders, one of which is bioluminescence.
-publishedOn: "2023-09-07"
-image: "$assets/blog-placeholder-5.jpg"
-tags:
-- Nature
-- Earth
-followUp: "discovering-fire"
+date: "2023-09-07"
+image:
+  src: "$assets/blog-placeholder-5.jpg"
+category: Nature
+nextPost: "discovering-fire"
 ---
 
 The ocean, Earth's vast and mysterious realm, is home to countless wonders, one of which is bioluminescence. This mesmerizing phenomenon occurs when living organisms in the ocean emit light, creating a stunning natural light show. In this article, we'll explore the science behind bioluminescence and some of the fascinating creatures that produce it.
