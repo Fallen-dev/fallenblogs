@@ -1,6 +1,10 @@
 @import url(./fonts.css);
-@import url(./vars.css);
+@import url(./theme.css);
 @import url(./headings.css);
+
+:root {
+  --border-radius: var(--space-2xs);
+}
 
 * {
   margin: 0;
@@ -55,11 +59,13 @@
 
 .content > .hero-img {
   grid-column: full-width;
+  border-radius: 0px;
 }
 
 @media (min-width: 576px) {
   .content > .hero-img {
     grid-column: content;
+    border-radius: var(--border-radius);
   }
 }
 
@@ -114,6 +120,7 @@ img {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  border-radius: var(--border-radius);
   object-fit: cover;
   vertical-align: middle;
   margin-inline: auto;
