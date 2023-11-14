@@ -1,7 +1,7 @@
 ---
 title: Setup LVM on Debian - Wiki
 description: A documentation on how to setup LVM on Debian. Documentation written by Debian.
-date: "2023-11-14 11:13"
+date: "2023-11-14 23:13"
 category: Linux
 image:
   src: $assets/pexels-pixabay-33278.jpg

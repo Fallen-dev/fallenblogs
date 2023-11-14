@@ -28,7 +28,12 @@ const { data } = post;
   {
     data.image && (
       <>
-        <Img src={data.image.src} width="800" alt="My post" class="hero-img" />
+        <Img
+          src={data.image.src}
+          width="800"
+          alt="My post"
+          class="hero-img no-mb"
+        />
         {data.image.credit && data.image.link && (
           <figcaption class="muted">
             {data.image.credit}. <a href={data.image.link}>Link.</a>
@@ -112,7 +117,7 @@ const { data } = post;
   }
 
   figcaption {
-    margin-bottom: var(--space-s);
+    margin-block: var(--space-s);
     font-size: var(--step--1);
     text-align: center;
   }

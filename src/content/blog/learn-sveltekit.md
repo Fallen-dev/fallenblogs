@@ -6,7 +6,7 @@ image:
   link: https://pexels.com
   src: $assets/pexels-nguyen-van-minh-vuong.jpg
 category: SvelteKit
-date: "2023-11-14 7:23"
+date: "2023-11-14 17:00"
 ---
 
 ### What is Svelte?
