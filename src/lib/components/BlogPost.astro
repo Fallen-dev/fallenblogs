@@ -30,7 +30,7 @@ const { count } = Astro.props;
               </hgroup>
             </a>
 
-            <small class="disable">
+            <small class="muted">
               <Date date={data.date} onlyDate /> &bull; {minutesRead}
             </small>
           </article>
@@ -42,7 +42,7 @@ const { count } = Astro.props;
 <style>
   a {
     text-decoration: inherit;
-    text-decoration: none;
+    color: inherit;
   }
 
   a:active {
@@ -59,6 +59,7 @@ const { count } = Astro.props;
     will-change: background-color, color;
 
     border-bottom: 0.5px solid var(--color-surface-variant);
+    margin-bottom: 0px;
 
     transition:
       color 60ms ease-out,
