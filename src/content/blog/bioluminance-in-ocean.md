@@ -3,7 +3,7 @@ title: The Wonders of Bioluminescence in the Ocean
 description: The ocean, Earth's vast and mysterious realm, is home to countless wonders, one of which is bioluminescence.
 date: "2023-09-07"
 image:
-  src: "$assets/blog-placeholder-5.jpg"
+  src: "$assets/blog-placeholder-3.jpg"
 category: Nature
 nextPost: "discovering-fire"
 ---

@@ -38,6 +38,11 @@ hgroup > :last-child {
   margin-bottom: 0px;
 }
 
+a {
+  color: var(--color-secondary);
+  text-underline-offset: 0.25rem;
+}
+
 p {
   margin-bottom: var(--margin-bottom);
 }
@@ -96,8 +101,4 @@ pre code {
     font-size: 1.025rem;
     margin-bottom: 1.25rem;
   }
-}
-
-h1, h2, h3, h4, h5, h6, p, small, a, span {
-  color: inherit;
 }

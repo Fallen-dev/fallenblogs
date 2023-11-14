@@ -10,6 +10,7 @@ type Props = {
   loading?: "lazy" | "eager";
   picture_width?: string;
   picture_height?: string;
+  style?: string;
 };
 
 const {
@@ -19,6 +20,7 @@ const {
   height,
   class: className = "",
   loading = "lazy",
+  style = "",
 } = Astro.props;
 
 const placeholderImg = await getImage({
@@ -55,5 +57,5 @@ const placeholderImg = await getImage({
   fetchpriority="high"
   width={Number(width)}
   height={Number(height)}
-  style={`background-image: url(${placeholderImg.src});`}
+  style={`background-image: url(${placeholderImg.src});` + style}
 />

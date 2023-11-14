@@ -9,7 +9,7 @@ type Props = {
 const { count } = Astro.props;
 ---
 
-<section class="breakout">
+<section>
   {
     blogs.length > 0 &&
       blogs.slice(0, count).map(async (post) => {
@@ -18,28 +18,22 @@ const { count } = Astro.props;
         const { data } = post;
 
         return (
-          <a href={`/blog/${post.slug}`}>
-            <article class="no-mb">
+          <article>
+            <a href={`/blog/${post.slug}`}>
               {data.image && (
-                <Img
-                  src={data.image.src}
-                  width="540"
-                  height="200"
-                  alt="My post"
-                  class="no-mb"
-                />
+                <Img src={data.image.src} width="600" alt="My post" />
               )}
 
-              <div class="meta">
-                <hgroup>
-                  <small class="disable">
-                    <Date date={data.date} onlyDate /> &bull; {minutesRead}
-                  </small>
-                  <h6>{data.title}</h6>
-                </hgroup>
-              </div>
-            </article>
-          </a>
+              <hgroup>
+                <strong>{data.title}</strong>
+                <p>{data.description}</p>
+              </hgroup>
+            </a>
+
+            <small class="disable">
+              <Date date={data.date} onlyDate /> &bull; {minutesRead}
+            </small>
+          </article>
         );
       })
   }
@@ -51,44 +45,54 @@ const { count } = Astro.props;
     text-decoration: none;
   }
 
-  article:hover {
-    background-color: whitesmoke;
-    color: black;
+  a:active {
+    color: var(--color-primary);
   }
-  article:hover hgroup > * {
-    color: black;
-  }
-
-  /* section {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(var(--grid-post-count), 1fr);
-  } */
 
   section {
-    display: column;
-    columns: var(--grid-post-count);
-    gap: var(--margin-bottom);
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(var(--grid-post-count), 1fr);
   }
 
-  section > a {
-    display: block;
-    break-inside: avoid;
-    margin-bottom: var(--margin-bottom);
-
+  section > article {
     will-change: background-color, color;
+
+    border-bottom: 0.5px solid var(--color-surface-variant);
 
     transition:
       color 60ms ease-out,
       background-color 160ms ease-out;
   }
 
-  small {
-    display: inline-block;
-    margin-bottom: 0.25rem;
+  hgroup {
+    margin-bottom: 1rem;
   }
 
-  .meta > :last-child {
-    margin-bottom: 0px;
+  hgroup strong {
+    display: inline-block;
+    font-size: var(--fs-h3);
+    margin-bottom: 1rem;
+  }
+
+  small {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (hover) {
+    a:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  @media (min-width: 768px) {
+    section > article {
+      border-bottom: none;
+    }
+
+    small {
+      margin-bottom: 0px;
+    }
   }
 </style>

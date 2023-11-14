@@ -20,12 +20,12 @@ dependencies:
   astro:
     specifier: ^3.5.3
     version: 3.5.3(@types/node@20.9.0)(typescript@5.2.2)
+  color-convert:
+    specifier: ^2.0.1
+    version: 2.0.1
   colorthief:
     specifier: ^2.4.0
     version: 2.4.0
-  colvertize:
-    specifier: ^0.1.0
-    version: 0.1.0
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
@@ -1577,10 +1577,6 @@ packages:
     dependencies:
       '@lokesh.dhakar/quantize': 1.3.0
       get-pixels: 3.3.3
-    dev: false
-
-  /colvertize@0.1.0:
-    resolution: {integrity: sha512-sAsU3ORm1mEUF1KECXCFXncHoDL+hbgvLiiIo5RiZsQJQG6CgMk/HKS05KqZ6G61qyEN7LVBkXhh4aAMO8FT3Q==}
     dev: false
 
   /combined-stream@1.0.8:

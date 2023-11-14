@@ -1,3 +1,5 @@
+@import url(./theme.css);
+
 :root {
   --background: 0, 0%, 10%;
   --on-background: 0, 0%, 95%;
@@ -32,8 +34,6 @@
     --background: 0, 0%, 10%;
     --on-background: 0, 0%, 95%;
   
-  --grid-post-count: 3;
-
     --fs-h1: 2.5rem;
     --fs-h2: 2rem;
     --fs-h3: 1.5rem;

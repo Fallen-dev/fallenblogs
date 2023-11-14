@@ -47,8 +47,8 @@ import config from "$lib/config";
 
   body {
     position: relative;
-    background-color: hsl(var(--background));
-    color: hsl(var(--on-background));
+    background-color: var(--color-background);
+    color: var(--color-on-background);
     min-height: 100vh;
 
     font-family:
@@ -79,8 +79,8 @@ import config from "$lib/config";
     user-select: none;
     background-image: linear-gradient(
       to bottom,
-      hsl(var(--bg-color, var(--background))),
-      hsl(var(--background))
+      var(--bg-color, var(--color-background)),
+      var(--color-background)
     );
   }
 </style>
