@@ -1,7 +1,7 @@
 ---
-title: Install Arch Linux like a pro
+title: Arch Linux installation guide 
 description: Want to install Arch Linux but afraid of the commandline? No worries, in this article I'll show you how to install it in the most easiest way.
-date: 2023-11-20 20:00
+date: 2023-11-20 16:00
 image:
   src: $assets/neofetch.png
 category: Linux
@@ -216,6 +216,7 @@ Now it's time to format them to create file systems. Here are some details of fo
 - The `Root` and `Home` partitions can be in any file systems but **`ext4` is highly recommended**.
 
 Now let's format them. Below the `-L` flag means label.
+
 ### Format the /dev/sda1 (Boot)
 
 ```bash
