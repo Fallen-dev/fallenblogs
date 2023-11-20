@@ -20,7 +20,7 @@ const { data } = post;
 <Body>
   <hgroup>
     <h1>{data.title}</h1>
-    <small class="muted">{minutesRead} &bull; <Date date={data.date} /></small>
+    <p class="muted">{minutesRead} &bull; <Date date={data.date} /></p>
   </hgroup>
 
   <p class="muted">{data.description}</p>
@@ -35,7 +35,7 @@ const { data } = post;
           class="hero-img no-mb"
         />
         {data.image.credit && data.image.link && (
-          <figcaption class="muted">
+          <figcaption class="muted no-mb">
             {data.image.credit}. <a href={data.image.link}>Link.</a>
           </figcaption>
         )}
@@ -117,12 +117,15 @@ const { data } = post;
   }
 
   figcaption {
-    margin-block: var(--space-s);
     font-size: var(--step--1);
     text-align: center;
   }
 
   .prose :global(pre) {
     grid-column: breakout;
+  }
+
+  .divider {
+    margin-block: var(--step-s);
   }
 </style>
