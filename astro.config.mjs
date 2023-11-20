@@ -1,23 +1,21 @@
 import { defineConfig } from 'astro/config';
-import vercel from "@astrojs/vercel/serverless";
-import { remarkReadingTime } from './remark-reading-time.mjs';
-import svelte from "@astrojs/svelte";
-import sitemap from "@astrojs/sitemap"
 import mdx from "@astrojs/mdx";
+import readingTime from "./src/readingTime";
 
 // https://astro.build/config
 export default defineConfig({
-	adapter: vercel(),
-	output: "server",
-	integrations: [svelte(), mdx(), sitemap()],
-	markdown: {
-		remarkPlugins: [remarkReadingTime]
-	},
-	image: {
-		domains: ['astro.build'],
-		remotePatterns: [{
-			protocol: 'https'
-		}]
-	},
-	site: process.env.NODE_ENV === 'production' ? 'https://fallenblogs.vercel.app' : 'http://localhost:4321'
+  integrations: [mdx()],
+  site: process.env.NODE_ENV == 'production' ? 'https://fallenblogs.vercel.app' : 'http://localhost:4321',
+  markdown: {
+    remarkPlugins: [readingTime],
+    shikiConfig: {
+      theme: 'material-theme-darker'
+    },
+    image: {
+      domains: ['astro.build'],
+      remotePatterns: [{
+        protocol: 'https'
+      }]
+    }
+  }
 });

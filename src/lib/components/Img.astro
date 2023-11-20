@@ -1,0 +1,61 @@
+---
+import { Image, getImage } from "astro:assets";
+
+type Props = {
+  src: any;
+  alt?: string;
+  width?: string | number;
+  height?: string | number;
+  class?: string;
+  loading?: "lazy" | "eager";
+  picture_width?: string;
+  picture_height?: string;
+  style?: string;
+};
+
+const {
+  src,
+  alt = "",
+  width,
+  height,
+  class: className = "",
+  loading = "lazy",
+  style = "",
+} = Astro.props;
+
+const placeholderImg = await getImage({
+  src,
+  width: 4,
+});
+---
+
+<!-- 
+<Picture
+  {alt}
+  {src}
+  {loading}
+  quality={90}
+  width={Number(width)}
+  height={Number(height)}
+  formats={["avif", "webp"]}
+  style={`background: url(${placeholderImg.src}) no-repeat; background-size: cover;`}
+  pictureAttributes={{
+    class: className,
+    style: {
+      width: picture_width,
+      height: picture_height,
+    },
+  }}
+/> -->
+<Image
+  {alt}
+  {src}
+  {loading}
+  quality={90}
+  format="png"
+  class={className}
+  fetchpriority="high"
+  width={Number(width)}
+  height={Number(height)}
+  style={`background-image: url(${placeholderImg.src});` + style}
+/>

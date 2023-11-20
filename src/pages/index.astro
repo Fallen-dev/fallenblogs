@@ -1,52 +1,36 @@
 ---
-import { POST_COUNT } from "$config";
-import Body from "@/Body.astro";
-import Posts from "@/Posts.astro";
-import { getCollection } from "astro:content";
-
-const blogs = await getCollection("blog");
+import { BlogPost, Body } from "$lib/components";
 ---
 
 <Body>
-	<hgroup data-animate-container>
-		<h1 data-animate>Fallen&apos;s tech blogs</h1>
-		<p data-animate>A final year CS student</p>
-	</hgroup>
+	<section>
+		<hgroup data-animate-container>
+			<h1 data-animate>Fallen&apos;s tech blogs</h1>
+			<p data-animate>A final year CS student</p>
+		</hgroup>
+		<div data-animate-container>
+			<p data-animate>
+				Hi, I'm Rishav, known as Fallen on GitHub and here I share my
+				experiences and discoveries in the ever-evolving world of technology.
+			</p>
+			<p data-animate>
+				I'm an under graduate CS student completing B.Tech and with 3 years of
+				experience in web development.
+			</p>
+		</div>
+	</section>
 
-	<div data-animate-container>
-		<p data-animate>
-			Hi, I'm Rishav, known as Fallen on GitHub and here I share my experiences
-			and discoveries in the ever-evolving world of technology.
-		</p>
-		<p data-animate>
-			I'm an under graduate CS student completing B.Tech and with 3 years of
-			experience in web development.
-		</p>
-	</div>
-
-	<div class="banner" data-animate-post>
+	<section class="heading-link">
 		<strong>Latest blogs</strong>
+		<a href="/blog">See all</a>
+	</section>
 
-		<a href="/blog" class="contrast">See all</a>
-	</div>
-
-	<Posts posts={blogs} count={POST_COUNT} />
-
-	<div data-animate-container>
-		<a href="/blog" role="button" class="contrast" data-animate-post
-			>See all blogs</a
-		>
-	</div>
+	<BlogPost count={6} />
 </Body>
 
 <style>
-	.banner {
+	.heading-link {
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: var(--block-spacing-vertical);
-	}
-
-	hgroup p {
-		margin-bottom: 0;
 	}
 </style>

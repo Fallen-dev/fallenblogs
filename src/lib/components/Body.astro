@@ -1,146 +1,87 @@
 ---
-import "@picocss/pico";
-import "$lib/styles/global.css";
+import "$lib/css/main.css";
 
-import Nav from "@/Nav.astro";
-import Footer from "@/Footer.astro";
-import PlaceholderImage from "$assets/placeholder.jpg";
-import { SITE_DESCRIPTION, SITE_TITLE } from "$config";
-
-interface Props {
-  title?: string;
-  description?: string;
-  publishedOn?: string | Date | undefined;
-  image?: string;
-}
-
-const {
-  title: _title,
-  description = SITE_DESCRIPTION,
-  publishedOn,
-  image = PlaceholderImage.src,
-} = Astro.props;
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
-const title = _title ? `${_title} • ${SITE_TITLE}` : SITE_TITLE;
-
-const links = [
-  { name: "Home", href: "/" },
-  { name: "Blog", href: "/blog" },
-  { name: "About", href: "/about" },
-];
-
-const theme = Astro.cookies.get("theme")?.value || "dark";
+import config from "$lib/config";
 ---
 
-<html lang="en" data-theme={theme}>
+<html lang="en">
   <head>
-    <!-- Global Metadata -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicon/favicon-16x16.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicon/apple-touch-icon.png"
-    />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="block-all-mixed-content"
-    />
+    <meta name="description" content={config.site.description} />
+    <meta name="author" content={config.site.author} />
 
-    <!-- Font preloads -->
-    <link
-      rel="preload"
-      href="/fonts/Satoshi-Regular.woff"
-      as="font"
-      type="font/woff"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/Satoshi-Bold.woff"
-      as="font"
-      type="font/woff"
-      crossorigin
-    />
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href={canonicalURL} />
-
-    <!-- Google tags -->
-    <meta name="robots" content="index,follow" />
-
-    <!-- Primary Meta Tags -->
-    <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="author" content="Rishav Mandal" />
-    <meta name="description" content={description} />
-    <meta
-      name="keywords"
-      content="article, blog, technology, web development, linux, problem solving"
-    />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content={publishedOn ? "article" : "website"} />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:locale" content="en" />
-    <meta property="og:image" content={new URL(image, Astro.url)} />
-    <meta property="og:image:alt" content={title} />
-    {
-      publishedOn && (
-        <>
-          <meta property="article:author" content="Fallen | Rishav" />
-          <meta
-            property="article:published_time"
-            content={publishedOn.toString()}
-          />
-        </>
-      )
-    }
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, Astro.url)} />
-    <meta property="twitter:image:alt" content={title} />
-
-    <!-- Change theme color of url bar -->
-    <meta name="theme-color" content="#201a19" />
+    <title>{config.site.name}</title>
   </head>
   <body>
-    <Nav title={SITE_TITLE} {links} />
+    <main class="content">
+      <nav class="breakout">
+        <a href="/"><strong>{config.site.name}</strong></a>
 
-    <main class="container">
+        <a href="/blog">Blog</a>
+      </nav>
+
       <slot />
     </main>
-
-    <Footer author={SITE_TITLE} {links} />
-
-    <script>
-      import { reveal } from "$lib/utils";
-
-      reveal("[data-animate]", { y: [90, 0], opacity: 1 }, { delay: 1 }, 0.25);
-    </script>
   </body>
 </html>
+
+<style>
+  nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-s);
+  }
+
+  nav a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(---space-s) - 0.5rem);
+  }
+
+  body {
+    position: relative;
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    min-height: 100vh;
+
+    font-family:
+      Satoshi,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Open Sans",
+      "Helvetica Neue",
+      sans-serif;
+    font-size: var(--step-0);
+    line-height: 1.5;
+  }
+
+  body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    height: 0;
+    isolation: isolate;
+    z-index: -1;
+    will-change: height, background;
+    user-select: none;
+    background-image: linear-gradient(
+      to bottom,
+      var(--bg-color, var(--color-background)),
+      var(--color-background)
+    );
+  }
+</style>

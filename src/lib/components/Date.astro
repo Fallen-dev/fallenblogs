@@ -1,19 +1,42 @@
 ---
-import { formatDate } from "$lib/utils";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
-interface Props {
-  date: Date | string | undefined;
-  showText?: boolean;
+function $(date: string | Date | undefined):
+  | {
+      date: string;
+      isRelativeTime: boolean;
+    }
+  | undefined {
+  if (typeof date === "undefined") return;
+
+  dayjs.extend(relativeTime);
+  const givenDate = dayjs(date);
+  const today = dayjs();
+
+  if (givenDate.isBefore(today.subtract(1, "M")))
+    return { date: givenDate.format("MMM DD, YYYY"), isRelativeTime: false };
+
+  return { date: givenDate.fromNow(), isRelativeTime: true };
 }
 
-const { date, showText } = Astro.props;
+type Props = {
+  date: Date | string | undefined;
+  onlyDate?: boolean;
+};
 
-const format = formatDate(date);
+const { date, onlyDate } = Astro.props;
+
+const fdate = $(date);
 ---
 
 {
-  format && showText && (
-    <span>Published {format.isRelativeTime ? "" : "on "}</span>
+  fdate ? (
+    <span>
+      {!onlyDate && `Published${fdate.isRelativeTime ? " " : " on "}`}
+      <time datetime={fdate.date.toString()}>{fdate.date}</time>
+    </span>
+  ) : (
+    <span class="draft">Draft</span>
   )
 }
-{format && <time datetime={String(date)}>{format.date}</time>}

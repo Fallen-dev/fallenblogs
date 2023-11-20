@@ -1,44 +1,9 @@
 ---
-import Body from "@/Body.astro";
-import Posts from "@/Posts.astro";
-import { getCollection } from "astro:content";
-
-const searchValue = Astro.url.searchParams.get("search") || "";
-
-const posts = await getCollection("blog", function (post) {
-  if (searchValue)
-    return post.data.title.toLowerCase().includes(searchValue.toLowerCase());
-
-  return post;
-});
+import { BlogPost, Body } from "$lib/components";
 ---
 
-<Body title="All of my blogs">
-  <form>
-    <input
-      type="search"
-      name="search"
-      placeholder="Search blogs"
-      min="2"
-      max="30"
-      value={searchValue}
-      required
-      data-animate
-    />
-  </form>
+<Body>
+  <h6>Blogs</h6>
 
-  <Posts {posts} />
+  <BlogPost />
 </Body>
-
-<script>
-  const form = document.querySelector("form")!;
-
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const searchInput = formData.get("search") as string;
-
-    location.assign("/blog?" + new URLSearchParams({ search: searchInput }));
-  });
-</script>

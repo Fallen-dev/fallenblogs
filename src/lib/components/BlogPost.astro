@@ -1,0 +1,103 @@
+---
+import { blogs } from "$lib/utils";
+import { Img, Date } from "$lib/components";
+
+type Props = {
+  count?: number;
+};
+
+const { count } = Astro.props;
+---
+
+<section>
+  {
+    blogs.length > 0 &&
+      blogs.slice(0, count).map(async (post) => {
+        const { remarkPluginFrontmatter } = await post.render();
+        const { minutesRead } = remarkPluginFrontmatter;
+        const { data } = post;
+
+        return (
+          <article>
+            <a href={`/blog/${post.slug}`}>
+              {data.image && (
+                <Img src={data.image.src} width="600" alt="My post" />
+              )}
+
+              <hgroup>
+                <strong>{data.title}</strong>
+                <p>{data.description}</p>
+              </hgroup>
+            </a>
+
+            <small class="muted">
+              <Date date={data.date} onlyDate /> &bull; {minutesRead}
+            </small>
+          </article>
+        );
+      })
+  }
+</section>
+
+<style>
+  a {
+    text-decoration: inherit;
+    color: inherit;
+  }
+
+  a:active {
+    color: var(--color-primary);
+  }
+
+  section {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  section > article {
+    will-change: background-color, color;
+
+    border-bottom: 0.5px solid var(--color-surface-variant);
+    margin-bottom: 0px;
+
+    transition:
+      color 60ms ease-out,
+      background-color 160ms ease-out;
+  }
+
+  hgroup {
+    margin-bottom: 1rem;
+  }
+
+  hgroup strong {
+    display: inline-block;
+    font-size: var(--step-1);
+    margin-bottom: 1rem;
+  }
+
+  small {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (hover) {
+    a:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  @media (min-width: 768px) {
+    section {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    section > article {
+      border-bottom: none;
+    }
+
+    small {
+      margin-bottom: 0px;
+    }
+  }
+</style>

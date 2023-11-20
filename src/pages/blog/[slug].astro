@@ -1,167 +1,132 @@
 ---
-import Body from "@/Body.astro";
-import Posts from "@/Posts.astro";
-import Share from "@/Share.svelte";
-import TableOfContents from "@/TableOfContents.svelte";
-import Date from "@/Date.astro";
-import { Image } from "astro:assets";
-import { getCollection, getEntry } from "astro:content";
+import { blogs } from "$lib/utils";
+import { Body, Date, Img } from "$lib/components";
 
-const { slug } = Astro.params;
-if (typeof slug === "undefined") return Astro.redirect("/blog");
+export const getStaticPaths = async () => {
+  return blogs.map((post) => {
+    return {
+      params: { slug: post.slug },
+      props: { post },
+    };
+  });
+};
 
-const post = await getEntry("blog", slug);
-if (typeof post === "undefined") return Astro.redirect("/404");
-
-const followUp = post.data.followUp;
-const followUpPost = followUp && (await getEntry(followUp));
-
-const relatedPosts = await getCollection(
-  "blog",
-  ({ data: { tags }, slug }) =>
-    post.slug !== slug &&
-    tags.find((t) =>
-      post.data.tags.find(
-        (tag: string) => tag.toLowerCase() === t.toLowerCase(),
-      ),
-    ),
-);
-
+const { post } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
-
-type Data = { slug: string; depth: number; text: string };
-const toc = [] as any;
-
-headings?.forEach((item: Data) => {
-  switch (item.depth) {
-    case 1:
-      toc.push(item);
-      break;
-    case 2:
-      toc.push(item);
-      break;
-    case 3:
-      toc.push([item]);
-      break;
-    case 4:
-      toc.push([[item]]);
-      break;
-    case 5:
-      toc.push([[[item]]]);
-      break;
-    case 6:
-      toc.push([[[item]]]);
-      break;
-  }
-});
+const { minutesRead } = remarkPluginFrontmatter;
+const { data } = post;
 ---
 
-<Body
-  title={post.data.title}
-  description={post.data.description}
-  publishedOn={post.data.publishedOn}
-  image={post.data.image.src}
->
-  <Share
-    shareData={{
-      title: "Check out this article on Fallenblogs",
-      text: post.data.title,
-      url: Astro.url.href,
-    }}
-    client:load
-  />
-
-  <hgroup id="post-title" data-animate-container>
-    <h1 class="title" data-animate>
-      {post.data.title}
-    </h1>
-    <p style="margin-bottom: 0;" data-animate>
-      {
-        post.data.publishedOn ? (
-          <Date date={post.data.publishedOn} showText />
-        ) : (
-          <span>Not published</span>
-        )
-      }
-       &bull; {remarkPluginFrontmatter.minutesRead}
-    </p>
+<Body>
+  <hgroup>
+    <h1>{data.title}</h1>
+    <p class="muted">{minutesRead} &bull; <Date date={data.date} /></p>
   </hgroup>
+
+  <p class="muted">{data.description}</p>
+
+  {
+    data.image && (
+      <>
+        <Img
+          src={data.image.src}
+          width="800"
+          alt="My post"
+          class="hero-img no-mb"
+        />
+        {data.image.credit && data.image.link && (
+          <figcaption class="muted no-mb">
+            {data.image.credit}. <a href={data.image.link}>Link.</a>
+          </figcaption>
+        )}
+      </>
+    )
+  }
+
+  <div class="divider breakout"></div>
+
   <section>
-    <figure id="hero" transition:name="image">
-      <Image
-        src={post.data.image}
-        alt="Just an image"
-        quality="high"
-        widths={[720, 1024]}
-        sizes="720px, (min-width: 1024px) 1024px"
-        loading="eager"
-      />
-    </figure>
+    <p>
+      <strong>Table of contents</strong>
+    </p>
+    <ul>
+      {
+        headings.map((heading) => {
+          return (
+            <li>
+              &bull; <a href={`#${heading.slug}`}>{heading.text}</a>
+            </li>
+          );
+        })
+      }
+    </ul>
   </section>
 
-  <div id="prose">
-    <article class="toc">
-      <h6>Table of contents</h6>
-      <TableOfContents headings={toc} />
-    </article>
-
-    <details class="toc" data-onmobile>
-      <summary><strong>Table of contents</strong></summary>
-      <TableOfContents headings={toc} />
-    </details>
-
-    <figure id="md">
-      <Content />
-    </figure>
-  </div>
-
-  <section id="bottom-navigation">
-    <a href="/blog">&larr; Blogs</a>
-
-    {
-      followUpPost && (
-        <a href={`/post/${followUpPost.slug}`} role="button" class="outline">
-          <strong>Follow up:</strong>&ThinSpace;
-          {followUpPost.data.title} &rarr;
-        </a>
-      )
-    }
+  <section class="md full-width">
+    <Content />
   </section>
-
-  <Posts posts={relatedPosts} />
 </Body>
 
 <script>
-  function initObserver() {
-    const headings = document.querySelectorAll(
-      "#md > h1, #md > h2, #md > h3, #md > h4, #md > h5, #md > h6",
-    );
+  //@ts-ignore
+  import ColorThief from "colorthief";
+  //@ts-ignore
+  import convert from "color-convert";
 
-    function headingsObserver(entries: IntersectionObserverEntry[]) {
-      entries.forEach((entry) => {
-        const link = document.querySelector(
-          `.toc a[href="#${entry.target.id}"]`,
-        );
+  const colorThief = new ColorThief();
+  const img = document.querySelector("img.hero-img") as HTMLImageElement;
 
-        if (entry.isIntersecting) link?.classList.add("contrast");
-        else link?.classList.remove("contrast");
-      });
-    }
+  function setBgColorOnRoot(img: HTMLImageElement) {
+    const root = document.querySelector(":root") as HTMLElement;
 
-    const observer = new IntersectionObserver(headingsObserver, {
-      threshold: 1,
-      rootMargin: "40% 0px -60% 0px",
+    if (!img || !img.src) return;
+
+    const rgb = colorThief.getColor(img);
+    const hsl = convert.rgb.hsl(rgb);
+
+    const bg_color = convert.hsl.hex(hsl[0], 20, 20);
+    const on_bg_color = convert.hsl.hex(hsl[0], 100, 90);
+    const on_bg_color_alt = convert.hsl.hex(hsl[0] + 180, 100, 90);
+
+    root.style.setProperty("--bg-color", "#" + bg_color);
+    root.style.setProperty("--on-bg-color", "#" + on_bg_color);
+    root.style.setProperty("--on-bg-color-alt", "#" + on_bg_color_alt);
+
+    document.querySelector("body")!.animate([{ height: "120vh" }], {
+      delay: 500,
+      duration: 500,
+      easing: "ease-out",
+      fill: "forwards",
+      pseudoElement: "::after",
     });
-
-    headings.forEach((heading) => observer.observe(heading));
   }
 
-  if (window.innerWidth > 990) initObserver();
+  if (img.complete) setBgColorOnRoot(img);
+  else img.addEventListener("load", () => setBgColorOnRoot(img));
 </script>
 
 <style>
-  #mirco-actions {
-    display: flex;
-    justify-content: space-between;
+  h1 {
+    background-image: linear-gradient(
+      to right,
+      var(--on-bg-color, var(--color-on-background)),
+      var(--on-bg-color-alt, var(--color-on-background))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  figcaption {
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+    text-align: center;
+  }
+
+  .prose :global(pre) {
+    grid-column: breakout;
+  }
+
+  .divider {
+    margin-block: var(--space-m);
   }
 </style>
