@@ -24,7 +24,7 @@ h6 {
 }
 
 hgroup > :first-child {
-  margin-bottom: var(--space-3xs);
+  margin-bottom: var(--space-s);
 }
 
 hgroup > :last-child {
@@ -82,5 +82,8 @@ pre code {
   }
   pre, code {
     font-size: var(--step--1);
+  }
+  hgroup > :first-child {
+    margin-bottom: var(--space-2xs);
   }
 }

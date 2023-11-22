@@ -9,7 +9,7 @@ type Props = {
 const { count } = Astro.props;
 ---
 
-<section>
+<section class="breakout">
   {
     blogs.length > 0 &&
       blogs.slice(0, count).map(async (post) => {
@@ -51,7 +51,7 @@ const { count } = Astro.props;
 
   section {
     display: grid;
-    gap: 2rem;
+    gap: var(--space-m);
     grid-template-columns: repeat(1, 1fr);
   }
 

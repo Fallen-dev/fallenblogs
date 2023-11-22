@@ -15,12 +15,11 @@
 }
 
 .content {
-  padding-block-start: 1rem;
-  padding-block-end: 4rem;
+  margin-bottom: var(--space-xl-2xl);
 
-  --padding-inline: 1rem;
-  --padding-breakout: var(--space-l);
-  --content-width: calc(32rem + (var(--padding-breakout) * 2));
+  --padding-inline: var(--space-m-l);
+  --padding-breakout: var(--space-xl);
+  --content-width: calc(42rem + (var(--padding-breakout) * 2));
 
   display: grid;
   grid-template-columns: 
@@ -124,21 +123,6 @@ img {
   object-fit: cover;
   vertical-align: middle;
   margin-inline: auto;
-  margin-bottom: var(--margin-bottom);
-}
-
-ul, ol {
-  padding-left: inherit;
-  list-style: none;
-}
-
-section {
-  margin-bottom: var(--margin-bottom);
-}
-
-.md :is(ul, ol) {
-  list-style: initial;
-  padding-left: 5%;
 }
 
 .md :is(img) {
@@ -151,13 +135,19 @@ section {
 
 /* margins */
 h1, h2, h3 {
-  margin-bottom: var(--space-m);
+  margin-bottom: var(--space-m-l);
 }
 
 h4, h5, h6, p, div, ul, ol, article, img, picture, figure, pre, hgroup, section {
-  margin-bottom: var(--space-s);
+  margin-bottom: var(--space-s-m);
 }
 
 li{
-  margin-bottom: var(--space-2xs);
+  margin-inline: var(--space-s-m);
+  margin-bottom: var(--space-2xs-xs);
+}
+
+:is(ol, ul) > :last-child,
+:is(ol, ul) > li > :last-child {
+  margin-bottom: 0px;
 }

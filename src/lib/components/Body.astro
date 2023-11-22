@@ -1,6 +1,7 @@
 ---
 import "$lib/css/main.css";
 
+import { ViewTransitions } from "astro:transitions";
 import config from "$lib/config";
 ---
 
@@ -15,8 +16,9 @@ import config from "$lib/config";
     <meta name="author" content={config.site.author} />
 
     <title>{config.site.name}</title>
+    <ViewTransitions />
   </head>
-  <body>
+  <body transition:animate="slide">
     <main class="content">
       <nav class="breakout">
         <a href="/"><strong>{config.site.name}</strong></a>
@@ -28,12 +30,12 @@ import config from "$lib/config";
     </main>
   </body>
 </html>
-
+  
 <style>
   nav {
     display: flex;
     justify-content: space-between;
-    margin-bottom: var(--space-s);
+    margin-block: var(--space-m);
   }
 
   nav a {
