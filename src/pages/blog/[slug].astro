@@ -73,38 +73,36 @@ const { data } = post;
   //@ts-ignore
   import convert from "color-convert";
 
-  document.addEventListener("astro:page-load", function () {
-    const colorThief = new ColorThief();
-    const img = document.querySelector("img.hero-img") as HTMLImageElement;
+  const colorThief = new ColorThief();
+  const img = document.querySelector("img.hero-img") as HTMLImageElement;
 
-    function setBgColorOnRoot(img: HTMLImageElement) {
-      const root = document.querySelector(":root") as HTMLElement;
+  function setBgColorOnRoot(img: HTMLImageElement) {
+    const root = document.querySelector(":root") as HTMLElement;
 
-      if (!img || !img.src) return;
+    if (!img || !img.src) return;
 
-      const rgb = colorThief.getColor(img);
-      const hsl = convert.rgb.hsl(rgb);
+    const rgb = colorThief.getColor(img);
+    const hsl = convert.rgb.hsl(rgb);
 
-      const bg_color = convert.hsl.hex(hsl[0], 20, 20);
-      const on_bg_color = convert.hsl.hex(hsl[0], 100, 90);
-      const on_bg_color_alt = convert.hsl.hex(hsl[0] + 180, 100, 90);
+    const bg_color = convert.hsl.hex(hsl[0], 20, 20);
+    const on_bg_color = convert.hsl.hex(hsl[0], 100, 90);
+    const on_bg_color_alt = convert.hsl.hex(hsl[0] + 180, 100, 90);
 
-      root.style.setProperty("--bg-color", "#" + bg_color);
-      root.style.setProperty("--on-bg-color", "#" + on_bg_color);
-      root.style.setProperty("--on-bg-color-alt", "#" + on_bg_color_alt);
+    root.style.setProperty("--bg-color", "#" + bg_color);
+    root.style.setProperty("--on-bg-color", "#" + on_bg_color);
+    root.style.setProperty("--on-bg-color-alt", "#" + on_bg_color_alt);
 
-      document.querySelector("body")!.animate([{ height: "120vh" }], {
-        delay: 500,
-        duration: 500,
-        easing: "ease-out",
-        fill: "forwards",
-        pseudoElement: "::after",
-      });
-    }
+    document.querySelector("body")!.animate([{ height: "120vh" }], {
+      delay: 500,
+      duration: 500,
+      easing: "ease-out",
+      fill: "forwards",
+      pseudoElement: "::after",
+    });
+  }
 
-    if (img.complete) setBgColorOnRoot(img);
-    else img.addEventListener("load", () => setBgColorOnRoot(img));
-  });
+  if (img.complete) setBgColorOnRoot(img);
+  else img.addEventListener("load", () => setBgColorOnRoot(img));
 </script>
 
 <style>
