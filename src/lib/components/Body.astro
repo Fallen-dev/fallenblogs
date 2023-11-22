@@ -1,7 +1,6 @@
 ---
 import "$lib/css/main.css";
 
-import { ViewTransitions } from "astro:transitions";
 import config from "$lib/config";
 ---
 
@@ -16,9 +15,8 @@ import config from "$lib/config";
     <meta name="author" content={config.site.author} />
 
     <title>{config.site.name}</title>
-    <ViewTransitions />
   </head>
-  <body transition:animate="slide">
+  <body>
     <main class="content">
       <nav class="breakout">
         <a href="/"><strong>{config.site.name}</strong></a>
