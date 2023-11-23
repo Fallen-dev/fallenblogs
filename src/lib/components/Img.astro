@@ -29,30 +29,12 @@ const placeholderImg = await getImage({
 });
 ---
 
-<!-- 
-<Picture
-  {alt}
-  {src}
-  {loading}
-  quality={90}
-  width={Number(width)}
-  height={Number(height)}
-  formats={["avif", "webp"]}
-  style={`background: url(${placeholderImg.src}) no-repeat; background-size: cover;`}
-  pictureAttributes={{
-    class: className,
-    style: {
-      width: picture_width,
-      height: picture_height,
-    },
-  }}
-/> -->
 <Image
   {alt}
   {src}
   {loading}
-  quality={90}
   format="png"
+  quality={100}
   class={className}
   fetchpriority="high"
   width={Number(width)}

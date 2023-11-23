@@ -1,0 +1,20 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+type Props = {
+  headings: MarkdownHeading[]
+}
+const {headings} = Astro.props
+---
+
+<ul>
+  {headings.map(item => (
+    <li>
+      {Array.isArray(item)
+        ? <Astro.self headings={item} />
+        : <a href={"#"+item.slug}>{item.text}</a>
+      }
+    </li>
+  ))
+  }
+</ul>

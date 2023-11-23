@@ -16,13 +16,14 @@ const { count } = Astro.props;
         const { remarkPluginFrontmatter } = await post.render();
         const { minutesRead } = remarkPluginFrontmatter;
         const { data } = post;
+        const alt = data.image?.credit || 'Cover photo of the article ' + data.title
 
         return (
           <article>
             <a href={`/blog/${post.slug}`}>
-              {data.image && (
-                <Img src={data.image.src} width="600" alt="My post" />
-              )}
+              {data.image &&
+                <Img src={data.image.src} width="600" {alt} />
+              }
 
               <hgroup>
                 <strong>{data.title}</strong>
@@ -67,13 +68,12 @@ const { count } = Astro.props;
   }
 
   hgroup {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-xs);
   }
 
   hgroup strong {
     display: inline-block;
     font-size: var(--step-1);
-    margin-bottom: 1rem;
   }
 
   small {

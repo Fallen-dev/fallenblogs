@@ -35,7 +35,7 @@ a {
   color: var(--color-tertiary);
   text-underline-offset: 4px;
   text-decoration-color: var(--color-surface-variant);
-  text-decoration-thickness: 1..5 px;
+  text-decoration-thickness: 1px;
 }
 
 a:visited {
@@ -77,9 +77,6 @@ pre code {
 }
 
 @media (min-width: 576px) {
-  a {
-    text-decoration-thickness: 1px;
-  }
   pre, code {
     font-size: var(--step--1);
   }

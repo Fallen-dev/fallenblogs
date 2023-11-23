@@ -1,6 +1,6 @@
 ---
-import { blogs } from "$lib/utils";
-import { Body, Date, Img } from "$lib/components";
+import { blogs, createTOC } from "$lib/utils";
+import { BlogPost, Body, Date, Img, TableOfContent } from "$lib/components";
 
 export const getStaticPaths = async () => {
   return blogs.map((post) => {
@@ -34,36 +34,34 @@ const { data } = post;
           alt="My post"
           class="hero-img no-mb"
         />
-        {data.image.credit && data.image.link && (
+        {data.image.credit && data.image.link &&
           <figcaption class="muted no-mb">
-            {data.image.credit}. <a href={data.image.link}>Link.</a>
+            {data.image.credit}. <a href={data.image.link} target="_blank" rel="noopener noreferrer">Link.</a>
           </figcaption>
-        )}
+        }
       </>
     )
   }
 
   <div class="divider breakout"></div>
 
-  <section>
-    <p>
-      <strong>Table of contents</strong>
-    </p>
-    <ul>
-      {
-        headings.map((heading) => {
-          return (
-            <li>
-              <a href={`#${heading.slug}`}>{heading.text}</a>
-            </li>
-          );
-        })
-      }
-    </ul>
-  </section>
+  <details>
+    <summary aria-haspopup="listbox">Table of contents</summary>
+    <div class="toc">
+      <TableOfContent headings={createTOC(headings)} />
+    </div>
+  </details>
 
   <section class="md full-width">
     <Content />
+  </section>
+
+  <div class="divider breakout"></div>
+
+  <section>
+    <p><strong>Related post</strong></p>
+
+    <BlogPost count={2} />
   </section>
 </Body>
 
@@ -84,9 +82,9 @@ const { data } = post;
     const rgb = colorThief.getColor(img);
     const hsl = convert.rgb.hsl(rgb);
 
-    const bg_color = convert.hsl.hex(hsl[0], 20, 20);
-    const on_bg_color = convert.hsl.hex(hsl[0], 100, 90);
-    const on_bg_color_alt = convert.hsl.hex(hsl[0] + 180, 100, 90);
+    const bg_color = convert.hsl.hex(hsl[0], 50, 15);
+    const on_bg_color = convert.hsl.hex(hsl[0], 100, 80);
+    const on_bg_color_alt = convert.hsl.hex((hsl[0] + 52) % 360, 100, 80);
 
     root.style.setProperty("--bg-color", "#" + bg_color);
     root.style.setProperty("--on-bg-color", "#" + on_bg_color);
@@ -107,13 +105,34 @@ const { data } = post;
 
 <style>
   h1 {
+    display: inline-block;
     background-image: linear-gradient(
       to right,
       var(--on-bg-color, var(--color-on-background)),
-      var(--on-bg-color-alt, var(--color-on-background))
+      var(--on-bg-color-alt, var(--color-on-background)) 70%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  details {
+    margin-bottom: var(--space-s);
+    border: 1.5px solid var(--color-tertiary);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+  }
+
+  summary {
+    padding: var(--space-s);
+    color: var(--color-tertiary);
+  }
+
+  .toc > :global(ul) {
+    list-style: none;
+  }
+
+  .toc :global(li) {
+    margin-inline: var(--space-s);
   }
 
   figcaption {

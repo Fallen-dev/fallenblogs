@@ -97,7 +97,7 @@
 }
 
 .divider {
-  margin-bottom: var(--space-s);
+  margin-bottom: var(--space-s-m);
   display: block;
   width: 100%;
   height: 1.5px;
@@ -144,7 +144,7 @@ h4, h5, h6, p, div, ul, ol, article, img, picture, figure, pre, hgroup, section 
 
 li{
   margin-inline: var(--space-s-m);
-  margin-bottom: var(--space-2xs-xs);
+  margin-bottom: var(--space-s);
 }
 
 :is(ol, ul) > :last-child,
