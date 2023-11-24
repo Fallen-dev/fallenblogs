@@ -50,31 +50,6 @@ const blogs = await getBlogs(blog =>
     gap: var(--space-s);
   }
 
-  button, [role=button] {
-    --clr: var(--color-on-background);
-
-    all: unset;
-    width: auto;
-    padding: var(--space-xs) var(--space-s);
-    font-size: var(--step--1);
-    font-weight: 600;
-    background-color: var(--clr);
-    color: var(--color-background);
-    text-align: center;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--clr);
-    cursor: pointer;
-    transition: transform 250ms ease-out;
-  }
-
-  button:focus {
-    filter: brightness(0.96);
-  }
-
-  button:active {
-    transform: scale3d(0.96, 0.96, 0.96);
-  }
-
   input {
     all: unset;
     display: block;

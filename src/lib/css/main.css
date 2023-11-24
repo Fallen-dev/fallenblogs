@@ -126,6 +126,34 @@ img {
   margin-inline: auto;
 }
 
+button, [role=button] {
+  --clr: var(--color-on-background);
+
+  all: unset;
+  display: inline-block;
+  width: auto;
+  padding: var(--space-xs) var(--space-s);
+  font-size: var(--step--1);
+  font-weight: 600;
+  background-color: var(--clr);
+  color: var(--color-background) !important;
+  text-align: center;
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--clr);
+  cursor: pointer;
+  transition: transform 250ms ease-out;
+  will-change: transform, scale, scale3d;
+}
+
+button:focus, [role=button]:active {
+  filter: brightness(0.96);
+}
+
+button:active, [role=button]:active {
+  transform: scale3d(0.96, 0.96, 0.96);
+}
+
 .md :is(img) {
   max-height: none;
 }
