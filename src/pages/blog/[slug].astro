@@ -1,20 +1,26 @@
 ---
-import { blogs, createTOC } from "$lib/utils";
+import { getBlogs, createTOC } from "$lib/utils";
 import { BlogPost, Body, Date, Img, TableOfContent } from "$lib/components";
 
+
 export const getStaticPaths = async () => {
-  return blogs.map((post) => {
-    return {
-      params: { slug: post.slug },
-      props: { post },
-    };
-  });
-};
+  const blogs = await getBlogs()
+
+  return blogs.map((post) => ({    
+    params: { slug: post.slug },
+    props: { post },
+  })
+)
+}
 
 const { post } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const { minutesRead } = remarkPluginFrontmatter;
 const { data } = post;
+
+const relatedPosts = await getBlogs(blog => 
+  blog.data.category == data.category && blog.slug != post.slug
+)
 ---
 
 <Body>
@@ -58,11 +64,12 @@ const { data } = post;
 
   <div class="divider breakout"></div>
 
-  <section>
-    <p><strong>Related post</strong></p>
-
-    <BlogPost count={2} />
-  </section>
+  {relatedPosts.length > 0 &&
+    <section>
+      <p><strong>Also read</strong></p>
+      <BlogPost blogs={relatedPosts} />
+    </section>
+  }
 </Body>
 
 <script>
@@ -120,11 +127,29 @@ const { data } = post;
     border: 1.5px solid var(--color-tertiary);
     border-radius: var(--border-radius);
     cursor: pointer;
+
+    /* width: min-content;
+    background-color: var(--color-background);
+    position: sticky;
+    top: var(--space-s);
+    z-index: 1;
+    isolation: isolate; */
   }
 
+  /* details[open],
+  details[open] > summary {
+    width: auto;
+  } */
+
   summary {
+    /* width: max-content; */
     padding: var(--space-s);
     color: var(--color-tertiary);
+  }
+
+  .toc {
+    max-height: 60vh;
+    overflow-y: scroll;
   }
 
   .toc > :global(ul) {

@@ -1,0 +1,14 @@
+---
+import { Date } from '$lib/components';
+import {getBlogs} from '$lib/utils'
+
+const blogs = await getBlogs(data => data.data.category == 'astro')
+---
+
+{blogs.length > 0 && blogs.map(blog => 
+  <article>
+    <h4>{blog.data.title}</h4>  
+    <p>{blog.data.category}</p>
+    <Date date={blog.data.date} />
+  </article>
+)}

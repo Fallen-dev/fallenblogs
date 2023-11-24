@@ -1,15 +1,21 @@
 import type { MarkdownHeading } from 'astro'
+import type {CollectionEntry} from 'astro:content'
 import { getCollection } from 'astro:content'
 
-const _blogs = await getCollection('blog', (post) =>
-  process.env.NODE_ENV == 'production' ? post.data.date : post)
+export async function getBlogs(fn?: (p: CollectionEntry<'blog'>) => boolean) {
+  const data = await getCollection('blog', fn)
+  
+  const blogs = data.map(
+    post =>
+      process.env.NODE_ENV == 'production' ? post.data.date : post
+  ) as CollectionEntry<'blog'>[]
 
-// @ts-expect-error
-export const blogs = _blogs.sort((a, b) => {
-  if (!a.data.date || !b.data.date) return
-
-  return b.data.date.valueOf() - a.data.date.valueOf()
-})
+  //@ts-ignore
+  return blogs.sort((a, b) => {
+    if (!a.data.date || !b.data.date) return
+    return b.data.date.valueOf() - a.data.date.valueOf()
+  })
+}
 
 export function createTOC(headings: MarkdownHeading[]) {
   const toc = [] as any[]

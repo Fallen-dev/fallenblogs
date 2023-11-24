@@ -1,5 +1,8 @@
 ---
 import { BlogPost, Body } from "$lib/components";
+import { getBlogs } from "$lib/utils";
+
+const blogs = await getBlogs()
 ---
 
 <Body>
@@ -25,7 +28,7 @@ import { BlogPost, Body } from "$lib/components";
 		<a href="/blog">See all</a>
 	</section>
 
-	<BlogPost count={6} />
+	<BlogPost {blogs} count={6} />
 </Body>
 
 <style>

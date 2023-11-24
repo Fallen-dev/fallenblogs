@@ -1,7 +1,10 @@
 ---
 import { BlogPost, Body } from "$lib/components";
+import { getBlogs } from "$lib/utils";
+
+const blogs = await getBlogs()
 ---
 
 <Body>
-  <BlogPost />
+  <BlogPost {blogs} />
 </Body>

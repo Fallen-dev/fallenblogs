@@ -1,12 +1,13 @@
 ---
-import { blogs } from "$lib/utils";
 import { Img, Date } from "$lib/components";
+import type { CollectionEntry } from "astro:content";
 
 type Props = {
   count?: number;
+  blogs: CollectionEntry<'blog'>[]
 };
 
-const { count } = Astro.props;
+const { count, blogs } = Astro.props;
 ---
 
 <section class="breakout">
