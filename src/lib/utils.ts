@@ -2,7 +2,7 @@ import type { MarkdownHeading } from 'astro'
 import type {CollectionEntry} from 'astro:content'
 import { getCollection } from 'astro:content'
 
-export async function getBlogs(fn?: (p: CollectionEntry<'blog'>) => boolean) {
+export async function getBlogs(fn?: (p: CollectionEntry<'blog'>) => boolean | CollectionEntry<'blog'>) {
   const data = await getCollection('blog', fn)
   
   const blogs = data.map(

@@ -1,19 +1,20 @@
 ---
+import { getEntry } from "astro:content";
 import { getBlogs, createTOC } from "$lib/utils";
 import { BlogPost, Body, Date, Img, TableOfContent } from "$lib/components";
 
+const {slug} = Astro.params
 
-export const getStaticPaths = async () => {
-  const blogs = await getBlogs()
-
-  return blogs.map((post) => ({    
-    params: { slug: post.slug },
-    props: { post },
-  })
-)
+if (slug === undefined) {
+  return Astro.redirect('/');
 }
 
-const { post } = Astro.props;
+const post = await getEntry('blog', slug)
+
+if (post === undefined) {
+  return Astro.redirect("/404");
+}
+
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const { minutesRead } = remarkPluginFrontmatter;
 const { data } = post;
@@ -26,10 +27,16 @@ const relatedPosts = await getBlogs(blog =>
 <Body>
   <hgroup>
     <h1>{data.title}</h1>
-    <p class="muted"><Date date={data.date} /> &bull; {minutesRead}</p>
+    <p class="muted no-mb"><Date date={data.date} /> &bull; {minutesRead}</p>
+
+    {data.category &&
+      <p class="muted">
+        Category: <a href={`/blog?search=${data.category}`} style="text-transform: capitalize;">{data.category}</a>
+      </p>
+    }
   </hgroup>
 
-  <p class="muted">{data.description}</p>
+<p class="muted">{data.description}</p>
 
   {
     data.image && (

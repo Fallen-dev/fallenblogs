@@ -39,7 +39,7 @@
   --space-xs-s: clamp(0.75rem, 0.5761rem + 0.8696vw, 1.25rem);
 
   /* Space s-m: 16px → 30px */
-  --space-s-m: clamp(1rem, 0.6957rem + 1.5217vw, 1.875rem);
+  --margin-bottom: clamp(1rem, 0.6957rem + 1.5217vw, 1.875rem);
 
   /* Space m-l: 24px → 40px */
   --space-m-l: clamp(1.5rem, 1.1522rem + 1.7391vw, 2.5rem);

@@ -23,8 +23,6 @@ export const collections = {
         link: z.string().trim().optional()
       }).optional(),
 
-      imgcredit: z.string().trim().toLowerCase().optional(),
-
       date: z.date({ coerce: true }).optional(),
 
       category: z.string().toLowerCase().trim().optional(),
