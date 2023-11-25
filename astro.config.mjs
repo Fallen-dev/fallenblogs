@@ -1,12 +1,12 @@
 import { defineConfig } from 'astro/config';
-import vercel from "@astrojs/vercel/edge";
+import vercel from "@astrojs/vercel/serverless";
 import mdx from "@astrojs/mdx";
 import readingTime from "./src/readingTime.mjs";
 
 // https://astro.build/config
 export default defineConfig({
   adapter: vercel(),
-  output: "server",
+  output: "hybrid",
   integrations: [mdx()],
   site: process.env.NODE_ENV == 'production' ? 'https://fallenblogs.vercel.app' : 'http://localhost:4321',
   markdown: {
