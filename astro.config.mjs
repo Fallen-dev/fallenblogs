@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from "@astrojs/mdx";
-import readingTime from "./src/readingTime.mjs";
+import readingTime from "./src/readingTime.js";
 
 // https://astro.build/config
 export default defineConfig({
