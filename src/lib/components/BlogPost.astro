@@ -18,6 +18,7 @@ const { count, blogs } = Astro.props;
         const { minutesRead } = remarkPluginFrontmatter;
         const { data } = post;
         const alt = data.image?.credit || 'Cover photo of the article ' + data.title
+        const date = data?.date || undefined
 
         return (
           <article>
@@ -33,7 +34,7 @@ const { count, blogs } = Astro.props;
             </a>
 
             <small class="muted">
-              <Date date={data.date} onlyDate /> &bull; {minutesRead}
+              <Date {date} onlyDate /> &bull; {minutesRead}
             </small>
           </article>
         );
