@@ -1,20 +1,14 @@
 ---
-import { getEntry } from "astro:content";
 import { getBlogs, createTOC } from "$lib/utils";
 import { BlogPost, Body, Date, Img, TableOfContent } from "$lib/components";
 
-const {slug} = Astro.params
+export const getStaticPaths = async () => 
+(await getBlogs()).map((post) => ({
+  params: { slug: post.slug },
+  props: { post },
+}))
 
-if (slug === undefined) {
-  return Astro.redirect('/');
-}
-
-const post = await getEntry('blog', slug)
-
-if (post === undefined) {
-  return Astro.redirect("/404");
-}
-
+const { post } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const { minutesRead } = remarkPluginFrontmatter;
 const { data } = post;
