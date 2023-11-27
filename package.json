@@ -15,8 +15,6 @@
     "@astrojs/rss": "^3.0.0",
     "@astrojs/vercel": "^5.2.0",
     "astro": "^3.5.3",
-    "color-convert": "^2.0.1",
-    "colorthief": "^2.4.0",
     "dayjs": "^1.11.10",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",

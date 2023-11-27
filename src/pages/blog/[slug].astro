@@ -79,44 +79,6 @@ const relatedPosts = await getBlogs(blog =>
   }
 </Body>
 
-<script>
-  //@ts-ignore
-  import ColorThief from "colorthief";
-  //@ts-ignore
-  import convert from "color-convert";
-
-  const colorThief = new ColorThief();
-  const img = document.querySelector("img.hero-img") as HTMLImageElement;
-
-  function setBgColorOnRoot(img: HTMLImageElement) {
-    const root = document.querySelector(":root") as HTMLElement;
-
-    if (!img || !img.src) return;
-
-    const rgb = colorThief.getColor(img);
-    const hsl = convert.rgb.hsl(rgb);
-
-    const bg_color = convert.hsl.hex(hsl[0], 50, 15);
-    const on_bg_color = convert.hsl.hex(hsl[0], 100, 80);
-    const on_bg_color_alt = convert.hsl.hex((hsl[0] + 52) % 360, 100, 80);
-
-    root.style.setProperty("--bg-color", "#" + bg_color);
-    root.style.setProperty("--on-bg-color", "#" + on_bg_color);
-    root.style.setProperty("--on-bg-color-alt", "#" + on_bg_color_alt);
-
-    document.querySelector("body")!.animate([{ height: "120vh" }], {
-      delay: 500,
-      duration: 500,
-      easing: "ease-out",
-      fill: "forwards",
-      pseudoElement: "::after",
-    });
-  }
-
-  if (img.complete) setBgColorOnRoot(img);
-  else img.addEventListener("load", () => setBgColorOnRoot(img));
-</script>
-
 <style>
   h1 {
     display: inline-block;
