@@ -1,14 +1,11 @@
 import { defineConfig } from 'astro/config';
 import mdx from "@astrojs/mdx";
-import readingTime from "./src/readingTime.js";
-// import vercel from '@astrojs/vercel/serverless'
+import readingTime from "./src/readingTime";
 
 // https://astro.build/config
 export default defineConfig({
-  // adapter: vercel(),
-  // output: "server",
   integrations: [mdx()],
-  //site: process.env.NODE_ENV == 'production' ? 'https://fallenblogs.vercel.app' : 'http://localhost:4321',
+  site: process.env.NODE_ENV == 'production' ? 'https://fallenblogs.vercel.app' : 'http://localhost:4321',
   markdown: {
     remarkPlugins: [readingTime],
     shikiConfig: {
@@ -20,5 +17,5 @@ export default defineConfig({
         protocol: 'https'
       }]
     }
-  },
+  }
 });

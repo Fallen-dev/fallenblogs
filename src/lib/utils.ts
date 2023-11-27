@@ -3,17 +3,16 @@ import type {CollectionEntry} from 'astro:content'
 import { getCollection } from 'astro:content'
 
 export async function getBlogs(fn?: (p: CollectionEntry<'blog'>) => boolean | CollectionEntry<'blog'>) {
-  const data = await getCollection('blog', fn)
-  
-  const blogs = data.map(
-    post =>
-      process.env.NODE_ENV == 'production' ? post.data?.date != undefined : post
-  ) as CollectionEntry<'blog'>[]
+  const data = await getCollection('blog', function (post) {
+    return process.env.NODE_ENV?.toLowerCase() == 'production'
+    ? fn || post.data.date != undefined
+    : fn || post
+  })
 
-  //@ts-ignore
-  return blogs.sort((a, b) => {
-    if (!a.data?.date || !b.data?.date) return
-    return b.data.date.valueOf() - a.data.date.valueOf()
+  return data.sort((fst, snd) => {
+    if (!fst.data.date || !snd.data.date) return 0
+
+    return snd.data.date.valueOf() - fst.data.date.valueOf()
   })
 }
 
