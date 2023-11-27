@@ -1,10 +1,10 @@
 ---
 import { BlogPost, Body } from "$lib/components";
-import { getBlogs } from "$lib/utils";
+import { getCollection } from "astro:content";
 
 const searchValue = Astro.url.searchParams.get('search') || ''
 
-const blogs = await getBlogs(blog => 
+const blogs = await getCollection('blog', blog => 
   blog.data.title.toLowerCase()
   .includes(searchValue.toLowerCase())
   ||

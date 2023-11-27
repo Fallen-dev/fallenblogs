@@ -1,20 +1,24 @@
 ---
-import { getBlogs, createTOC } from "$lib/utils";
+import { createTOC } from "$lib/utils";
 import { BlogPost, Body, Date, Img, TableOfContent } from "$lib/components";
+import { getCollection } from "astro:content";
 
-export const getStaticPaths = async () => 
-(await getBlogs()).map((post) => ({
+export const getStaticPaths = async () => {
+  const blogs = await getCollection('blog', post => process.env.NODE_ENV == 'production' ? post.data.date : post)
+
+  return blogs.map((post) => ({
   params: { slug: post.slug },
   props: { post },
 }))
+}
 
 const { post } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const { minutesRead } = remarkPluginFrontmatter;
 const { data } = post;
 
-const relatedPosts = await getBlogs(blog => 
-  blog.data.category == data.category && blog.slug != post.slug
+const relatedPosts = await getCollection('blog', 
+blog => process.env.NODE_ENV == 'production' ? blog.data?.date && blog.data.category?.toLowerCase() == data.category?.toLowerCase() : blog
 )
 ---
 

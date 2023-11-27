@@ -1,8 +1,8 @@
 ---
 import { BlogPost, Body } from "$lib/components";
-import { getBlogs } from "$lib/utils";
+import {getCollection} from 'astro:content'
 
-const blogs = await getBlogs()
+const blogs = await getCollection('blog', post => process.env.NODE_ENV == 'production' ? post.data?.date : post)
 ---
 
 <Body>
