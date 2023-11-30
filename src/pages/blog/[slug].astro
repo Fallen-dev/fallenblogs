@@ -48,7 +48,7 @@ const relatedPosts = await getCollection(
         <Img
           src={data.image.src}
           width="800"
-          alt="My post"
+          alt="Cover photo"
           class="hero-img no-mb"
           style="margin-top: var(--margin-bottom);"
         />
@@ -91,41 +91,53 @@ const relatedPosts = await getCollection(
   }
 </Body>
 
+<script>
+  import Vibrant from 'node-vibrant'
+
+  async function generate_colors(img: HTMLImageElement|undefined) {
+    if (typeof img == 'undefined') return
+    
+    try {
+      const palette = await Vibrant.from(img.src).getPalette()
+      const root = document.querySelector(':root') as HTMLElement
+      const body = document.querySelector('body') as HTMLBodyElement
+
+      root.style.setProperty('--bg-color', String(palette.DarkVibrant?.getHex()))
+      root.style.setProperty('--on-bg-color', String(palette.LightVibrant?.getHex()))
+
+      body.animate([{ height: "120vh" }], {
+        delay: 450,
+        duration: 750,
+        easing: "ease-out",
+        fill: "forwards",
+        pseudoElement: "::after",
+      });
+    } catch (E) {
+      console.error(E)
+    }
+  }
+
+  const img = document.querySelector('img.hero-img') as HTMLImageElement | undefined
+
+  if (img?.complete) generate_colors(img)
+  else img && img.addEventListener('load', () => generate_colors(img))
+</script>
+
 <style>
   h1 {
-    display: inline-block;
-    background-image: linear-gradient(
-      to right,
-      var(--on-bg-color, var(--color-on-background)),
-      var(--on-bg-color-alt, var(--color-on-background)) 70%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--on-bg-color, var(--color-on-background));
   }
 
   details {
     margin-bottom: var(--space-s);
-    border: 1.5px solid var(--color-tertiary);
+    border: 1.5px solid var(--color-surface-variant);
     border-radius: var(--border-radius);
     cursor: pointer;
-
-    /* width: min-content;
-    background-color: var(--color-background);
-    position: sticky;
-    top: var(--space-s);
-    z-index: 1;
-    isolation: isolate; */
   }
 
-  /* details[open],
-  details[open] > summary {
-    width: auto;
-  } */
-
   summary {
-    /* width: max-content; */
     padding: var(--space-s);
-    color: var(--color-tertiary);
+    color: var(--color-on-background);
   }
 
   .toc {

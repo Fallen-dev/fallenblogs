@@ -69,20 +69,30 @@ import config from "$lib/config";
     line-height: 1.68;
   }
 
+  body::before,
   body::after {
     content: "";
     position: absolute;
     inset: 0;
-    height: 0;
-    isolation: isolate;
-    z-index: -1;
-    will-change: height, background;
     user-select: none;
+    isolation: isolate;
+  }
+
+  body::before {
+    height: 120vh;
+    background-color: var(--color-background);
+    filter: opacity(0.7);
+    z-index: -1;
+  }
+
+  body::after {
+    height: 0;
+    z-index: -2;
+    will-change: height, background;
     background-image: linear-gradient(
       to bottom,
       var(--bg-color, var(--color-background)),
       var(--color-background)
     );
-    background-color: var(--bg-color, var(--color-background));
   }
 </style>
