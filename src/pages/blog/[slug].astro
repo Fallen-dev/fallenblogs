@@ -1,40 +1,46 @@
 ---
 import { createTOC } from "$lib/utils";
 import { BlogPost, Body, Date, Img, TableOfContent } from "$lib/components";
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 
-export const getStaticPaths = async () => {
-  const blogs = await getCollection('blog', post => process.env.NODE_ENV == 'production' ? post.data.date : post)
+const { slug } = Astro.params;
+if (typeof slug == "undefined") return Astro.redirect("/blog");
 
-  return blogs.map((post) => ({
-  params: { slug: post.slug },
-  props: { post },
-}))
-}
+const post = await getEntry("blog", slug);
+if (typeof post == "undefined") return Astro.redirect("/404");
 
-const { post } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const { minutesRead } = remarkPluginFrontmatter;
 const { data } = post;
 
-const relatedPosts = await getCollection('blog', 
-blog => process.env.NODE_ENV == 'production' ? blog.data?.date && blog.data.category?.toLowerCase() == data.category?.toLowerCase() : blog
-)
+const relatedPosts = await getCollection(
+  "blog",
+  (blog) =>
+    blog.data.date &&
+    blog.data.category?.toLowerCase() == post.data.category?.toLowerCase() &&
+    blog.id != post.id
+);
 ---
 
 <Body>
-  <hgroup>
-    <h1>{data.title}</h1>
-    <p class="muted no-mb"><Date date={data.date} /> &bull; {minutesRead}</p>
+  <h1>{data.title}</h1>
+  <p class="muted no-mb"><Date date={data.date} /> &bull; {minutesRead}</p>
 
-    {data.category &&
+  {
+    data.category && (
       <p class="muted">
-        Category: <a href={`/blog?search=${data.category}`} style="text-transform: capitalize;">{data.category}</a>
+        Category:&nbsp;
+        <a
+          href={`/blog?search=${data.category}`}
+          style="text-transform: capitalize;"
+        >
+          {data.category}
+        </a>
       </p>
-    }
-  </hgroup>
+    )
+  }
 
-<p class="muted">{data.description}</p>
+  <p class="muted no-mb">{data.description}</p>
 
   {
     data.image && (
@@ -44,12 +50,16 @@ blog => process.env.NODE_ENV == 'production' ? blog.data?.date && blog.data.cate
           width="800"
           alt="My post"
           class="hero-img no-mb"
+          style="margin-top: var(--margin-bottom);"
         />
-        {data.image.credit && data.image.link &&
+        {data.image.credit && data.image.link && (
           <figcaption class="muted no-mb">
-            {data.image.credit}. <a href={data.image.link} target="_blank" rel="noopener noreferrer">Link.</a>
+            {data.image.credit}.{" "}
+            <a href={data.image.link} target="_blank" rel="noopener noreferrer">
+              Link.
+            </a>
           </figcaption>
-        }
+        )}
       </>
     )
   }
@@ -58,7 +68,7 @@ blog => process.env.NODE_ENV == 'production' ? blog.data?.date && blog.data.cate
 
   <details>
     <summary aria-haspopup="listbox">Table of contents</summary>
-    <div class="toc">
+    <div class="toc no-mb">
       <TableOfContent headings={createTOC(headings)} />
     </div>
   </details>
@@ -69,11 +79,15 @@ blog => process.env.NODE_ENV == 'production' ? blog.data?.date && blog.data.cate
 
   <div class="divider breakout"></div>
 
-  {relatedPosts.length > 0 &&
-    <section>
-      <p><strong>Also read</strong></p>
-      <BlogPost blogs={relatedPosts} />
-    </section>
+  {
+    relatedPosts.length > 0 && (
+      <section>
+        <p>
+          <strong>Also read</strong>
+        </p>
+        <BlogPost blogs={relatedPosts} />
+      </section>
+    )
   }
 </Body>
 
